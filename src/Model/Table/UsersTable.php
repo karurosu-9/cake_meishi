@@ -11,6 +11,8 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property \App\Model\Table\DivisionsTable&\Cake\ORM\Association\BelongsTo $Divisions
+ *
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -45,8 +47,8 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('divisions', [
-            'foreignKey' => 'id',
+        $this->belongsTo('Divisions', [
+            'foreignKey' => 'division_id',
             'joinType' => 'INNER',
         ]);
     }
@@ -60,28 +62,42 @@ class UsersTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->scalar('division')
-            ->maxLength('division', 50)
-            ->requirePresence('division', 'create')
-            ->notEmptyString('division');
-
-        $validator
             ->scalar('userName')
             ->maxLength('userName', 50)
             ->requirePresence('userName', 'create')
-            ->notEmptyString('userName');
+            ->notEmptyString('userName', '名前を入力してください。');
 
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
             ->requirePresence('password', 'create')
-            ->notEmptyString('password');
+            ->notEmptyString('password')
+            ->add('password', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'], 'パスワードを入力してください。');
 
         $validator
             ->scalar('admin')
             ->maxLength('admin', 255)
-            ->notEmptyString('admin');
+            ->notEmptyString('admin', '管理区分を選択してください。');
+
+        $validator
+            ->integer('division_id')
+            ->notEmptyString('division_id', '部署を選択してください。');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->isUnique(['password']), ['errorField' => 'password']);
+        $rules->add($rules->existsIn('division_id', 'Divisions'), ['errorField' => 'division_id']);
+
+        return $rules;
     }
 }

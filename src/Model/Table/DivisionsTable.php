@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Divisions Model
  *
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  *
  * @method \App\Model\Entity\Division newEmptyEntity()
  * @method \App\Model\Entity\Division newEntity(array $data, array $options = [])
@@ -47,9 +47,8 @@ class DivisionsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
+        $this->hasMany('Users', [
+            'foreignKey' => 'division_id',
         ]);
     }
 
@@ -65,11 +64,8 @@ class DivisionsTable extends Table
             ->scalar('divisionName')
             ->maxLength('divisionName', 100)
             ->requirePresence('divisionName', 'create')
-            ->notEmptyString('divisionName');
-
-        $validator
-            ->integer('user_id')
-            ->notEmptyString('user_id');
+            ->notEmptyString('divisionName')
+            ->add('divisionName', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
     }
@@ -83,7 +79,7 @@ class DivisionsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn('user_id', 'Users'), ['errorField' => 'user_id']);
+        $rules->add($rules->isUnique(['divisionName']), ['errorField' => 'divisionName']);
 
         return $rules;
     }
