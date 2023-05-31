@@ -17,11 +17,46 @@ class UsersController extends AppController
     {
         parent::initialize();
 
+        $this->paginate = [
+            'contain' => ['Divisions'],
+            'limit' => 6,
+            'order' => [
+                'Users.id' => 'ASC',
+            ],
+        ];
+
+        $this->Divisions = $this->getTableLocator()->get('Divisions');
+
     }
 
     public function beforeFilter(EventInterface $event)
     {
-        $this->Authentication->addUnauthenticatedActions(['login', 'index']);
+        parent::beforeFilter($event);
+        //ログインしていなくてもアクセスできるアクション
+        $this->Authentication->addUnauthenticatedActions(['login']);
+    }
+
+    public function login()
+    {
+            $this->request->allowMethod(['post', 'get']);
+            $result = $this->Authentication->getResult();
+            if ($result->isValid()) {
+                $this->Flash->success(__('ログインしました。'));
+                return $this->redirect(['controller' => 'Users', 'action' => 'index']);
+            }
+
+            if ($this->request->is('post') && !$result->valid()) {
+                $this->Flash->error(__('名前かパスワードが間違っています。もう一度やり直してください。'));
+            }
+    }
+
+    public function logout()
+    {
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $this->Authentication->logout();
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
     }
     /**
      * Index method
@@ -30,12 +65,21 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => [],
-        ];
-        $users = $this->paginate($this->Users);
 
-        $this->set(compact('users'));
+        $keyword = $this->request->getData('keyword');
+
+        $users = $this->Users->find('all');
+
+        if (!empty($keyword)) {
+            $users = $this->Users->find()->where(['Users.userName LIKE' => '%' . $keyword . '%']);
+        }
+
+        $users = $this->paginate($users);
+
+        $data = [
+            'users' => $users,
+        ];
+        $this->set($data);
     }
 
     /**
@@ -47,11 +91,19 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+
+        $loginUser = $this->request->getAttribute('identity');
+        //var_dump($user); exit;
         $user = $this->Users->get($id, [
-            'contain' => ['divisions'],
+            'contain' => ['Divisions'],
         ]);
 
-        $this->set(compact('user'));
+        $data = [
+            'user' => $user,
+            'loginUser' => $loginUser,
+        ];
+
+        $this->set($data);
     }
 
     /**
@@ -61,6 +113,7 @@ class UsersController extends AppController
      */
     public function add()
     {
+
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
@@ -71,8 +124,14 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $divisions = $this->Users->divisions->find('list', ['limit' => 200])->all();
-        $this->set(compact('user', 'divisions'));
+        //$divisionsにdivisionNameカラムの値を格納している
+        $divisions = $this->Divisions->find('list', ['valueField' => 'divisionName', 'limit' => 200])->toArray();
+        $data =[
+            'user' => $user,
+            'divisions' => $divisions,
+        ];
+
+        $this->set($data);
     }
 
     /**
@@ -85,7 +144,7 @@ class UsersController extends AppController
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => [],
+            'contain' => ['Divisions'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
@@ -96,8 +155,14 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $divisions = $this->Users->divisions->find('list', ['limit' => 200])->all();
-        $this->set(compact('user', 'divisions'));
+        $divisions = $this->Divisions->find('list', ['limit' => 200, 'valueField' => 'divisionName'])->toArray();
+
+        $data = [
+            'user' => $user,
+            'divisions' => $divisions,
+        ];
+
+        $this->set($data);
     }
 
     /**
