@@ -10,11 +10,10 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $divisionName
- * @property int $user_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\User[] $users
  */
 class Division extends Entity
 {
@@ -29,9 +28,8 @@ class Division extends Entity
      */
     protected $_accessible = [
         'divisionName' => true,
-        'user_id' => true,
         'created' => true,
         'modified' => true,
-        'user' => true,
+        'users' => true,
     ];
 }

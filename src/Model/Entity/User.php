@@ -3,19 +3,23 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\Auth\DefaultPasswordHasher;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\ORM\Entity;
+
+use function PHPUnit\Framework\stringContains;
 
 /**
  * User Entity
  *
  * @property int $id
- * @property string $division
  * @property string $userName
  * @property string $password
  * @property string $admin
+ * @property int $division_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \App\Model\Entity\Division $division
  */
 class User extends Entity
 {
@@ -29,12 +33,13 @@ class User extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'division' => true,
         'userName' => true,
         'password' => true,
         'admin' => true,
+        'division_id' => true,
         'created' => true,
         'modified' => true,
+        'division' => true,
     ];
 
     /**
@@ -48,7 +53,7 @@ class User extends Entity
 
     protected function _setPassword(string $password) : ?string
     {
-        if (strlen($password) > 0) {
+        if(strlen($password) > 0) {
             return (new DefaultPasswordHasher())->hash($password);
         }
     }
