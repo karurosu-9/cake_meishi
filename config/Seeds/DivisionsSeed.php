@@ -24,11 +24,16 @@ class DivisionsSeed extends AbstractSeed
     {
         $data = [
             [
-                'divisionName' => '経理部',
-                'user_id' => 1,
+                'divisionName' => '一般',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],
+            [
+                'divisionName' => '経理部',
+                'created' => FrozenTime::now(),
+                'modified' => FrozenTime::now(),
+            ],
+
         ];
 
         $table = $this->table('divisions');

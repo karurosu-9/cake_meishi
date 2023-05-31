@@ -23,13 +23,21 @@ class UsersSeed extends AbstractSeed
     {
         $data = [
             [
-                'division' => '経理部',
                 'userName' => '太郎',
                 'admin' => '一般',
                 'password' => 'abc',
+                'division_id' => 1,
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
-            ]
+            ],
+            [
+                'userName' => '花子',
+                'admin' => '経理',
+                'password' => 'def',
+                'division_id' => 2,
+                'created' => FrozenTime::now(),
+                'modified' => FrozenTime::now(),
+            ],
         ];
 
         $table = $this->table('users');
