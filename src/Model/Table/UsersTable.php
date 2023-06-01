@@ -50,6 +50,8 @@ class UsersTable extends Table
         $this->belongsTo('Divisions', [
             'foreignKey' => 'division_id',
             'joinType' => 'INNER',
+            //Divisionが削除されても関連するユーザーは削除されない
+            'dependent' => false,
         ]);
     }
 
@@ -71,8 +73,8 @@ class UsersTable extends Table
             ->scalar('password')
             ->maxLength('password', 255)
             ->requirePresence('password', 'create')
-            ->notEmptyString('password')
-            ->add('password', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'], 'パスワードを入力してください。');
+            ->notEmptyString('password', 'パスワードを入力してください。')
+            ->add('password', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'], '同じパスワードを使用してる人がいます。変更してください。');
 
         $validator
             ->scalar('admin')
