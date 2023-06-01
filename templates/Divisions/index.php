@@ -10,10 +10,15 @@ echo $this->Form->end();
 <table>
     <tr>
         <th><?= __('Division Name') ?></th>
+        <th><?= __('Control Panel') ?></th>
     </tr>
     <?php foreach ($divisions as $division) : ?>
         <tr>
-            <td><?= $this->Html->link(h($division->divisionName), ['action' => 'view']) ?></td>
+            <td><?= $this->Html->link(h($division->division_name), ['action' => 'view', $division->id]) ?></td>
+            <td>
+                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $division->id]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $division->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', $division->division_name)]) ?>
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>

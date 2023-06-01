@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\ORM\Query;
+
 /**
  * Divisions Controller
  *
@@ -16,10 +18,7 @@ class DivisionsController extends AppController
     {
         parent::initialize();
 
-        $this->paginate = [
-            'limit' => 10,
-            'contain' => ['Users'],
-        ];
+
 
         $this->Users = $this->getTableLocator()->get('Users');
     }
@@ -58,14 +57,47 @@ class DivisionsController extends AppController
     public function view($id = null)
     {
 
-        $users = $this->Users->find()->contain(['Divisions'])->toArray();
-        var_dump($users); exit;
-
         $division = $this->Divisions->get($id, [
             'contain' => ['Users'],
         ]);
+        
+        //ログインユーザーのデータを取得
+        $loginUser = $this->Authentication->getResult()->getData();
 
-        $this->set(compact('division'));
+        $keyword = $this->request->getData('keyword');
+
+
+        //userテーブルからdivisionsのidに紐づいたユーザーを取得
+        $users = $this->Users->find()
+            ->matching('Divisions', function (Query $q) use ($id) {
+                return $q->where(['Divisions.id' => $id]);
+            });
+
+        $this->paginate = [
+            'limit' => 10,
+            'contatin' => ['Divisions'],
+            'order' => [
+                'Users.id' => 'ASC',
+            ],
+        ];
+
+        if (!empty($keyword)) {
+            $users->where(['Users.userName LIKE' => '%' . $keyword . '%']);
+        }
+
+        //検索結果のユーザーの該当数を取得
+        $usersCount = $users->count();
+
+        $users = $this->paginate($users);
+
+        $data = [
+            'division' => $division,
+            'users' => $users,
+            'usersCount' => $usersCount,
+            'loginUser' => $loginUser,
+        ];
+
+        $this->set($data);
     }
 
     /**

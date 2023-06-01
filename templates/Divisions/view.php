@@ -1,16 +1,46 @@
 <div class="divisions content">
-    <p></p><small>社員番号：　<?= h($user->id) ?></small></p>
-    <hr>
-    <h3>名前：　<?= h($user->userName) ?></h3>
-    <hr>
-    <p>所属部署：　<?= h($user->division->divisionName) ?></p>
-    <hr>
-    <?php if ($loginUser->admin === '管理者'): ?>
-        <div class="button">
-            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-        </div>
-        <div class="button">
-            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => sprintf('本当に『%s』を削除してよろしいですか', $user->userName)]) ?>
-        </div>
-    <?php endif; ?>
+    <h1><?= __($division->division_name) ?></h1>
+    <br>
+    <br>
+    <?php
+    echo $this->Form->create($users);
+    echo $this->Form->control('keyword');
+    echo $this->Form->button(__('Search'));
+    echo $this->Form->end();
+    ?>
+    <table>
+        <?php if ($usersCount === 0) : ?>
+            <span style="color: red; font-weight: bold;">※該当するユーザーはいません。</span>
+        <?php endif; ?>
+        <tr>
+            <th><?= __('User Id') ?></th>
+            <th><?= __('User Name') ?></th>
+            <?php if ($loginUser->admin === '管理者') : ?>
+                <th><?= __('Admin') ?></th>
+            <?php endif; ?>
+            <th><?= __('Register') ?></th>
+        </tr>
+        <?php foreach ($users as $user) : ?>
+            <tr>
+                <td><?= h($user->id) ?></td>
+                <td><?= $this->Html->link(h($user->user_name), ['controller' => 'Users', 'action' => 'view', $user->id]) ?></td>
+                <?php if ($loginUser->admin === '管理者') : ?>
+                    <td><?= h($user->admin) ?></td>
+                <?php endif; ?>
+                <td><?= h($user->created) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <div class="paginator">
+        <ul class="pagination">
+            <?php
+            echo $this->Paginator->first(__('<< First'));
+            echo $this->Paginator->prev(__('< Prev'));
+            echo $this->Paginator->numbers();
+            echo $this->Paginator->next(__('Next >'));
+            echo $this->Paginator->last(__('Last >>'));
+            ?>
+        </ul>
+    </div>
+
 </div>
