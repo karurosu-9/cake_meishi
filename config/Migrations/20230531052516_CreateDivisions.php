@@ -15,7 +15,7 @@ class CreateDivisions extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('divisions');
-        $table->addColumn('divisionName', 'string', [
+        $table->addColumn('division_name', 'string', [
             'limit' => 100,
             'null' => false,
         ])
