@@ -7,7 +7,7 @@ echo $this->Form->control('division_id',[
     'options' => $divisions,
 
 ]);
-echo $this->Form->control('userName');
+echo $this->Form->control('user_name');
 echo $this->Form->control('password');
 echo $this->Form->control('admin',[
     'options' => [

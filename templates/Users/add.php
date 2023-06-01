@@ -1,4 +1,4 @@
-<h1><?= __('Register') ?></h1>
+<h1><?= __('User Register') ?></h1>
 <br>
 <br>
 <?php
@@ -7,7 +7,7 @@ echo $this->Form->control('division_id',[
     'options' => $divisions,
 
 ]);
-echo $this->Form->control('userName');
+echo $this->Form->control('user_name');
 echo $this->Form->control('password');
 echo $this->Form->control('admin',[
     'options' => [
@@ -17,4 +17,5 @@ echo $this->Form->control('admin',[
     'value' => '一般',
 ]);
 echo $this->Form->button(__('Submit'));
+echo $this->Form->end();
 ?>

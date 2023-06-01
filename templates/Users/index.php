@@ -12,15 +12,19 @@ echo $this->Form->end();
         <th><?= __('User Id') ?></th>
         <th><?= __('User Name') ?></th>
         <th><?= __('Division Name') ?></th>
-        <th><?= __('Admin') ?></th>
+        <?php if ($loginUser->admin === "管理者") : ?>
+            <th><?= __('Admin') ?></th>
+        <?php endif; ?>
         <th><?= __('Register') ?></th>
     </tr>
     <?php foreach ($users as $user) : ?>
         <tr>
             <td><?= h($user->id) ?></td>
-            <td><?= $this->Html->link(h($user->userName), ['action' => 'view', $user->id]) ?></td>
-            <td><?= h($user->division->divisionName) ?></td>
-            <td><?= h($user->admin) ?></td>
+            <td><?= $this->Html->link(h($user->user_name), ['action' => 'view', $user->id]) ?></td>
+            <td><?= h($user->division->division_name) ?></td>
+            <?php if ($loginUser === '管理者') : ?>
+                <td><?= h($user->admin) ?></td>
+            <?php endif; ?>
             <td><?= h($user->created) ?></td>
         </tr>
     <?php endforeach; ?>

@@ -45,7 +45,7 @@ class UsersController extends AppController
                 return $this->redirect(['controller' => 'Users', 'action' => 'index']);
             }
 
-            if ($this->request->is('post') && !$result->valid()) {
+            if ($this->request->is('post') && !$result->isValid()) {
                 $this->Flash->error(__('名前かパスワードが間違っています。もう一度やり直してください。'));
             }
     }
@@ -67,6 +67,8 @@ class UsersController extends AppController
     {
 
         $keyword = $this->request->getData('keyword');
+        //ログインユーザーの情報を取得
+        $loginUser = $this->Authentication->getResult()->getData();
 
         $users = $this->Users->find('all');
 
@@ -78,6 +80,7 @@ class UsersController extends AppController
 
         $data = [
             'users' => $users,
+            'loginUser' => $loginUser,
         ];
         $this->set($data);
     }
@@ -91,9 +94,9 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+        //ログインユーザーのデータを取得
+        $loginUser = $this->Authentication->getResult()->getData();
 
-        $loginUser = $this->request->getAttribute('identity');
-        //var_dump($user); exit;
         $user = $this->Users->get($id, [
             'contain' => ['Divisions'],
         ]);
