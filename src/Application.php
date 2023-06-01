@@ -127,7 +127,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // identifiers を読み込み、username と password のフィールドを確認します
         $authenticationService->loadIdentifier('Authentication.Password', [
             'fields' => [
-                'username' => 'username',
+                'username' => 'user_name',
                 'password' => 'password',
             ]
         ]);
@@ -137,7 +137,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // 入力した username と password をチェックする為のフォームデータを設定します
         $authenticationService->loadAuthenticator('Authentication.Form', [
             'fields' => [
-                'username' => 'username',
+                'username' => 'user_name',
                 'password' => 'password',
             ],
             'loginUrl' => '/GitHub/cake_meishi/users/login',

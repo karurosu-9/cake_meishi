@@ -40,21 +40,23 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 <body>
     <?php
-    $user = $this->request->getAttribute('identity');
+    $loginUser = $this->request->getAttribute('identity');
     ?>
     <nav class="top-nav">
-        <div class="top-nav-title">
-            <?= $this->Html->link(__('User List'), ['controller' => 'Users', 'action' => 'index']) ?>
-        </div>
-        <?php if ($user) : ?>
-                <div>
-                    ログインユーザー: 『<?= h($user->userName) ?>』
-                </div>
-            <?php endif; ?>
-        <div class="top-nav-links">
-            <?= $this->Html->link(__('logout'), ['controller' => 'Users', 'action' => 'Logout']) ?>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
-        </div>
+        <!-- ログインユーザーであれば表示する -->
+        <?php if ($loginUser) : ?>
+            <div class="top-nav-title">
+                <?= $this->Html->link(__('User List'), ['controller' => 'Users', 'action' => 'index']) ?>
+            </div>
+            <div class="top-nav-links" style="margin-left: 600px">
+                <?= $this->Html->link(__('logout'), ['controller' => 'Users', 'action' => 'Logout']) ?>
+                <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
+            </div>
+            <span style="font-weight: bold;"> | </span>
+            <div>
+                <span style="font-weight: bold">ログインユーザー: 『<?= h($loginUser->user_name) ?>』</span>
+            </div>
+        <?php endif; ?>
     </nav>
     <main class="main">
         <div class="container">
