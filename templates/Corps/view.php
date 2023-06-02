@@ -9,11 +9,12 @@
     echo $this->Form->end();
     ?>
     <table>
+        <?= $this->Common->displayNoDataMessage($meishiDataCounter) ?>
         <tr>
             <th><?= __('Corp Name') ?></th>
             <th><?= __('Division Name') ?></th>
             <th><?= __('title') ?></th>
-            <th><?= __('enpoyee Name') ?></th>
+            <th><?= __('empoyee Name') ?></th>
             <th><?= __('address') ?></th>
             <th><?= __('tel') ?></th>
         </tr>

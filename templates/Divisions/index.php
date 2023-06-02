@@ -8,17 +8,23 @@ echo $this->Form->button(__('Search'));
 echo $this->Form->end();
 ?>
 <table>
+    <!-- 作成したヘルパーメソッド：　検索結果がなければ表示 -->
+    <?= $this->Common->displayNoDataMessage($divisionCounter) ?>
     <tr>
         <th><?= __('Division Name') ?></th>
-        <th><?= __('Control Panel') ?></th>
+        <?php if ($loginUser->admin === '管理者') : ?>
+            <th><?= __('Control Panel') ?></th>
+        <?php endif; ?>
     </tr>
     <?php foreach ($divisions as $division) : ?>
         <tr>
             <td><?= $this->Html->link(h($division->division_name), ['action' => 'view', $division->id]) ?></td>
-            <td>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $division->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $division->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', $division->division_name)]) ?>
-            </td>
+            <?php if ($loginUser->admin === '管理者') : ?>
+                <td>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $division->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $division->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', $division->division_name)]) ?>
+                </td>
+            <?php endif; ?>
         </tr>
     <?php endforeach; ?>
 </table>

@@ -8,6 +8,8 @@ echo $this->Form->button(__('Search'));
 echo $this->Form->end();
 ?>
 <table>
+    <!-- 該当するユーザーがいなかった場合表示 -->
+    <?= $this->Common->displayNoDataMessage($usersCounter) ?>
     <tr>
         <th><?= __('User Id') ?></th>
         <th><?= __('User Name') ?></th>

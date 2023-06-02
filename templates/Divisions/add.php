@@ -4,6 +4,6 @@
 <?php
 echo $this->Form->create($division);
 echo $this->Form->control('division_name');
-echo $this->Form->button(__('Submit'));
+echo $this->Form->button(__('Register'));
 echo $this->Form->end();
 ?>
