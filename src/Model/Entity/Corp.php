@@ -28,5 +28,6 @@ class Corp extends Entity
         'corp_name' => true,
         'created' => true,
         'modified' => true,
+        'meishi' => true,
     ];
 }

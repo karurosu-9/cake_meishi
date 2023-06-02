@@ -45,7 +45,7 @@ class CorpsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('MeishiData', [
+        $this->hasMany('Meishi', [
             'foreignKey' => 'corp_id',
             'dependent' => true,
         ]);
