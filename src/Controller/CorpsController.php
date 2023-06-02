@@ -21,10 +21,10 @@ class CorpsController extends AppController
             'order' => [
                 'Corps.corp_name' => 'ASC',
             ],
-            'contain' => ['MeishiData'],
+            'contain' => ['Meishi'],
         ];
 
-        $this->MeishiData = $this->getTableLocator()->get('MeishiData');
+        $this->Meishi = $this->getTableLocator()->get('Meishi');
     }
     /**
      * Index method
@@ -33,33 +33,31 @@ class CorpsController extends AppController
      */
     public function index()
     {
-
+        //ログインユーザーの情報を取得
         $loginUser = $this->Authentication->getResult()->getData();
 
         $keyword = $this->request->getData('keyword');
 
-        $corps = $this->Corps->find('all');
+        $meishiData = $this->Meishi->find('all')->contain(['Corps']);
+
 
         if (!empty($keyword)) {
-            $corps->where(['Corps.corp_name LIKE' => '%' . $keyword . '%']);
+            $meishiData->where(['Corps.corp_name LIKE' => '%' . $keyword . '%']);
         }
 
-        $corpsCount = $corps->count();
+        $meishiCount = $meishiData->count();
 
         $this->paginate = [
-            'limit' => 20,
-            'order' => [
-                'Corps.corp_name' => 'ASC',
-            ],
-            'contain' => ['MeishiData'],
+            'limit' => 30,
+            'contain' => ['Corps'],
         ];
 
-        $corps = $this->paginate($corps);
+        $this->paginate($meishiData);
 
         $data = [
-            'corps' => $corps,
-            'corpsCount' => $corpsCount,
             'loginUser' => $loginUser,
+            'meishiCount' => $meishiCount,
+            'meishiData' => $meishiData,
         ];
 
         $this->set($data);
@@ -77,31 +75,31 @@ class CorpsController extends AppController
 
         $keyword = $this->request->getData('keyword');
 
-        $meishiData = $this->MeishiData->find('all')->where(['MeishiData.corp_id' => $id])->contain(['Corps']);
+        $meishi = $this->Meishi->find('all')->where(['Meishi.corp_id' => $id])->contain(['Corps']);
 
         if (!empty($keyword)) {
-            $meishiData->where(['MeishiData.employee_name LIKE' => '%' . $keyword . '%']);
+            $meishi->where(['Meishi.employee_name LIKE' => '%' . $keyword . '%']);
         }
 
-        $meishiDataCount = $meishiData->count();
+        $meishiCount = $meishi->count();
 
         $corp = $this->Corps->get($id, [
-            'contain' => ['MeishiData'],
+            'contain' => ['Meishi'],
         ]);
 
 
         $this->paginate = [
             'limit' => 30,
             'contain' => ['Corps'],
-            'order' => ['MeishiData.id' => 'ASC'],
+            'order' => ['Meishi.id' => 'ASC'],
         ];
 
-        $meishiData = $this->paginate($meishiData);
+        $meishiData = $this->paginate($meishi);
 
         $data = [
             'corp' => $corp,
-            'meishiData' => $meishiData,
-            'meishiDataCount' => $meishiDataCount,
+            'meishi' => $meishi,
+            'meishiCount' => $meishiCount,
         ];
 
         $this->set($data);

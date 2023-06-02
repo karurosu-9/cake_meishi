@@ -12,20 +12,16 @@
         <!-- 検索結果が該当無しの場合表示 -->
         <?= $this->Common->displayNoDataMessage($meishiDataCount) ?>
         <tr>
-            <th><?= __('Corp Name') ?></th>
             <th><?= __('Division Name') ?></th>
             <th><?= __('title') ?></th>
             <th><?= __('empoyee Name') ?></th>
-            <th><?= __('address') ?></th>
             <th><?= __('tel') ?></th>
         </tr>
         <?php foreach ($meishiData as $meishi) : ?>
             <tr>
-                <td><?= h($meishi->corp->corp_name) ?></td>
                 <td><?= h($meishi->division) ?></td>
                 <td><?= h($meishi->title) ?></td>
                 <td><?= h($meishi->employee_name) ?></td>
-                <td><?= h($meishi->address) ?></td>
                 <td><?= h($meishi->tel) ?></td>
                 <td></td>
             </tr>

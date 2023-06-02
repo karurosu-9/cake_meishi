@@ -3,25 +3,27 @@
     <br>
     <br>
     <?php
-    echo $this->Form->create($corps);
+    echo $this->Form->create($meishiData);
     echo $this->Form->control('keyword');
     echo $this->Form->button(__('Search'));
     echo $this->Form->end();
     ?>
     <table>
         <!-- 該当する企業が無かった場合に表示する -->
-        <?= $this->Common->displayNoDataMessage($corpsCount) ?>
+        <?= $this->Common->displayNoDataMessage($meishiCount) ?>
         <tr>
-            <th><?= __('Corp Name') ?></th>
+            <th><?= $this->paginator->sort(__('Corp Name')) ?></th>
+            <th><?= __('Corp Address') ?></th>
             <th><?= __('Control Panel') ?></th>
         </tr>
-        <?php foreach ($corps as $corp) : ?>
+        <?php foreach ($meishiData as $meishi) : ?>
             <tr>
-                <td><?= $this->Html->link(h($corp->corp_name), ['action' => 'view', $corp->id]) ?></td>
+                <td><?= $this->Html->link(h($meishi->corp->corp_name), ['action' => 'view', $meishi->corp->id]) ?></td>
+                <td><?= h($meishi->address) ?></td>
                 <?php if ($loginUser->admin === '管理者') : ?>
                     <td>
-                        <?= $this->Html->link('Edit', ['action' => 'edit', $corp->id]) ?>
-                        <?= $this->Form->postLink('Delete', ['action' => 'delete', $corp->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', $corp->corp_name)]) ?>
+                        <?= $this->Html->link('Edit', ['action' => 'edit', $meishi->corp->id]) ?>
+                        <?= $this->Form->postLink('Delete', ['action' => 'delete', $meishi->corp->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', $meishi->corp->corp_name)]) ?>
                     </td>
                 <?php endif; ?>
             </tr>
