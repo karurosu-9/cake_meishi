@@ -3,13 +3,13 @@
     <br>
     <br>
     <?php
-    echo $this->Form->create($users);
+    echo $this->Form->create($divisions);
     echo $this->Form->control('keyword');
     echo $this->Form->button(__('Search'));
     echo $this->Form->end();
     ?>
     <table>
-        <?php if ($usersCount === 0) : ?>
+        <?php if ($divisionsCount === 0) : ?>
             <span style="color: red; font-weight: bold;">※該当するユーザーはいません。</span>
         <?php endif; ?>
         <tr>

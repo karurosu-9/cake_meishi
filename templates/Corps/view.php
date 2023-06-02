@@ -9,7 +9,8 @@
     echo $this->Form->end();
     ?>
     <table>
-        <?= $this->Common->displayNoDataMessage($meishiDataCounter) ?>
+        <!-- 検索結果が該当無しの場合表示 -->
+        <?= $this->Common->displayNoDataMessage($meishiDataCount) ?>
         <tr>
             <th><?= __('Corp Name') ?></th>
             <th><?= __('Division Name') ?></th>
