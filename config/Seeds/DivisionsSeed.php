@@ -24,12 +24,12 @@ class DivisionsSeed extends AbstractSeed
     {
         $data = [
             [
-                'divisionName' => '一般',
+                'division_name' => '一般',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],
             [
-                'divisionName' => '経理部',
+                'division_name' => '経理部',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],
