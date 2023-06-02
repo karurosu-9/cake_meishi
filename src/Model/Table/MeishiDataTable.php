@@ -68,7 +68,14 @@ class MeishiDataTable extends Table
             ->scalar('division')
             ->maxLength('division', 255)
             ->requirePresence('division', 'create')
-            ->notEmptyString('division', '部署名を入力してください。');
+            ->notEmptyString('division', '部署名を入力してください。')
+            ->add('division', 'validFormat', [
+                'rule' => [
+                    'custom',
+                    '/^(?![0-9]+$)[a-zA-Z0-9]+$/',
+                ],
+                'message' => '部署名の登録に数字だけの登録はできません。',
+            ]);
 
         $validator
             ->scalar('title')
@@ -79,7 +86,14 @@ class MeishiDataTable extends Table
             ->scalar('employee_name')
             ->maxLength('employee_name', 50)
             ->requirePresence('employee_name', 'create')
-            ->notEmptyString('employee_name', '名前を入力してください。');
+            ->notEmptyString('employee_name', '名前を入力してください。')
+            ->add('employee_name', 'validFormat', [
+                'rule' => [
+                    'regex',
+                    '/^[a-zA-Z]+$/',
+                ],
+                'message' => '名前に数字は入れられません。',
+            ]);
 
         $validator
             ->scalar('address')
@@ -90,7 +104,14 @@ class MeishiDataTable extends Table
         $validator
             ->scalar('tel')
             ->maxLength('tel', 13)
-            ->allowEmptyString('tel');
+            ->allowEmptyString('tel')
+            ->add('tel', 'validFormat', [
+                'rule' => [
+                    'custom',
+                    '/^[0-9]+$/',
+                ],
+                'message' => '数字以外の入力はできません。',
+            ]);
 
         return $validator;
     }

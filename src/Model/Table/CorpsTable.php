@@ -64,6 +64,13 @@ class CorpsTable extends Table
             ->maxLength('corp_name', 255)
             ->requirePresence('corp_name', 'create')
             ->notEmptyString('corp_name', '会社名を入力してください。')
+            ->add('corp_name', 'validFormat', [
+                'rule' => [
+                    'custom',
+                    '/^(?![0-9]+$)[a-zA-Z0-9]+$/',
+                ],
+                'message' => '企業名は数字のみや、記号は登録できません。',
+            ])
             ->add('corp_name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;

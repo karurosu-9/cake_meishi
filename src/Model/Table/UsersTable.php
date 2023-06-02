@@ -64,16 +64,23 @@ class UsersTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->scalar('userName')
-            ->maxLength('userName', 50)
-            ->requirePresence('userName', 'create')
-            ->notEmptyString('userName', '名前を入力してください。');
+            ->scalar('user_name')
+            ->maxLength('user_name', 50)
+            ->requirePresence('user_name', 'create')
+            ->notEmptyString('user_name', '名前を入力してください。');
 
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
             ->requirePresence('password', 'create')
             ->notEmptyString('password', 'パスワードを入力してください。')
+            ->add('password', 'validFormat', [
+                'rule' => [
+                    'custom',
+                    '/^(?![0-9]+$)(?![a-zA-Z]+$)[a-zA-Z0-9]{5,}/'
+                ],
+                'message' => 'パスワードは5文字以上で数字と文字を絡めて入力してください。'
+            ])
             ->add('password', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'], '同じパスワードを使用してる人がいます。変更してください。');
 
         $validator

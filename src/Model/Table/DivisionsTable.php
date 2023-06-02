@@ -61,11 +61,17 @@ class DivisionsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->scalar('divisionName')
-            ->maxLength('divisionName', 100)
-            ->requirePresence('divisionName', 'create')
-            ->notEmptyString('divisionName')
-            ->add('divisionName', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->scalar('division_name')
+            ->maxLength('division_name', 100)
+            ->requirePresence('division_name', 'create')
+            ->notEmptyString('division_name', '名前を入力してください。')
+            ->add('division_name', 'validFormat', [
+                'rule' => [
+                    'custom',
+                    '/^(?![0-9]+$)[a-zA-Z0-9]+$/',
+                ],
+                'message' => '部署名に記号を含めたりや数字のみの登録はできません。',])
+            ->add('division_name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
     }
@@ -79,7 +85,7 @@ class DivisionsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['divisionName']), ['errorField' => 'divisionName']);
+        $rules->add($rules->isUnique(['division_name']), ['errorField' => 'division_name']);
 
         return $rules;
     }
