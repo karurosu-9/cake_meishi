@@ -33,7 +33,7 @@ class User extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'userName' => true,
+        'user_name' => true,
         'password' => true,
         'admin' => true,
         'division_id' => true,

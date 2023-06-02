@@ -27,7 +27,7 @@ class Division extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'divisionName' => true,
+        'division_name' => true,
         'created' => true,
         'modified' => true,
         'users' => true,
