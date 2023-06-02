@@ -44,7 +44,7 @@ class CorpsController extends AppController
             $corps->where(['Corps.corp_name LIKE' => '%' . $keyword . '%']);
         }
 
-        $corpsCounter = $corps->count();
+        $corpsCount = $corps->count();
 
         $this->paginate = [
             'limit' => 20,
@@ -58,7 +58,7 @@ class CorpsController extends AppController
 
         $data = [
             'corps' => $corps,
-            'corpsCounter' => $corpsCounter,
+            'corpsCount' => $corpsCount,
             'loginUser' => $loginUser,
         ];
 
@@ -83,7 +83,7 @@ class CorpsController extends AppController
             $meishiData->where(['MeishiData.employee_name LIKE' => '%' . $keyword . '%']);
         }
 
-        $meishiDataCouner = $meishiData->count();
+        $meishiDataCount = $meishiData->count();
 
         $corp = $this->Corps->get($id, [
             'contain' => ['MeishiData'],
@@ -101,7 +101,7 @@ class CorpsController extends AppController
         $data = [
             'corp' => $corp,
             'meishiData' => $meishiData,
-            'meishiDataCounter' => $meishiDataCouner,
+            'meishiDataCount' => $meishiDataCount,
         ];
 
         $this->set($data);
