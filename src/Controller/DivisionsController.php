@@ -34,14 +34,20 @@ class DivisionsController extends AppController
 
         $keyword = $this->request->getData('keyword');
 
+        $loginUser = $this->Authentication->getResult()->getData();
+
         if (!empty($keyword)) {
-            $divisions= $this->Divisions->find()->where(['Divisions.divisionName LIKE'=> '%' . $keyword . '%' ]);
+            $divisions= $this->Divisions->find()->where(['Divisions.division_name LIKE'=> '%' . $keyword . '%' ]);
         }
+
+        $divisionsCounter = $divisions->count();
 
         $divisions = $this->paginate($divisions);
 
         $data = [
             'divisions' => $divisions,
+            'divisionsCounter' => $divisionsCounter,
+            'loginUser' => $loginUser,
         ];
 
         $this->set($data);
@@ -60,7 +66,7 @@ class DivisionsController extends AppController
         $division = $this->Divisions->get($id, [
             'contain' => ['Users'],
         ]);
-        
+
         //ログインユーザーのデータを取得
         $loginUser = $this->Authentication->getResult()->getData();
 
@@ -68,10 +74,7 @@ class DivisionsController extends AppController
 
 
         //userテーブルからdivisionsのidに紐づいたユーザーを取得
-        $users = $this->Users->find()
-            ->matching('Divisions', function (Query $q) use ($id) {
-                return $q->where(['Divisions.id' => $id]);
-            });
+        $users = $this->Users->find('all')->where(['Users.division_id' => $id]);
 
         $this->paginate = [
             'limit' => 10,
@@ -82,7 +85,7 @@ class DivisionsController extends AppController
         ];
 
         if (!empty($keyword)) {
-            $users->where(['Users.userName LIKE' => '%' . $keyword . '%']);
+            $users->where(['Users.user_name LIKE' => '%' . $keyword . '%']);
         }
 
         //検索結果のユーザーの該当数を取得
@@ -117,7 +120,12 @@ class DivisionsController extends AppController
             }
             $this->Flash->error(__('The division could not be saved. Please, try again.'));
         }
-        $this->set(compact('division'));
+
+        $data = [
+            'division' => $division,
+        ];
+
+        $this->set($data);
     }
 
     /**
