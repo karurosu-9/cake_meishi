@@ -73,13 +73,16 @@ class UsersController extends AppController
         $users = $this->Users->find('all');
 
         if (!empty($keyword)) {
-            $users = $this->Users->find()->where(['Users.userName LIKE' => '%' . $keyword . '%']);
+            $users = $this->Users->find()->where(['Users.user_name LIKE' => '%' . $keyword . '%']);
         }
+
+        $usersCounter = $users->count();
 
         $users = $this->paginate($users);
 
         $data = [
             'users' => $users,
+            'usersCounter' => $usersCounter,
             'loginUser' => $loginUser,
         ];
         $this->set($data);
@@ -128,7 +131,7 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         //$divisionsにdivisionNameカラムの値を格納している
-        $divisions = $this->Divisions->find('list', ['valueField' => 'divisionName', 'limit' => 200])->toArray();
+        $divisions = $this->Divisions->find('list', ['valueField' => 'division_name', 'limit' => 200])->toArray();
         $data =[
             'user' => $user,
             'divisions' => $divisions,
@@ -158,7 +161,7 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $divisions = $this->Divisions->find('list', ['limit' => 200, 'valueField' => 'divisionName'])->toArray();
+        $divisions = $this->Divisions->find('list', ['limit' => 200, 'valueField' => 'division_name'])->toArray();
 
         $data = [
             'user' => $user,
