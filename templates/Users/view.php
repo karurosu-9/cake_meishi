@@ -13,5 +13,10 @@
             <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => sprintf('本当に『%s』を削除してよろしいですか', $user->user_name)]) ?>
         </div>
     <?php endif; ?>
+    <br>
+    <br>
+    <div style="font-size: 25px">
+        <?= $this->Html->link(__('<< Back'), ['action' => 'index']) ?>
+    </div>
 </div>
 

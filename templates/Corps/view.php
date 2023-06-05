@@ -44,4 +44,9 @@
             ?>
         </ul>
     </div>
+    <br>
+    <br>
+    <div style="font-size: 25px">
+        <?= $this->Html->link(__('<< Back'), ['action' => 'index']) ?>
+    </div>
 </div>

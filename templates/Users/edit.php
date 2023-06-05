@@ -20,4 +20,9 @@
     echo $this->Form->button(__('Edit'));
     echo $this->Form->end();
     ?>
+    <br>
+    <br>
+    <div style="font-size: 25px">
+        <?= $this->Html->link(__('<< Back'), ['action' => 'index']) ?>
+    </div>
 </div>
