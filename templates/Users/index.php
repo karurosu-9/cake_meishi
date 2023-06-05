@@ -25,7 +25,7 @@
                 <td><?= h($user->id) ?></td>
                 <td><?= $this->Html->link(h($user->user_name), ['action' => 'view', $user->id]) ?></td>
                 <td><?= h($user->division->division_name) ?></td>
-                <?php if ($loginUser === '管理者') : ?>
+                <?php if ($loginUser->admin === '管理者') : ?>
                     <td><?= h($user->admin) ?></td>
                 <?php endif; ?>
                 <td><?= h($user->created) ?></td>
