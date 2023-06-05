@@ -3,6 +3,7 @@
         margin: 2em 0;
         background: #f1f1f1;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.22);
+        width: 500px;
     }
 
     .box30 .box-title {
@@ -22,6 +23,14 @@
 
     .menu-list {
         font-size: 30px;
+        display: flex;
+    }
+
+    .left-menu {
+        flex: 1;
+    }
+    .right-menu {
+        flex: 1;
     }
 </style>
 
@@ -32,15 +41,27 @@
     <div class="box30">
         <div class="box-title"><?= __('Admin Menu') ?></div>
         <div class="menu-list">
-            ・<?= $this->Html->link(__('User Add'), ['controller' => 'Users', 'action' => 'add']) ?>
-            <br>
-            ・<?= $this->Html->link(__('Division Add'), ['controller' => 'Divisions', 'action' => 'add']) ?>
-            <br>
-            ・<?= $this->Html->link(__('Corps List'), ['controller' => 'Corps', 'action' => 'index']) ?>
-            <br>
+            <div class="left-menu">
+                <p><?= __('List') ?></p>
+                ・<?= $this->Html->link(__('User Add'), ['controller' => 'Users', 'action' => 'add']) ?>
+                <br>
+                ・<?= $this->Html->link(__('Division Add'), ['controller' => 'Divisions', 'action' => 'add']) ?>
+                <br>
+                ・<?= $this->Html->link(__('Corps Add'), ['controller' => 'Corps', 'action' => 'index']) ?>
+                <br>
+            </div>
+            <div class="right-menu">
+                <p><?= __('Add') ?></p>
+                ・<?= $this->Html->link(__('Users List'), ['controller' => 'Users', 'action' => 'index']) ?>
+                <br>
+                ・<?= $this->Html->link(__('Divisions List'), ['controller' => 'Divisions', 'action' => 'index']) ?>
+                <br>
+                ・<?= $this->Html->link(__('Corps List'), ['controller' => 'Corps', 'action' => 'index']) ?>
+                <br>
+            </div>
         </div>
     </div>
-<?php else: ?>
+<?php else : ?>
     <div class="box30">
         <div class="box-title"><?= __('Main Menu') ?></div>
         <div class="menu-list">
