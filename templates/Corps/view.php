@@ -16,6 +16,8 @@
             <th><?= __('title') ?></th>
             <th><?= __('empoyee Name') ?></th>
             <th><?= __('tel') ?></th>
+            <th><?= __('address') ?></th>
+            <th><?= __('Control') ?></th>
         </tr>
         <?php foreach ($meishiData as $meishi) : ?>
             <tr>
@@ -23,7 +25,11 @@
                 <td><?= h($meishi->title) ?></td>
                 <td><?= h($meishi->employee_name) ?></td>
                 <td><?= h($meishi->tel) ?></td>
-                <td></td>
+                <td><?= h($meishi->address) ?></td>
+                <td>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Meishi', 'action' => 'edit', $meishi->id]) ?>
+                    <?= $this->Html->link(__('Delete'), ['controller' => 'Meishi', 'action' => 'delete', $meishi->id]) ?>
+                </td>
             </tr>
         <?php endforeach; ?>
     </table>
