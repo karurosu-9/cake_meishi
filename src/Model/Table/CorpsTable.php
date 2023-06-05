@@ -67,7 +67,7 @@ class CorpsTable extends Table
             ->add('corp_name', 'validFormat', [
                 'rule' => [
                     'custom',
-                    '/^(?![0-9]+$)[a-zA-Z0-9]+$/',
+                    '/^(?![0-9]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]+$/u',
                 ],
                 'message' => '企業名は数字のみや、記号は登録できません。',
             ])

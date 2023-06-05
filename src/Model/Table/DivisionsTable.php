@@ -68,7 +68,7 @@ class DivisionsTable extends Table
             ->add('division_name', 'validFormat', [
                 'rule' => [
                     'custom',
-                    '/^(?![0-9]+$)[a-zA-Z0-9]+$/',
+                    '/^(?![0-9]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]+$/u',
                 ],
                 'message' => '部署名に記号を含めたりや数字のみの登録はできません。',])
             ->add('division_name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);

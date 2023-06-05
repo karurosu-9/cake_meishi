@@ -72,7 +72,7 @@ class MeishiTable extends Table
             ->add('division', 'validFormat', [
                 'rule' => [
                     'custom',
-                    '/^(?![0-9]+$)[a-zA-Z0-9]+$/',
+                    '/^(?![0-9]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]+$/u',
                 ],
                 'message' => '所属部署は記号を入力したり、数字のみでは登録できません。',
             ]);
@@ -83,7 +83,7 @@ class MeishiTable extends Table
             ->add('title', 'validFormat', [
                 'rule' => [
                     'custom',
-                    '/^(?![0-9]+$)[a-zA-Z0-9]+$/',
+                    '/^(?![0-9]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]+$/u',
                 ],
                 'message' => '役職は記号を入力したり、数字のみでは登録できません。',
             ]);
@@ -96,7 +96,7 @@ class MeishiTable extends Table
             ->add('employee_name', 'validFormat', [
                 'rule' => [
                     'custom',
-                    '/^[a-zA-Z]+$/',
+                    '/^[a-zA-Zぁ-んァ-ヶー一-龠]+$/u',
                 ],
                 'message' => '名前は記号や数字を入れると登録できません。',
             ]);
@@ -109,7 +109,7 @@ class MeishiTable extends Table
             ->add('address', 'validFormat', [
                 'rule' => [
                     'custom',
-                    '/^(?![0-9]+$)[a-zA-Z0-9]+$/',
+                    '/^(?![0-9]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]+$/u',
                 ],
                 'message' => '住所は記号を入力したり、数字のみでは登録できません。',
             ]);
@@ -121,7 +121,7 @@ class MeishiTable extends Table
             ->add('tel', 'validFormat', [
                 'rule' => [
                     'custom',
-                    '/^(?![0-9]+$)[a-zA-Z0-9]+$/',
+                    '/^[0-9]+$/',
                 ],
                 'message' => '電話番号は数字のみでしか登録できません。',
             ]);

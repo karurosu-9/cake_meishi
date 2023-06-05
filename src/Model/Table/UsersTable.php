@@ -77,7 +77,7 @@ class UsersTable extends Table
             ->add('password', 'validFormat', [
                 'rule' => [
                     'custom',
-                    '/^(?![0-9]+$)(?![a-zA-Z]+$)[a-zA-Z0-9]{5,}/'
+                    '/^(?![0-9]+$)(?![a-zA-Z]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]{5,}/u'
                 ],
                 'message' => 'パスワードは5文字以上で数字と文字を絡めて入力してください。'
             ])
