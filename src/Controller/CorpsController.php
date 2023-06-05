@@ -38,26 +38,27 @@ class CorpsController extends AppController
 
         $keyword = $this->request->getData('keyword');
 
-        $meishiData = $this->Meishi->find('all')->contain(['Corps']);
-
+        $corps = $this->Corps->find('all');
 
         if (!empty($keyword)) {
-            $meishiData->where(['Corps.corp_name LIKE' => '%' . $keyword . '%']);
+            $corps->where(['Corps.corp_name LIKE' => '%' . $keyword . '%']);
         }
 
-        $meishiCount = $meishiData->count();
+        $corpsCount = $corps->count();
 
         $this->paginate = [
             'limit' => 30,
-            'contain' => ['Corps'],
+            'order' => [
+                'Corps.corp_name' => 'ASC',
+            ],
         ];
 
-        $this->paginate($meishiData);
+        $corps = $this->paginate($corps);
 
         $data = [
+            'corps' => $corps,
+            'corpsCount' => $corpsCount,
             'loginUser' => $loginUser,
-            'meishiCount' => $meishiCount,
-            'meishiData' => $meishiData,
         ];
 
         $this->set($data);
@@ -75,13 +76,13 @@ class CorpsController extends AppController
 
         $keyword = $this->request->getData('keyword');
 
-        $meishi = $this->Meishi->find('all')->where(['Meishi.corp_id' => $id])->contain(['Corps']);
+        $meishiData = $this->Meishi->find('all')->where(['Meishi.corp_id' => $id])->contain(['Corps']);
 
         if (!empty($keyword)) {
-            $meishi->where(['Meishi.employee_name LIKE' => '%' . $keyword . '%']);
+            $meishiData->where(['Meishi.employee_name LIKE' => '%' . $keyword . '%']);
         }
 
-        $meishiCount = $meishi->count();
+        $meishiDataCount = $meishiData->count();
 
         $corp = $this->Corps->get($id, [
             'contain' => ['Meishi'],
@@ -94,12 +95,12 @@ class CorpsController extends AppController
             'order' => ['Meishi.id' => 'ASC'],
         ];
 
-        $meishiData = $this->paginate($meishi);
+        $meishiData = $this->paginate($meishiData);
 
         $data = [
             'corp' => $corp,
-            'meishi' => $meishi,
-            'meishiCount' => $meishiCount,
+            'meishiData' => $meishiData,
+            'meishiDataCount' => $meishiDataCount,
         ];
 
         $this->set($data);
