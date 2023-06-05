@@ -42,7 +42,7 @@ class UsersController extends AppController
             $result = $this->Authentication->getResult();
             if ($result->isValid()) {
                 $this->Flash->success(__('ログインしました。'));
-                return $this->redirect(['controller' => 'Users', 'action' => 'index']);
+                return $this->redirect(['controller' => 'Home', 'action' => 'index']);
             }
 
             if ($this->request->is('post') && !$result->isValid()) {
