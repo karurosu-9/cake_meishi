@@ -49,6 +49,8 @@ class DivisionsTable extends Table
 
         $this->hasMany('Users', [
             'foreignKey' => 'division_id',
+            //Divisionが削除されても関連するuserは削除されない
+            'dependetn' => false,
         ]);
     }
 

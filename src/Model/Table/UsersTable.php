@@ -50,8 +50,6 @@ class UsersTable extends Table
         $this->belongsTo('Divisions', [
             'foreignKey' => 'division_id',
             'joinType' => 'INNER',
-            //Divisionが削除されても関連するユーザーは削除されない
-            'dependent' => false,
         ]);
     }
 
