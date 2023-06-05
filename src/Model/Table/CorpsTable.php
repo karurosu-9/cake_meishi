@@ -11,6 +11,8 @@ use Cake\Validation\Validator;
 /**
  * Corps Model
  *
+ * @property \App\Model\Table\MeishiTable&\Cake\ORM\Association\HasMany $Meishi
+ *
  * @method \App\Model\Entity\Corp newEmptyEntity()
  * @method \App\Model\Entity\Corp newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Corp[] newEntities(array $data, array $options = [])
@@ -63,15 +65,28 @@ class CorpsTable extends Table
             ->scalar('corp_name')
             ->maxLength('corp_name', 255)
             ->requirePresence('corp_name', 'create')
-            ->notEmptyString('corp_name', '会社名を入力してください。')
+            ->notEmptyString('corp_name', '企業名を入力しいてください。')
             ->add('corp_name', 'validFormat', [
                 'rule' => [
                     'custom',
                     '/^(?![0-9]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]+$/u',
                 ],
-                'message' => '企業名は数字のみや、記号は登録できません。',
+                'message' => '企業名は記号の入力や数字のみでの登録はできません。',
             ])
             ->add('corp_name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        $validator
+            ->scalar('address')
+            ->maxLength('address', 255)
+            ->requirePresence('address', 'create')
+            ->notEmptyString('address', '住所を入力してください。')
+            ->add('address', 'validFormat', [
+                'rule' => [
+                    'custom',
+                    '/^(?![0-9]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]+$/u',
+                ],
+                'message' => '住所は記号の入力や数字のみでの登録はできません。',
+            ]);
 
         return $validator;
     }

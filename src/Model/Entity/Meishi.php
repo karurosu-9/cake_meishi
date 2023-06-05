@@ -13,7 +13,6 @@ use Cake\ORM\Entity;
  * @property string $division
  * @property string|null $title
  * @property string $employee_name
- * @property string $address
  * @property string|null $tel
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
@@ -36,7 +35,6 @@ class Meishi extends Entity
         'division' => true,
         'title' => true,
         'employee_name' => true,
-        'address' => true,
         'tel' => true,
         'created' => true,
         'modified' => true,

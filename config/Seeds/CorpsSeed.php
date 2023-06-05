@@ -24,26 +24,31 @@ class CorpsSeed extends AbstractSeed
         $data = [
             [
                 'corp_name' => '宇式通信株式会社',
+                'address' => '東京都新宿区',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],
             [
                 'corp_name' => '大日本印刷株式会社',
+                'address' => '東京都渋谷区',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],
             [
                 'corp_name' => 'アスカ株式会社',
+                'address' => '神奈川県横浜市',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],
             [
                 'corp_name' => 'ＡＢＣ株式会社',
+                'address' => '神奈川県川崎市',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],
             [
                 'corp_name' => '株式会社ＥＦＧ',
+                'address' => '石川県金沢市',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],

@@ -23,7 +23,7 @@ class CorpsControllerTest extends TestCase
      */
     protected $fixtures = [
         'app.Corps',
-        'app.MeishiData',
+        'app.Meishi',
     ];
 
     /**

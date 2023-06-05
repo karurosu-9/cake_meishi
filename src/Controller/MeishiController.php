@@ -28,6 +28,7 @@ class MeishiController extends AppController
     {
         $meishi = $this->Meishi->newEmptyEntity();
         if ($this->request->is('post')) {
+            
             $meishi = $this->Meishi->patchEntity($meishi, $this->request->getData());
             if ($this->Meishi->save($meishi)) {
                 $this->Flash->success(__('The meishi has been saved.'));

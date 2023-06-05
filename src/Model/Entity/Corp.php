@@ -10,8 +10,11 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $corp_name
+ * @property string $address
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \App\Model\Entity\Meishi[] $meishi
  */
 class Corp extends Entity
 {
@@ -26,6 +29,7 @@ class Corp extends Entity
      */
     protected $_accessible = [
         'corp_name' => true,
+        'address' => true,
         'created' => true,
         'modified' => true,
         'meishi' => true,

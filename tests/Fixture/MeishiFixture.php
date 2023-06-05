@@ -30,10 +30,9 @@ class MeishiFixture extends TestFixture
                 'division' => 'Lorem ipsum dolor sit amet',
                 'title' => 'Lorem ipsum dolor sit amet',
                 'employee_name' => 'Lorem ipsum dolor sit amet',
-                'address' => 'Lorem ipsum dolor sit amet',
                 'tel' => 'Lorem ipsum',
-                'created' => '2023-06-02 16:04:28',
-                'modified' => '2023-06-02 16:04:28',
+                'created' => '2023-06-05 17:27:08',
+                'modified' => '2023-06-05 17:27:08',
             ],
         ];
         parent::init();

@@ -17,11 +17,10 @@ class CorpsController extends AppController
         parent::initialize();
 
         $this->paginate = [
-            'limit' => 20,
+            'limit' => 30,
             'order' => [
                 'Corps.corp_name' => 'ASC',
             ],
-            'contain' => ['Meishi'],
         ];
 
         $this->Meishi = $this->getTableLocator()->get('Meishi');
@@ -33,25 +32,18 @@ class CorpsController extends AppController
      */
     public function index()
     {
-        //ログインユーザーの情報を取得
-        $loginUser = $this->Authentication->getResult()->getData();
 
-        $keyword = $this->request->getData('keyword');
+        $loginUser = $this->Authentication->getResult()->getData();
 
         $corps = $this->Corps->find('all');
 
+        $keyword = $this->request->getData();
+
         if (!empty($keyword)) {
-            $corps->where(['Corps.corp_name LIKE' => '%' . $keyword . '%']);
+            $corps->where(['Corps.corp_name' => '%' . $keyword .'%']);
         }
 
         $corpsCount = $corps->count();
-
-        $this->paginate = [
-            'limit' => 30,
-            'order' => [
-                'Corps.corp_name' => 'ASC',
-            ],
-        ];
 
         $corps = $this->paginate($corps);
 
@@ -74,12 +66,12 @@ class CorpsController extends AppController
     public function view($id = null)
     {
 
-        $keyword = $this->request->getData('keyword');
-
         $meishiData = $this->Meishi->find('all')->where(['Meishi.corp_id' => $id])->contain(['Corps']);
 
+        $keyword = $this->request->getData();
+
         if (!empty($keyword)) {
-            $meishiData->where(['Meishi.employee_name LIKE' => '%' . $keyword . '%']);
+            $meishiData->where(['Meishi.employee_name' => '%' . $keyword . '%']);
         }
 
         $meishiDataCount = $meishiData->count();
@@ -88,22 +80,24 @@ class CorpsController extends AppController
             'contain' => ['Meishi'],
         ]);
 
-
         $this->paginate = [
             'limit' => 30,
-            'contain' => ['Corps'],
-            'order' => ['Meishi.id' => 'ASC'],
+            'order' => [
+                'Meishi.id' => 'DESC',
+            ],
         ];
 
         $meishiData = $this->paginate($meishiData);
 
         $data = [
-            'corp' => $corp,
             'meishiData' => $meishiData,
             'meishiDataCount' => $meishiDataCount,
+            'corp' => $corp,
         ];
 
         $this->set($data);
+
+        $this->set(compact('corp'));
     }
 
     /**

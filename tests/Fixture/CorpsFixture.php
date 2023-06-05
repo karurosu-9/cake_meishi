@@ -21,8 +21,9 @@ class CorpsFixture extends TestFixture
             [
                 'id' => 1,
                 'corp_name' => 'Lorem ipsum dolor sit amet',
-                'created' => '2023-06-01 16:49:32',
-                'modified' => '2023-06-01 16:49:32',
+                'address' => 'Lorem ipsum dolor sit amet',
+                'created' => '2023-06-05 15:44:49',
+                'modified' => '2023-06-05 15:44:49',
             ],
         ];
         parent::init();

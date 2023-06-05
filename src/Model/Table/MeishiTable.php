@@ -74,56 +74,44 @@ class MeishiTable extends Table
                     'custom',
                     '/^(?![0-9]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]+$/u',
                 ],
-                'message' => '所属部署は記号を入力したり、数字のみでは登録できません。',
+                'message' => '所属部署は記号の入力や数字のみの登録はできません。',
             ]);
+
         $validator
             ->scalar('title')
-            ->maxLength('title', 50)
+            ->maxLength('title', 50, '最大入力文字数は５０文字までです。')
             ->allowEmptyString('title')
             ->add('title', 'validFormat', [
                 'rule' => [
                     'custom',
                     '/^(?![0-9]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]+$/u',
                 ],
-                'message' => '役職は記号を入力したり、数字のみでは登録できません。',
+                'message' => '役職は記号の入力や数字のみの登録はできません。',
             ]);
 
         $validator
             ->scalar('employee_name')
             ->maxLength('employee_name', 50)
             ->requirePresence('employee_name', 'create')
-            ->notEmptyString('employee_name')
+            ->notEmptyString('employee_name', '名前の入力をしてください。')
             ->add('employee_name', 'validFormat', [
                 'rule' => [
                     'custom',
                     '/^[a-zA-Zぁ-んァ-ヶー一-龠]+$/u',
                 ],
-                'message' => '名前は記号や数字を入れると登録できません。',
-            ]);
-
-        $validator
-            ->scalar('address')
-            ->maxLength('address', 255)
-            ->requirePresence('address', 'create')
-            ->notEmptyString('address')
-            ->add('address', 'validFormat', [
-                'rule' => [
-                    'custom',
-                    '/^(?![0-9]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]+$/u',
-                ],
-                'message' => '住所は記号を入力したり、数字のみでは登録できません。',
+                'message' => '名前は文字以外の登録はできません。',
             ]);
 
         $validator
             ->scalar('tel')
-            ->maxLength('tel', 13)
+            ->maxLength('tel', 13, '最大入力文字数は１３文字までです。')
             ->allowEmptyString('tel')
             ->add('tel', 'validFormat', [
                 'rule' => [
                     'custom',
                     '/^[0-9]+$/',
                 ],
-                'message' => '電話番号は数字のみでしか登録できません。',
+                'message' => '数字以外の登録はできません。',
             ]);
 
         return $validator;
