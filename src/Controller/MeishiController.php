@@ -11,35 +11,12 @@ namespace App\Controller;
  */
 class MeishiController extends AppController
 {
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
+
+    public function initialize(): void
     {
-        $this->paginate = [
-            'contain' => ['Corps'],
-        ];
-        $meishi = $this->paginate($this->Meishi);
+        parent::initialize();
 
-        $this->set(compact('meishi'));
-    }
-
-    /**
-     * View method
-     *
-     * @param string|null $id Meishi id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $meishi = $this->Meishi->get($id, [
-            'contain' => ['Corps'],
-        ]);
-
-        $this->set(compact('meishi'));
+        $this->Corps = $this->getTableLocator()->get('Corps');
     }
 
     /**
@@ -55,12 +32,18 @@ class MeishiController extends AppController
             if ($this->Meishi->save($meishi)) {
                 $this->Flash->success(__('The meishi has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Corps', 'action' => 'view', $meishi->corp_id]);
             }
             $this->Flash->error(__('The meishi could not be saved. Please, try again.'));
         }
-        $corps = $this->Meishi->Corps->find('list', ['limit' => 200])->all();
-        $this->set(compact('meishi', 'corps'));
+        $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name'])->all();
+
+        $data = [
+            'meishi' => $meishi,
+            'corps' => $corps
+        ];
+
+        $this->set($data);
     }
 
     /**
@@ -73,14 +56,14 @@ class MeishiController extends AppController
     public function edit($id = null)
     {
         $meishi = $this->Meishi->get($id, [
-            'contain' => [],
+            'contain' => ['Corps'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $meishi = $this->Meishi->patchEntity($meishi, $this->request->getData());
             if ($this->Meishi->save($meishi)) {
                 $this->Flash->success(__('The meishi has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Corps', 'action' => 'view', $meishi->corps->id]);
             }
             $this->Flash->error(__('The meishi could not be saved. Please, try again.'));
         }
