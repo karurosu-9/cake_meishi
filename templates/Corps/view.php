@@ -25,7 +25,7 @@
                 <td><?= h($meishi->title) ?></td>
                 <td><?= h($meishi->employee_name) ?></td>
                 <td><?= h($meishi->tel) ?></td>
-                <td><?= h($meishi->address) ?></td>
+                <td><?= h($meishi->corp->address) ?></td>
                 <td>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Meishi', 'action' => 'edit', $meishi->id]) ?>
                     <?= $this->Html->link(__('Delete'), ['controller' => 'Meishi', 'action' => 'delete', $meishi->id]) ?>
