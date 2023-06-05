@@ -14,9 +14,8 @@ class CommonHelper extends Helper
     public function displayNoDataMessage($counter)
     {
         if ($counter === 0) {
-            return '<span style="color: red; font-weight: bold;">※検索条件に指定したデータは存在しません。</span>';
+            return '<span style="color: red; font-weight: bold;">※データは存在しません</span>';
         }
-
         return;
     }
 }
