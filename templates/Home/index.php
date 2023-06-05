@@ -36,6 +36,8 @@
             <br>
             ・<?= $this->Html->link(__('Division Add'), ['controller' => 'Divisions', 'action' => 'add']) ?>
             <br>
+            ・<?= $this->Html->link(__('Corps List'), ['controller' => 'Corps', 'action' => 'index']) ?>
+            <br>
         </div>
     </div>
 <?php else: ?>
