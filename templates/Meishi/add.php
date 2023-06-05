@@ -11,7 +11,6 @@
     echo $this->Form->control('division');
     echo $this->Form->control('title');
     echo $this->Form->control('employee_name');
-    echo $this->Form->control('address');
     echo $this->Form->control('tel');
     echo $this->Form->button(__('Register'));
     echo $this->Form->end();
