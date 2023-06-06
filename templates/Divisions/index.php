@@ -10,7 +10,7 @@
     ?>
     <table>
         <!-- 作成したヘルパーメソッド：　検索結果がなければ表示 -->
-        <?= $this->Common->displayNoDataMessage($divisionCounter) ?>
+        <?= $this->Common->displayNoDataMessage($divisionsCounter) ?>
         <tr>
             <th><?= __('Division Name') ?></th>
             <?php if ($loginUser->admin === '管理者') : ?>
