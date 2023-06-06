@@ -22,7 +22,7 @@
     ?>
     <br>
     <br>
-    <div style="font-size: 25px">
+    <div style="font-size: 20px">
         <?= $this->Html->link(__('<< Back'), ['action' => 'index']) ?>
     </div>
 </div>
