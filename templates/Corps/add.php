@@ -1,4 +1,4 @@
-<h1><?= __('Crop Register') ?></h1>
+<h1><?= __('Corp Register') ?></h1>
 <br>
 <br>
 <?php
