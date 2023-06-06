@@ -29,6 +29,7 @@
     .left-menu {
         flex: 1;
     }
+    
     .right-menu {
         flex: 1;
     }
@@ -42,7 +43,7 @@
         <div class="box-title"><?= __('Admin Menu') ?></div>
         <div class="menu-list">
             <div class="left-menu">
-                <p><?= __('List') ?></p>
+                <p><?= __('Add') ?></p>
                 ・<?= $this->Html->link(__('User Add'), ['controller' => 'Users', 'action' => 'add']) ?>
                 <br>
                 ・<?= $this->Html->link(__('Division Add'), ['controller' => 'Divisions', 'action' => 'add']) ?>
@@ -51,7 +52,7 @@
                 <br>
             </div>
             <div class="right-menu">
-                <p><?= __('Add') ?></p>
+                <p><?= __('List') ?></p>
                 ・<?= $this->Html->link(__('Users List'), ['controller' => 'Users', 'action' => 'index']) ?>
                 <br>
                 ・<?= $this->Html->link(__('Divisions List'), ['controller' => 'Divisions', 'action' => 'index']) ?>
