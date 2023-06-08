@@ -44,7 +44,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     ?>
     <nav class="top-nav">
         <!-- ログインユーザーであれば表示する -->
-        <?php if ($loginUser) : ?>
+        <?php if (h($loginUser)) : ?>
             <div class="top-nav-title">
                 <?= $this->Html->link(__('Home'), ['controller' => 'Home', 'action' => 'index']) ?>
             </div>

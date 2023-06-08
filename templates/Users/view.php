@@ -5,12 +5,12 @@
     <hr>
     <p>所属部署：　<?= h($user->division->division_name) ?></p>
     <hr>
-    <?php if ($loginUser->admin === '管理者'): ?>
+    <?php if (h($loginUser->admin) === '管理者'): ?>
         <div class="button">
             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
         </div>
         <div class="button">
-            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => sprintf('本当に『%s』を削除してよろしいですか', $user->user_name)]) ?>
+            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => sprintf('本当に『%s』を削除してよろしいですか', h($user->user_name))]) ?>
         </div>
     <?php endif; ?>
     <br>

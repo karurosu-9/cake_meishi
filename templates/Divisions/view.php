@@ -1,5 +1,5 @@
 <div class="divisions content">
-    <h1><?= __($division->division_name) ?></h1>
+    <h1><?= __(h($division->division_name)) ?></h1>
     <br>
     <br>
     <?php
@@ -9,13 +9,11 @@
     echo $this->Form->end();
     ?>
     <table>
-        <?php if ($divisionsCount === 0) : ?>
-            <span style="color: red; font-weight: bold;">※該当するユーザーはいません。</span>
-        <?php endif; ?>
+        <?php $this->Common->displayNoDataMessage($usersCount) ?>
         <tr>
             <th><?= __('User Id') ?></th>
             <th><?= __('User Name') ?></th>
-            <?php if ($loginUser->admin === '管理者') : ?>
+            <?php if (h($loginUser->admin) === '管理者') : ?>
                 <th><?= __('Admin') ?></th>
             <?php endif; ?>
             <th><?= __('Register') ?></th>
@@ -24,7 +22,7 @@
             <tr>
                 <td><?= h($user->id) ?></td>
                 <td><?= $this->Html->link(h($user->user_name), ['controller' => 'Users', 'action' => 'view', $user->id]) ?></td>
-                <?php if ($loginUser->admin === '管理者') : ?>
+                <?php if (h($loginUser->admin) === '管理者') : ?>
                     <td><?= h($user->admin) ?></td>
                 <?php endif; ?>
                 <td><?= h($user->created) ?></td>

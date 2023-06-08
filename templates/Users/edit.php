@@ -5,7 +5,7 @@
     <?php
     echo $this->Form->create($user);
     echo $this->Form->control('division_id', [
-        'options' => $divisions,
+        'options' => h($divisions),
 
     ]);
     echo $this->Form->control('user_name');

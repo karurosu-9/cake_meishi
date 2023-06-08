@@ -10,7 +10,7 @@
     ?>
     <table>
         <!-- 作成したヘルパーメソッド：　検索結果がなければ表示 -->
-        <?= $this->Common->displayNoDataMessage($divisionsCounter) ?>
+        <?= $this->Common->displayNoDataMessage($divisionsCount) ?>
         <tr>
             <th><?= __('Division Name') ?></th>
             <?php if ($loginUser->admin === '管理者') : ?>
@@ -20,10 +20,10 @@
         <?php foreach ($divisions as $division) : ?>
             <tr>
                 <td><?= $this->Html->link(h($division->division_name), ['action' => 'view', $division->id]) ?></td>
-                <?php if ($loginUser->admin === '管理者') : ?>
+                <?php if (h($loginUser->admin) === '管理者') : ?>
                     <td>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $division->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $division->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', $division->division_name)]) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $division->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？'), h($division->division_name)]) ?>
                     </td>
                 <?php endif; ?>
             </tr>
