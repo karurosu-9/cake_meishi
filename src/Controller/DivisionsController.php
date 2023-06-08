@@ -40,13 +40,13 @@ class DivisionsController extends AppController
             $divisions= $this->Divisions->find()->where(['Divisions.division_name LIKE'=> '%' . $keyword . '%' ]);
         }
 
-        $divisionsCounter = $divisions->count();
+        $divisionsCount = $divisions->count();
 
         $divisions = $this->paginate($divisions);
 
         $data = [
             'divisions' => $divisions,
-            'divisionsCounter' => $divisionsCounter,
+            'divisionsCount' => $divisionsCount,
             'loginUser' => $loginUser,
         ];
 

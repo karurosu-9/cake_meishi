@@ -76,13 +76,13 @@ class UsersController extends AppController
             $users = $this->Users->find()->where(['Users.user_name LIKE' => '%' . $keyword . '%']);
         }
 
-        $usersCounter = $users->count();
+        $usersCount = $users->count();
 
         $users = $this->paginate($users);
 
         $data = [
             'users' => $users,
-            'usersCounter' => $usersCounter,
+            'usersCount' => $usersCount,
             'loginUser' => $loginUser,
         ];
         $this->set($data);
