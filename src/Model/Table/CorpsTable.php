@@ -49,7 +49,14 @@ class CorpsTable extends Table
 
         $this->hasMany('Meishi', [
             'foreignKey' => 'corp_id',
+            //企業名が削除されたら、関連する名刺のデータも削除される
             'dependent' => true,
+        ]);
+
+        $this->hasMany('Esimate', [
+            'foreignKey' => 'corp_id',
+            //企業名が削除されたら、関連する見積データも削除される
+            'dependent' => false,
         ]);
     }
 
