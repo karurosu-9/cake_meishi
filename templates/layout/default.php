@@ -54,7 +54,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </div>
             <span style="font-weight: bold;"> | </span>
             <div>
-                <span style="font-weight: bold">ログインユーザー: 『<?= h($loginUser->user_name) ?>』</span>
+                <span style="font-weight: bold">ログインユーザー: 『<?= $this->Html->link(h($loginUser->user_name), ['controller' => 'Users', 'action' => 'view', $loginUser->id]) ?>』</span>
             </div>
         <?php endif; ?>
     </nav>
