@@ -2,12 +2,22 @@
 use App\Consts\EstimateConst;
 ?>
 
+<style>
+    span {
+        font-weight: bold;
+        font-size: 20px;
+    }
+</style>
+
 <div class="estimate content">
     <h1><?= __('Estimate') ?></h1>
     <br>
     <br>
-    <!-- 見積を出す企業の選択リスト -->
     <?= $this->Form->create(null, ['url' => ['action' => 'confirmEstimate']]) ?>
+    <br>
+    <br>
+    <br>
+    <!-- 見積を出す企業の選択リスト -->
     <?= $this->Form->control('corp_id',[
         'options' => $corps,
         'label' => '会社を選択してください。',
