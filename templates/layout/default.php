@@ -38,26 +38,48 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 
+<style>
+    @media print {
+        .page {
+            width: 172mm;
+            height: 251mm;
+            margin-top: 190px;
+            margin-left: 35px;
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        .no_print {
+            display: none;
+        }
+    }
+</style>
+
 <body>
-    <?php
-    $loginUser = $this->request->getAttribute('identity');
-    ?>
-    <nav class="top-nav">
-        <!-- ログインユーザーであれば表示する -->
-        <?php if (h($loginUser)) : ?>
-            <div class="top-nav-title">
-                <?= $this->Html->link(__('Home'), ['controller' => 'Home', 'action' => 'index']) ?>
-            </div>
-            <div class="top-nav-links" style="margin-left: 600px">
-                <?= $this->Html->link(__('logout'), ['controller' => 'Users', 'action' => 'Logout']) ?>
-                <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
-            </div>
-            <span style="font-weight: bold;"> | </span>
-            <div>
-                <span style="font-weight: bold">ログインユーザー: 『<?= $this->Html->link(h($loginUser->user_name), ['controller' => 'Users', 'action' => 'view', $loginUser->id]) ?>』</span>
-            </div>
-        <?php endif; ?>
-    </nav>
+    <div class="no_print">
+        <?php
+        $loginUser = $this->request->getAttribute('identity');
+        ?>
+        <nav class="top-nav">
+            <!-- ログインユーザーであれば表示する -->
+            <?php if ($loginUser) : ?>
+                <div class="top-nav-title">
+                    <?= $this->Html->link(__('Home'), ['controller' => 'Home', 'action' => 'index']) ?>
+                </div>
+                <div class="top-nav-links" style="margin-left: 600px">
+                    <?= $this->Html->link(__('logout'), ['controller' => 'Users', 'action' => 'Logout']) ?>
+                    <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
+                </div>
+                <span style="font-weight: bold;"> | </span>
+                <div>
+                    <span style="font-weight: bold">ログインユーザー: 『<?= $this->Html->link(h($loginUser->user_name), ['controller' => 'Users', 'action' => 'view', $loginUser->id]) ?>』</span>
+                </div>
+            <?php endif; ?>
+        </nav>
+    </div>
     <main class="main">
         <div class="container">
             <?= $this->Flash->render() ?>
