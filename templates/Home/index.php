@@ -42,56 +42,56 @@
         display: flex;
         justify-content: center;
     }
-
 </style>
-
-<h1><?= __('Home Menu') ?></h1>
-<br>
-<br>
-<div class="list">
-    <?php if (h($loginUser->admin) === '管理者' || h($loginUser->admin) === 'システム部') : ?>
-        <div class="box30">
-            <div class="box-title"><?= __('Admin Menu') ?></div>
-            <div class="menu-list">
-                <div class="left-menu">
-                    <p><?= __('Add') ?></p>
-                    ・<?= $this->Html->link(__('User Add'), ['controller' => 'Users', 'action' => 'add']) ?>
-                    <br>
-                    ・<?= $this->Html->link(__('Division Add'), ['controller' => 'Divisions', 'action' => 'add']) ?>
-                    <br>
-                    ・<?= $this->Html->link(__('Corps Add'), ['controller' => 'Corps', 'action' => 'index']) ?>
-                    <br>
-                </div>
-                <div class="center-menu">
-                    <p><?= __('List') ?></p>
-                    ・<?= $this->Html->link(__('Users List'), ['controller' => 'Users', 'action' => 'index']) ?>
-                    <br>
-                    ・<?= $this->Html->link(__('Divisions List'), ['controller' => 'Divisions', 'action' => 'index']) ?>
-                    <br>
-                    ・<?= $this->Html->link(__('Corps List'), ['controller' => 'Corps', 'action' => 'index']) ?>
-                    <br>
-                </div>
-                <div class="right-menu">
-                    <p><?= __('Estimates') ?></p>
-                    ・<?= $this->Html->link(__('Estimate Add'), ['controller' => 'Estimate', 'action' => 'add']) ?>
-                </div>
-            </div>
-        </div>
-    <?php else : ?>
-        <div class="box30">
-            <div class="box-title"><?= __('Main Menu') ?></div>
-            <div class="menu-list">
-                <div class="left-menu">
-                    ・<?= $this->Html->link(__('Users List'), ['controller' => 'Users', 'action' => 'index']) ?>
-                    <br>
-                    ・<?= $this->Html->link(__('Corps List'), ['controller' => 'Corps', 'action' => 'index']) ?>
-                    <br>
-                </div>
-                <div class="right-menu">
-                    ・<?= $this->Html->link(__('Mitumori'), ['controller' => 'Mitumori', 'action' => 'index']) ?>
-                    <br>
+<div class="Home content">
+    <h1><?= __('Home Menu') ?></h1>
+    <br>
+    <br>
+    <div class="list">
+        <?php if ($loginUser->admin === '管理者' || $loginUser->admin === 'システム部') : ?>
+            <div class="box30">
+                <div class="box-title"><?= __('Admin Menu') ?></div>
+                <div class="menu-list">
+                    <div class="left-menu">
+                        <p><?= __('Add') ?></p>
+                        ・<?= $this->Html->link(__('User Add'), ['controller' => 'Users', 'action' => 'add']) ?>
+                        <br>
+                        ・<?= $this->Html->link(__('Division Add'), ['controller' => 'Divisions', 'action' => 'add']) ?>
+                        <br>
+                        ・<?= $this->Html->link(__('Corps Add'), ['controller' => 'Corps', 'action' => 'index']) ?>
+                        <br>
+                    </div>
+                    <div class="center-menu">
+                        <p><?= __('List') ?></p>
+                        ・<?= $this->Html->link(__('Users List'), ['controller' => 'Users', 'action' => 'index']) ?>
+                        <br>
+                        ・<?= $this->Html->link(__('Divisions List'), ['controller' => 'Divisions', 'action' => 'index']) ?>
+                        <br>
+                        ・<?= $this->Html->link(__('Corps List'), ['controller' => 'Corps', 'action' => 'index']) ?>
+                        <br>
+                    </div>
+                    <div class="right-menu">
+                        <p><?= __('Estimates') ?></p>
+                        ・<?= $this->Html->link(__('Estimate Add'), ['controller' => 'Estimate', 'action' => 'add']) ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    <?php endif; ?>
+        <?php else : ?>
+            <div class="box30">
+                <div class="box-title"><?= __('Main Menu') ?></div>
+                <div class="menu-list">
+                    <div class="left-menu">
+                        ・<?= $this->Html->link(__('Users List'), ['controller' => 'Users', 'action' => 'index']) ?>
+                        <br>
+                        ・<?= $this->Html->link(__('Corps List'), ['controller' => 'Corps', 'action' => 'index']) ?>
+                        <br>
+                    </div>
+                    <div class="right-menu">
+                        ・<?= $this->Html->link(__('Mitumori'), ['controller' => 'Mitumori', 'action' => 'index']) ?>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>
