@@ -1,5 +1,5 @@
 <div class="corps content">
-    <h1><?= __($corp->corp_name) ?></h1>
+    <h1><?= __(h($corp->corp_name)) ?></h1>
     <br>
     <br>
     <?php

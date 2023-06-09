@@ -14,7 +14,7 @@
         <tr>
             <th><?= __('Corp Name') ?></th>
             <th><?= __('Corp Adress') ?></th>
-            <?php if (h($loginUser->admin) === '管理者'): ?>
+            <?php if ($loginUser->admin === '管理者'): ?>
                 <th><?= __('Control Panel') ?></th>
             <?php endif; ?>
         </tr>

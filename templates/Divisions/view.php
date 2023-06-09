@@ -13,16 +13,16 @@
         <tr>
             <th><?= __('User Id') ?></th>
             <th><?= __('User Name') ?></th>
-            <?php if (h($loginUser->admin) === '管理者') : ?>
+            <?php if ($loginUser->admin === '管理者') : ?>
                 <th><?= __('Admin') ?></th>
             <?php endif; ?>
             <th><?= __('Register') ?></th>
         </tr>
         <?php foreach ($users as $user) : ?>
             <tr>
-                <td><?= h($user->id) ?></td>
+                <td><?= $user->id ?></td>
                 <td><?= $this->Html->link(h($user->user_name), ['controller' => 'Users', 'action' => 'view', $user->id]) ?></td>
-                <?php if (h($loginUser->admin) === '管理者') : ?>
+                <?php if ($loginUser->admin === '管理者') : ?>
                     <td><?= h($user->admin) ?></td>
                 <?php endif; ?>
                 <td><?= h($user->created) ?></td>

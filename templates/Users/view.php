@@ -5,7 +5,7 @@
     <hr>
     <p>所属部署：　<?= h($user->division->division_name) ?></p>
     <hr>
-    <?php if (h($loginUser->admin) === '管理者'): ?>
+    <?php if ($loginUser->admin === '管理者'): ?>
         <div class="button">
             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
         </div>
