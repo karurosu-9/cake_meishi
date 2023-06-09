@@ -1,16 +1,10 @@
 <?php
+
 use App\Consts\EstimateConst;
 ?>
-<div class="estimate content">
-    <?= __('Estimate Confirm') ?>
 
-    <style>
-    body {
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: left;
-        width: 1050px;
+<style>
+    .estimate {
         font-family: "ＭＳ Ｐ明朝";
     }
 
@@ -48,7 +42,7 @@ use App\Consts\EstimateConst;
 
     .group {
         display: flex;
-        margin-left: 300px;
+        margin-left: 300;
     }
 
     .group2 {
@@ -68,7 +62,7 @@ use App\Consts\EstimateConst;
     .date {
         width: 140px;
         padding: 0px;
-        margin-left: 250px;
+        margin-left: 700px;
         border-bottom: black solid 1px;
         text-align: center;
         padding: auto;
@@ -153,7 +147,8 @@ use App\Consts\EstimateConst;
 
     .image {
         position: absolute;
-        margin-left: 800px;
+        margin-top: 10px;
+        margin-left: 750px;
     }
 
     .total_price {
@@ -174,34 +169,35 @@ use App\Consts\EstimateConst;
         font-size: 18px;
     }
 
-    .tekiyo{
+    .tekiyo {
         letter-spacing: 120px;
         text-indent: 120px;
     }
 
-    .suryo{
+    .suryo {
         letter-spacing: 10px;
         text-indent: 10px;
     }
 
-    .tanka{
+    .tanka {
         letter-spacing: 10px;
         text-indent: 10px;
     }
 
-    .kingaku{
+    .kingaku {
         letter-spacing: 20px;
         text-indent: 20px;
     }
 
-    .biko{
+    .biko {
         letter-spacing: 50px;
         text-indent: 50px;
     }
 
-    .total_price{
+    .total_price {
         letter-spacing: 100px;
         text-indent: 100px;
+        font-weight: bold;
     }
 
     @media print {
@@ -222,101 +218,119 @@ use App\Consts\EstimateConst;
         }
     }
 </style>
-<body>
-<br>
-<br>
-<br>
-<br>
-<div class="title">
-    御見積書
-</div>
-<br>
-<br>
-<br>
-<div class="corp">
-    　<?= $corp->corp_name ?> 　　御中
-</div>
-<br>
-下記の通り御見積申し上げます。<br>
-<br>
-<div class="group2">
-    <div class="condition">
-        <div class="place">
-            受渡場所<span class="place-span1"><?= h($place) ?></span>
+
+<div class="estimate">
+    <div class="content">
+        <div class="no-print">
+            <br>
+            <br>
+            <br>
+            <br>
         </div>
-        <div class="place">
-            取引条件<span class="place-span2"><?= h($conditions) ?></span>
-        </div>
-        <div class="place">
-            見積有効期限<span class="place-span3"><?= h($deadline) ?></span>
+        <div class="title">
+            御見積書
         </div>
         <br>
-    </div>
-    <div class="image">
-        <image src='./img/アスカプランニング角印.png' width="95px" height="95px">
-    </div>
-    <div class="mycorp">
-        <div class="group3">
-            <div class="postal">
-                〒<?= h($postCode) ?>
+        <br>
+        <br>
+        <div class="date">
+            <?= $currentDate ?>
+        </div>
+        <div class="corp">
+            　<?= h($corp->corp_name) ?> 　　御中
+        </div>
+        <br>
+        下記の通り御見積申し上げます。<br>
+        <br>
+        <div class="group2">
+            <div class="condition">
+                <div class="place">
+                    受渡場所<span class="place-span1"><?= h($place) ?></span>
+                </div>
+                <div class="place">
+                    取引条件<span class="place-span2"><?= h($conditions) ?></span>
+                </div>
+                <div class="place">
+                    見積有効期限<span class="place-span3"><?= h($deadline) ?></span>
+                </div>
+                <br>
             </div>
-            <div class="address">
-                <?= h($address) ?>
+            <div class="image">
+                <?= $this->Html->image('/webroot/img/アスカプランニング角印.png', ['width' => '95px', 'height' => '95px']) ?>
+            </div>
+            <div class="mycorp">
+                <div class="group3">
+                    <div class="postal">
+                        〒<?= h($postCode) ?>
+                    </div>
+                    <div class="address">
+                        <?= h($address) ?>
+                    </div>
+                </div>
+                <div class="corp_name">
+                    <?= h($myCorpName) ?>
+                </div>
+                <div class="group4">
+                    <div class="tel">
+                        <?= h($tel) ?>
+                    </div>
+                    <div class="fax">
+                        <?= h($fax) ?>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="corp_name">
-            <?= h($myCorpName) ?>
-        </div>
-        <div class="group4">
-            <div class="tel">
-                <?= h($tel) ?>
-            </div>
-            <div class="fax">
-                <?= h($fax) ?>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-    <table>
-        <tr>
-            <th width="620px" class="tekiyo">摘要</th>
-            <th width="80px" class="unit_price">単価</th>
-            <th width="80px" class="quantity">数量</th>
-            <th width="120px" class="amount">金額</th>
-            <th width="50px" class="note">備考</th>
-        </tr>
-        <?php for ($i = 1; $i <= EstimateConst::FORM_NOT_HOSOKU; $i++): ?>
-            <?php if ($amount[$i] === null || $amount[$i] === '') {continue;}?>
+        <br>
+        <table>
             <tr>
-                <td><?= h($tekiyo[$i]) ?></td>
-                <td><?= h($unitPrice[$i]) ?></td>
-                <td><?= h($quantity[$i]) ?></td>
-                <td><?= h($amount[$i]) . ' -' ?></td>
-                <td style="border:none;"><?= h($note[$i]) ?></td>
+                <th width="620px" class="tekiyo">摘要</th>
+                <th width="80px" class="unit_price">単価</th>
+                <th width="80px" class="quantity">数量</th>
+                <th width="120px" class="amount">金額</th>
+                <th width="50px" class="note">備考</th>
             </tr>
+            <?php for ($i = 1; $i <= EstimateConst::FORM_NOT_HOSOKU; $i++) : ?>
+                <?php if ($amount[$i] === null || $amount[$i] === '') {
+                    continue;
+                } ?>
+                <tr>
+                    <td><?= h($tekiyo[$i]) ?></td>
+                    <td><?= h($unitPrice[$i]) ?></td>
+                    <td><?= h($quantity[$i]) ?></td>
+                    <td><?= h($amount[$i]) . ' -' ?></td>
+                    <td style="border:none;"><?= h($note[$i]) ?></td>
+                </tr>
+            <?php endfor; ?>
+            <div>
+                <tr>
+                    <td colspan="1" class="total_price">合計</td>
+                    <td class="none"></td>
+                    <td class="none"></td>
+                    <td class="all_total_price"><?= '¥' . h($totalAmount) . ' -' ?></td>
+                </tr>
+            </div>
+        </table>
+        <?php for ($i = 1; $i <= EstimateConst::FORM_HOSOKU; $i++) : ?>
+            <div class="hosoku">
+                <?php if ($hosoku[$i] === null || $hosoku[$i] === '') {
+                    break;
+                } ?>
+                <?= h($hosoku[$i]) ?>
+            </div>
         <?php endfor; ?>
-        <div>
-            <tr>
-                <td colspan="1" class="total_price">合計</td>
-                <td class="none"></td>
-                <td class="none"></td>
-                <td class="all_total_price"><?= '¥' . h($totalAmount) . ' -' ?></td>
-            </tr>
-        </div>
-    </table>
-    <?php for ($i = 1; $i <= EstimateConst::FORM_HOSOKU; $i++): ?>
-        <div class="hosoku">
-            <?php if ($hosoku[$i] === null || $hosoku[$i] === '') {break;} ?>
-            <?= $hosoku[$i] ?>
-        </div>
-    <?php endfor; ?>
 
-<div class="no_print">
-    <br>
-    <br>
-    <br>
+        <div class="no_print">
+            <br>
+            <br>
+            <br>
+            <div class="button-position">
+                <div class="button">
+                    <?= $this->Form->button(__('back'), ['onclick' => 'javascript:history.back();']) ?>
+                </div>
+                <div class="button">
+                    <?= $this->Form->postLink(__('confirmation'), ['action' => 'resultEstimate'], ['confirm' => 'この内容で登録してよろしいですか？']) ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-</div>
-    </body>
