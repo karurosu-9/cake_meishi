@@ -1,0 +1,21 @@
+@media print {
+    .page {
+        width: 172mm;
+        height: 251mm;
+        margin-top: 190px;
+        margin-left: 35px;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        page-break-after: auto;
+    }
+
+    .no_print {
+        display: none;
+    }
+}
+
+#keyword {
+    width: 500px;
+}
