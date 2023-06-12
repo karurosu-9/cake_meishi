@@ -1,0 +1,195 @@
+.estimate {
+    font-family: "ＭＳ Ｐ明朝";
+}
+
+.print-button {
+    margin-left: 935px;
+}
+
+table {
+    border-collapse: collapse;
+    border: black solid 2px;
+    margin-top: 5px;
+    padding: 0px;
+}
+
+th {
+    border: black solid 2px;
+    background-color: #c0c0c0;
+    text-align: center;
+    font-size: 15px;
+    padding: 0px;
+}
+
+td {
+    border: black solid 1px;
+    border-right: black solid 2px;
+    padding: 0px;
+    text-align: center;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+.title {
+    font-size: 25px;
+}
+
+.group {
+    display: flex;
+    margin-left: 300;
+}
+
+.group2 {
+    display: flex;
+    margin-top: 10px;
+}
+
+
+.group3 {
+    display: flex;
+}
+
+.group4 {
+    display: flex;
+}
+
+.date {
+    width: 140px;
+    padding: 0px;
+    margin-left: 400px;
+    border-bottom: black solid 1px;
+    text-align: center;
+    padding: auto;
+    font-size: 16px;
+}
+
+.num {
+    border-bottom: black solid 1px;
+    margin-left: 200px;
+    font-size: 16px;
+}
+
+.corp {
+    border-bottom: 1px solid black;
+    width: 330px;
+    padding: auto;
+    flex-basis: auto;
+    white-space: nowrap;
+    font-size: 19px;
+    margin-top: -15px;
+}
+
+.language {
+    margin-top: 20px;
+}
+
+.place {
+    border-bottom: 1px solid black;
+    width: 300px;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.place-span1 {
+    margin-left: 120px;
+}
+
+.place-span2 {
+    margin-left: 110px;
+}
+
+.place-span3 {
+    margin-left: 85px;
+}
+
+.goukei {
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    width: 300px;
+    margin-top: 25px;
+    padding: 0px;
+}
+
+.price {
+    margin-left: 50px;
+    font-size: 20px;
+}
+
+
+.mycorp {
+    position: relative;
+    margin-left: 400px;
+    margin-top: 18px;
+    font-size: 15px;
+}
+
+.postal {
+    margin-right: 10px;
+}
+
+.corp_name {
+    font-size: 17px;
+    letter-spacing: 3px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.tel {
+    margin-right: 20px;
+}
+
+.image {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 750px;
+}
+
+.total_price {
+    border-top: solid 2px black;
+    border-right: solid 2px black;
+}
+
+.none {
+    border-top: solid 2px black;
+}
+
+.all_total_price {
+    border-top: solid 2px black;
+    border-right: solid 2px black;
+}
+
+.hosoku {
+    font-size: 18px;
+}
+
+.tekiyo {
+    letter-spacing: 120px;
+    text-indent: 120px;
+}
+
+.suryo {
+    letter-spacing: 10px;
+    text-indent: 10px;
+}
+
+.tanka {
+    letter-spacing: 10px;
+    text-indent: 10px;
+}
+
+.kingaku {
+    letter-spacing: 20px;
+    text-indent: 20px;
+}
+
+.biko {
+    letter-spacing: 50px;
+    text-indent: 50px;
+}
+
+.total_price {
+    letter-spacing: 100px;
+    text-indent: 100px;
+    font-weight: bold;
+}
