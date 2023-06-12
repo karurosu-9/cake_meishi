@@ -72,7 +72,7 @@
                     </div>
                     <div class="right-menu">
                         <p><?= __('Estimates') ?></p>
-                        ・<?= $this->Html->link(__('Estimate Add'), ['controller' => 'Estimate', 'action' => 'add']) ?>
+                        ・<?= $this->Html->link(__('Estimates Add'), ['controller' => 'Estimates', 'action' => 'add']) ?>
                     </div>
                 </div>
             </div>

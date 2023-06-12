@@ -53,7 +53,7 @@ class CorpsTable extends Table
             'dependent' => true,
         ]);
 
-        $this->hasMany('Esimate', [
+        $this->hasMany('Estimates', [
             'foreignKey' => 'corp_id',
             //企業名が削除されたら、関連する見積データも削除される
             'dependent' => false,
