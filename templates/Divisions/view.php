@@ -3,7 +3,7 @@
     <br>
     <br>
     <?php
-    echo $this->Form->create($divisions);
+    echo $this->Form->create($division);
     echo $this->Form->control('keyword');
     echo $this->Form->button(__('Search'));
     echo $this->Form->end();
