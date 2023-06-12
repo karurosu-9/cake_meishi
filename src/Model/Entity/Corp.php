@@ -33,5 +33,6 @@ class Corp extends Entity
         'created' => true,
         'modified' => true,
         'meishi' => true,
+        'estimate' => true,
     ];
 }
