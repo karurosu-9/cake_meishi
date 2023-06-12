@@ -31,32 +31,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
+    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake', 'layout']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
-
-<style>
-    @media print {
-        .page {
-            width: 172mm;
-            height: 251mm;
-            margin-top: 190px;
-            margin-left: 35px;
-            page-break-after: always;
-        }
-
-        .page:last-child {
-            page-break-after: auto;
-        }
-
-        .no_print {
-            display: none;
-        }
-    }
-</style>
 
 <body>
     <div class="no_print">
