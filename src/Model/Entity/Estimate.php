@@ -10,10 +10,10 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $corp_id
- * @property string|null $tekiyo1
- * @property string|null $unit_price1
- * @property string|null $quantity1
- * @property string|null $amount1
+ * @property string $tekiyo1
+ * @property string $unit_price1
+ * @property string $quantity1
+ * @property string $amount1
  * @property string|null $note1
  * @property string|null $tekiyo2
  * @property string|null $unit_price2
@@ -38,7 +38,7 @@ use Cake\ORM\Entity;
  * @property string|null $hosoku1
  * @property string|null $hosoku2
  * @property string|null $hosoku3
- * @property string $total_amount
+ * @property int $total_amount
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
