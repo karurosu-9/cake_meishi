@@ -190,7 +190,7 @@ class EstimatesTable extends Table
         }
 
         $validator
-            ->scalar('total_amount')
+            ->integer('total_amount')
             ->requirePresence('total_amount', 'create')
             ->notEmptyString('total_amount')
             ->add('total_amount', 'validFormat', [
