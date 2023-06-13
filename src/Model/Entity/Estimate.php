@@ -88,6 +88,7 @@ class Estimate extends Entity
         'total_amount' => true,
         'created' => true,
         'modified' => true,
+        'create_user' => true,
         'corp' => true,
     ];
 }
