@@ -73,7 +73,7 @@ class UsersController extends AppController
         $users = $this->Users->find('all');
 
         if (!empty($keyword)) {
-            $users = $this->Users->find()->where(['Users.user_name LIKE' => '%' . $keyword . '%']);
+            $users = $users->where(['Users.user_name LIKE' => '%' . $keyword . '%']);
         }
 
         $usersCount = $users->count();
