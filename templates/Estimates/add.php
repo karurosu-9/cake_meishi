@@ -13,16 +13,16 @@ use App\Consts\EstimateConst;
     <h1><?= __('Estimate') ?></h1>
     <br>
     <br>
-    <?= $this->Form->create(null) ?>
     <br>
-    <br>
-    <br>
-    <!-- 見積を出す企業の選択リスト -->
-    <?= $this->Form->control('corp_id',[
+    <?php
+    echo $this->Form->create(null);
+    //見積を出す企業の選択リスト
+    echo $this->Form->control('corp_id', [
         'options' => $corps,
         'label' => '会社を選択してください。',
         'style' => 'width:200px',
-    ]) ?>
+    ]);
+    ?>
     <br>
     <br>
 
