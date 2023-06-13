@@ -5,7 +5,12 @@ echo $this->Html->css('estimate');
 ?>
 <div class="estimate">
     <div class="content">
-        <div class="no-print">
+        <div class="no_print">
+            <br>
+            <br>
+            <div class="print-button">
+                <button onclick="window.print()"><?= __('Print') ?></button>
+            </div>
             <br>
             <br>
             <br>
@@ -75,13 +80,13 @@ echo $this->Html->css('estimate');
             </tr>
             <?php for ($i = 1; $i <= EstimateConst::FORM_NOT_HOSOKU; $i++) : ?>
                 <?php if ($amount[$i] === null || $amount[$i] === '') {
-                    continue;
+                    break;
                 } ?>
                 <tr>
                     <td><?= h($tekiyo[$i]) ?></td>
-                    <td><?= h($unitPrice[$i]) ?></td>
+                    <td><?= number_format(h($unitPrice[$i])) ?></td>
                     <td><?= h($quantity[$i]) ?></td>
-                    <td><?= h($amount[$i]) . ' -' ?></td>
+                    <td><?= number_format(h($amount[$i])) . ' -' ?></td>
                     <td style="border:none;"><?= h($note[$i]) ?></td>
                 </tr>
             <?php endfor; ?>
@@ -90,16 +95,17 @@ echo $this->Html->css('estimate');
                     <td colspan="1" class="total_price">合計</td>
                     <td class="none"></td>
                     <td class="none"></td>
-                    <td class="all_total_price"><?= '¥' . h($totalAmount) . ' -' ?></td>
+                    <td class="all_total_price"><?= '¥' . number_format(h($totalAmount)) . ' -' ?></td>
                 </tr>
             </div>
         </table>
+        【<?= __('hosoku') ?>】
         <?php for ($i = 1; $i <= EstimateConst::FORM_HOSOKU; $i++) : ?>
             <div class="hosoku">
                 <?php if ($hosoku[$i] === null || $hosoku[$i] === '') {
                     break;
                 } ?>
-                <?= h($hosoku[$i]) ?>
+                ・<?= h($hosoku[$i]) ?>
             </div>
         <?php endfor; ?>
 
@@ -110,9 +116,6 @@ echo $this->Html->css('estimate');
             <div class="button-position">
                 <div class="button">
                     <?= $this->Form->button(__('back'), ['onclick' => 'javascript:history.back();']) ?>
-                </div>
-                <div class="button">
-                    <?= $this->Form->postLink(__('confirmation'), ['action' => 'confirmEstimate'], ['confirm' => 'この内容で登録してよろしいですか？']) ?>
                 </div>
             </div>
         </div>
