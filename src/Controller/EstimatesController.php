@@ -32,18 +32,73 @@ class EstimatesController extends AppController
             ],
         ];
     }
+
+   public function index()
+   {
+    // アクセス時は見積データを表示しない状態にする
+    $estimatesCount = 0;
+    $estimates = [];
+
+    // 会社名で検索をかけた時に取得する値
+    $corpId = $this->request->getQuery('corp_id');
+
+    // 会社名の選択肢を取得
+    $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name']);
+
+    $time = 0;
+
+    // 検索フォームが送信された場合
+    if ($this->request->is('get') && $corpId) {
+        $time = time() + (10 * 60);
+        // 検索条件と制限時間をセッションに保存
+        $searchParams = $this->request->getQueryParams();
+        $this->request->getSession()->write('Estimates.search', [
+            'params' => $searchParams,
+            'time' => $time
+        ]);
+    }
+
+    // セッションから検索条件と制限時間をそれぞれ分けて取得
+    $searchData = $this->request->getSession()->read('Estimates.search');
+    $searchParams = isset($searchData['params']) ? $searchData['params'] : [];
+    $searchTime = isset($searchData['time']) ? $searchData['time'] : null;
+
+    // 制限時間が設定されていて、現在の時刻が制限時間を超えている場合、セッションを削除して検索条件をクリア
+    if ($searchTime && $searchTime < time()) {
+        $this->request->getSession()->delete('Estimates.search');
+        $searchParams = [];
+    }
+
+    // 検索条件がある場合
+    if ($searchParams) {
+        $estimates = $this->Estimates->find('all')->contain(['Corps']);
+        $estimates = $estimates->where(['corp_id' => $searchParams['corp_id']]);
+        $estimatesCount = $estimates->count();
+        $estimates = $this->paginate($estimates);
+    }
+
+    $data = [
+        'corps' => $corps,
+        'estimates' => $estimates,
+        'estimatesCount' => $estimatesCount,
+        'searchParams' => $searchParams,
+    ];
+
+    $this->set($data);
+   }
+
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
+    /*public function index()
     {
-
+        //アクセス時は見積データを表示しない状態にする
         $estimatesCount = 0;
 
         $estimates = [];
-
+        //会社名で検索をかけた時に取得する値
         $corpId = $this->request->getData('corp_id');
 
         $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name']);
@@ -55,7 +110,6 @@ class EstimatesController extends AppController
             $estimates = $this->paginate($estimates);
         }
 
-
         $data = [
             'corps' => $corps,
             'estimates' => $estimates,
@@ -63,7 +117,7 @@ class EstimatesController extends AppController
         ];
 
         $this->set($data);
-    }
+    }*/
 
     /**
      * View method
@@ -72,7 +126,7 @@ class EstimatesController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id)
     {
         $estimate = $this->Estimates->get($id, [
             'contain' => ['Corps'],
