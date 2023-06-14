@@ -10,7 +10,7 @@
             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
         </div>
         <div class="button">
-            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => sprintf('本当に『%s』を削除してよろしいですか', h($user->user_name))]) ?>
+            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => sprintf('『%s』を本当に削除してよろしいですか', h($user->user_name))]) ?>
         </div>
     <?php endif; ?>
     <br>

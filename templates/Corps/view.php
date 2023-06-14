@@ -28,7 +28,7 @@
                 <td><?= h($meishi->corp->address) ?></td>
                 <td>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Meishi', 'action' => 'edit', $meishi->id]) ?>
-                    <?= $this->Html->link(__('Delete'), ['controller' => 'Meishi', 'action' => 'delete', $meishi->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Meishi', 'action' => 'delete', $meishi->id], ['confirm' => sprintf('『%s』の名刺データをを本当に削除してもよろしいですか？', h($meishi->employee_name))]) ?>
                 </td>
             </tr>
         <?php endforeach; ?>
