@@ -1,4 +1,5 @@
 <?php
+
 use App\Consts\EstimateConst;
 
 echo $this->Html->css('estimate');
@@ -11,6 +12,7 @@ echo $this->Html->css('estimate');
             <div class="print-button">
                 <button onclick="window.print()"><?= __('Print') ?></button>
             </div>
+            <?= $this->Html->link(__('Estimates List'), ['action' => 'index']) ?>
             <br>
             <br>
             <br>
@@ -113,9 +115,13 @@ echo $this->Html->css('estimate');
             <br>
             <br>
             <br>
-            <div class="button-position">
+            <?= $this->Html->link(__('<< BACK'), ['action' => 'index']) ?>
+            <div class="control-button" style="text-align: right;">
                 <div class="button">
-                    <?= $this->Form->button(__('back'), ['onclick' => 'javascript:history.back();']) ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $estimate->id]) ?>
+                </div>
+                <div class="button">
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $estimate->id], ['confirm' => sprintf('『%s』の見積データを本当に削除してよろしいですか？', $estimate->id)]) ?>
                 </div>
             </div>
         </div>
