@@ -1,9 +1,10 @@
 <div class="Estimates content">
     <h1><?= __('Estimates List') ?></h1>
     <br>
-    <br><br>
+    <br>
+    <br>
     <?php
-    echo $this->Form->create(null, ['url' => ['type' => 'get']]);
+    echo $this->Form->create(null, ['type' => 'get', 'url' => ['action' => 'index']]);
     echo $this->Form->control('corp_id', [
         'options' => $corps,
         'label' => '会社を選択してください。',
@@ -14,7 +15,16 @@
     ?>
     <br>
     <br>
-    <?php if (!empty($estimates)) : ?>
+    <?php if ($estimatesCount === 0) : ?>
+        <table>
+            <!-- 該当する見積データが無かった場合に表示 -->
+            <?= $this->Common->displayNoDataMessage($estimatesCount) ?>
+            <tr>
+                <th><?= __('Id') ?></th>
+                <th><?= __('Created') ?></th>
+            </tr>
+        </table>
+    <?php else : ?>
         <table>
             <tr>
                 <th><?= __('Id') ?></th>
@@ -23,19 +33,22 @@
             </tr>
             <?php foreach ($estimates as $estimate) : ?>
                 <tr>
-                    <td><?= $estimate->id ?></td>
-                    <td><?= $estimate->date ?></td>
-                    <td><?= $estimate->create_user ?></td>
+                    <td><?= $this->Html->link($estimate->id, ['action' => 'view', $estimate->id]) ?></td>
+                    <td><?= h($estimate->date) ?></td>
+                    <td><?= h($estimate->create_user) ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
-    <?php else: ?>
-        <table>
-            <!-- 該当する見積データが無かった場合に表示 -->
-            <?= $this->Common->displayNoDataMessage($estimatesCount) ?>
-            <tr>
-                <th><?= __('Id') ?></th>
-                <th><?= __('Created') ?></th>
-            </tr>
+        <div class="paginator">
+            <ul class="pagination">
+                <?php
+                echo $this->paginator->first('<< First');
+                echo $this->paginator->prev('< Prev');
+                echo $this->paginator->numbers();
+                echo $this->paginator->next('Next >');
+                echo $this->paginator->last('Last >>');
+                ?>
+            </ul>
+        </div>
     <?php endif; ?>
 </div>
