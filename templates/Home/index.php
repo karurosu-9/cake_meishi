@@ -72,7 +72,10 @@
                     </div>
                     <div class="right-menu">
                         <p><?= __('Estimates') ?></p>
+                        ・<?= $this->Html->link(__('Estimates List'), ['controller' => 'Estimates', 'action' => 'index']) ?>
+                        <br>
                         ・<?= $this->Html->link(__('Estimates Add'), ['controller' => 'Estimates', 'action' => 'add']) ?>
+                        <br>
                     </div>
                 </div>
             </div>
@@ -87,7 +90,9 @@
                         <br>
                     </div>
                     <div class="right-menu">
-                        ・<?= $this->Html->link(__('Mitumori'), ['controller' => 'Mitumori', 'action' => 'index']) ?>
+                        <?php if ($this->loginUser->admin === '経理部') : ?>
+                            ・<?= $this->Html->link(__('Estimates'), ['controller' => 'Estimates', 'action' => 'index']) ?>
+                        <?php endif;  ?>
                         <br>
                     </div>
                 </div>
