@@ -2,6 +2,12 @@
     <h1><?= __('Estimates List') ?></h1>
     <br>
     <br>
+    <?php if ($loginUser->admin === '管理者' || $loginUser->admin === 'システム部' || $loginUser->admin === '経理部') : ?>
+        <div class="button" style="margin-left: 850px">
+            <?= $this->Html->link(__('Estimate Add'), ['action' => 'add']) ?>
+        </div>
+    <?php endif; ?>
+    <br>
     <br>
     <?php
     echo $this->Form->create(null, ['url' => ['action' => 'index']]);
