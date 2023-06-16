@@ -14,7 +14,7 @@
         <tr>
             <th><?= __('Division Name') ?></th>
             <th><?= __('title') ?></th>
-            <th><?= __('empoyee Name') ?></th>
+            <th><?= __('employee Name') ?></th>
             <th><?= __('tel') ?></th>
             <th><?= __('address') ?></th>
             <th><?= __('Control') ?></th>
