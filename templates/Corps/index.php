@@ -2,22 +2,22 @@
     <h1><?= __('Corp List') ?></h1>
     <br>
     <br>
-    <!--  検索フォーム -->
     <div class="searchConditions" style="font-weight: bold; color: red;">
         ※会社名検索
     </div>
+    <!--  検索フォームをヘルパーメソッドから表示 -->
     <?= $this->Common->searchForm($corps) ?>
     <table>
-        <!-- 該当する企業が無かった場合に表示する -->
+        <!-- 検索結果件数が0なら表示 -->
         <?= $this->Common->displayNoDataMessage($corpsCount) ?>
         <tr>
             <th><?= __('Corp Name') ?></th>
             <th><?= __('Corp Adress') ?></th>
-            <?php if ($loginUser->admin === '管理者'): ?>
+            <?php if ($loginUser->admin === '管理者') : ?>
                 <th><?= __('Control Panel') ?></th>
             <?php endif; ?>
         </tr>
-        <?php foreach ($corps as $corp): ?>
+        <?php foreach ($corps as $corp) : ?>
             <tr>
                 <td><?= $this->Html->link(h($corp->corp_name), ['action' => 'view', $corp->id]) ?></td>
                 <td><?= h($corp->address) ?></td>

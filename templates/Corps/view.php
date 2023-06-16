@@ -5,9 +5,10 @@
     <div style="font-weight: bold; color: red;">
         ※名前検索
     </div>
+    <!-- 検索フォームをヘルパーメソッドから表示 -->
     <?= $this->Common->searchForm($meishiData) ?>
     <table>
-        <!-- 検索結果が該当無しの場合表示 -->
+        <!-- 検索結果件数が0なら表示 -->
         <?= $this->Common->displayNoDataMessage($meishiDataCount) ?>
         <tr>
             <th><?= __('Division Name') ?></th>
