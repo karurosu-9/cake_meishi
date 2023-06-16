@@ -33,46 +33,47 @@ class EstimatesController extends AppController
         ];
     }
 
-   public function index()
+    /*public function index()
    {
     // アクセス時は見積データを表示しない状態にする
     $estimatesCount = 0;
     $estimates = [];
 
     // 会社名で検索をかけた時に取得する値
-    $corpId = $this->request->getQuery('corp_id');
+    $corpId = $this->request->getData('corp_id');
+
 
     // 会社名の選択肢を取得
     $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name']);
-
+    //セッション用のタイマーの初期値
     $time = 0;
 
     // 検索フォームが送信された場合
-    if ($this->request->is('get') && $corpId) {
-        $time = time() + (10 * 60);
+    if ($this->request->is('post') && $corpId) {
+        $time = time() + (5 * 60);
         // 検索条件と制限時間をセッションに保存
-        $searchParams = $this->request->getQueryParams();
+        $searchId = $this->request->getData();
         $this->request->getSession()->write('Estimates.search', [
-            'params' => $searchParams,
+            'corp_id' => $searchId,
             'time' => $time
         ]);
     }
 
     // セッションから検索条件と制限時間をそれぞれ分けて取得
     $searchData = $this->request->getSession()->read('Estimates.search');
-    $searchParams = isset($searchData['params']) ? $searchData['params'] : [];
+    $searchId = isset($searchData['corp_id']) ? $searchData['corp_id'] : [];
     $searchTime = isset($searchData['time']) ? $searchData['time'] : null;
 
     // 制限時間が設定されていて、現在の時刻が制限時間を超えている場合、セッションを削除して検索条件をクリア
     if ($searchTime && $searchTime < time()) {
         $this->request->getSession()->delete('Estimates.search');
-        $searchParams = [];
+        $searchId = [];
     }
 
     // 検索条件がある場合
-    if ($searchParams) {
+    if ($searchId) {
         $estimates = $this->Estimates->find('all')->contain(['Corps']);
-        $estimates = $estimates->where(['corp_id' => $searchParams['corp_id']]);
+        $estimates = $estimates->where(['corp_id' => $searchId['corp_id']]);
         $estimatesCount = $estimates->count();
         $estimates = $this->paginate($estimates);
     }
@@ -81,31 +82,57 @@ class EstimatesController extends AppController
         'corps' => $corps,
         'estimates' => $estimates,
         'estimatesCount' => $estimatesCount,
-        'searchParams' => $searchParams,
     ];
 
     $this->set($data);
-   }
+   }*/
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    /*public function index()
+    public function index()
     {
-        //アクセス時は見積データを表示しない状態にする
+        // アクセス時は見積データを表示しない状態にする
         $estimatesCount = 0;
-
         $estimates = [];
-        //会社名で検索をかけた時に取得する値
+
+        // 会社名で検索をかけた時に取得する値
         $corpId = $this->request->getData('corp_id');
 
-        $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name']);
 
-        if ($this->request->is('post')) {
+        // 会社名の選択肢を取得
+        $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name']);
+        //セッション用のタイマーの初期値
+        $time = 0;
+
+        // 検索フォームが送信された場合
+        if ($this->request->is('post') && $corpId) {
+            $time = time() + (5 * 60);
+            // 検索条件と制限時間をセッションに保存
+            $searchId = $this->request->getData();
+            $this->request->getSession()->write('Estimates.search', [
+                'corp_id' => $searchId,
+                'time' => $time
+            ]);
+        }
+
+        // セッションから検索条件と制限時間をそれぞれ分けて取得
+        $searchData = $this->request->getSession()->read('Estimates.search');
+        $searchId = isset($searchData['corp_id']) ? $searchData['corp_id'] : [];
+        $searchTime = isset($searchData['time']) ? $searchData['time'] : null;
+
+        // 制限時間が設定されていて、現在の時刻が制限時間を超えている場合、セッションを削除して検索条件をクリア
+        if ($searchTime && $searchTime < time()) {
+            $this->request->getSession()->delete('Estimates.search');
+            $searchId = [];
+        }
+
+        // 検索条件がある場合
+        if ($searchId) {
             $estimates = $this->Estimates->find('all')->contain(['Corps']);
-            $estimates = $estimates->where(['corp_id' => $corpId]);
+            $estimates = $estimates->where(['corp_id' => $searchId['corp_id']]);
             $estimatesCount = $estimates->count();
             $estimates = $this->paginate($estimates);
         }
@@ -117,7 +144,7 @@ class EstimatesController extends AppController
         ];
 
         $this->set($data);
-    }*/
+    }
 
     /**
      * View method
@@ -133,21 +160,26 @@ class EstimatesController extends AppController
         ]);
 
         $date = $estimate->date;
+        //ビューに表示する日付の形式を変更
+        $unixDate = strtotime($date);
+        $formattedDate = date('Y年n月j日', $unixDate);
 
         $corp = $this->Corps->find()->where(['id' => $estimate->corp_id])->first();
 
         //自社情報取得
         $myCorp = $this->MyCorps->find()->first();
         $myCorpName = $myCorp->corp;
+        //表示形式の変更
         $postCode = substr($myCorp->post_code, 0, 3) . '-' . substr($myCorp->post_code, 3);
         $address = $myCorp->address;
+        //表示形式の変更
         $tel = substr($myCorp->tel, 0, 3) . '-' . substr($myCorp->tel, 3, 3) . '-' . substr($myCorp->tel, 6);
         $fax = substr($myCorp->fax, 0, 3) . '-' . substr($myCorp->fax, 3, 3) . '-' . substr($myCorp->fax, 6);
         $place = $myCorp->place;
         $conditions = $myCorp->conditions;
         $deadline = $myCorp->deadline;
 
-        //見積データの取得
+        //自作関数から見積データの取得
         $result = $this->processEstimateData($id);
 
         $tekiyo = $result['tekiyo'];
@@ -160,7 +192,7 @@ class EstimatesController extends AppController
 
         $data = [
             'estimate' => $estimate,
-            'date' => $date,
+            'formattedDate' => $formattedDate,
             'corp' => $corp,
             'myCorpName' => $myCorpName,
             'postCode' => $postCode,
@@ -192,9 +224,11 @@ class EstimatesController extends AppController
 
         $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name'])->all();
 
-        //入力したフォームデータの内容をsessionへ格納してconfirmEstimateアクションへ渡す
+        //入力したフォームデータの内容をaddアクションで登録せずへ格納して見積確認フォームへリダイレクトする
         if ($this->request->is('post')) {
             $postData = $this->request->getData();
+            //confirmEstimateアクションで新規作成時と編集時の日付を区別する為、空を格納する
+            $postData['date'] = '';
             $this->request->getSession()->write('postData', $postData);
             return $this->redirect(['action' => 'confirmEstimate']);
         }
@@ -205,18 +239,41 @@ class EstimatesController extends AppController
 
         $this->set($data);
     }
+    
 
-    /*public function confirmEstimate()
+    public function confirmEstimate()
     {
-        //年月日の取得
-        $year = date('Y');
-        $month = date('n');
-        $date = date('d');
+        $postData = $this->request->getSession()->read('postData');
 
-        //見積作成時の日付を"-"の表示から年月日の表示にする
-        $currentDate = $year . '年' . $month . '月' . $date . '日';
+        $loginUser = $this->Authentication->getResult()->getData();
 
-        $corp = $this->Corps->find();
+        $estimate = $this->Estimates->newEmptyEntity();
+
+        //新規で作成の場合、現在の年月日の取得
+        if (!empty($postData['date'])) {
+            //データベースに登録する形式の日付
+            $estimateDate = $postData['date'];
+            //ビューに表示する用の日付
+            $unixDate = strtotime($estimateDate);
+            $formattedDate = date('Y年n月j日', $unixDate);
+        } else {
+            $estimateDate = date('Y-m-d');
+            $unixDate = strtotime($estimateDate);
+            $formattedDate = date('Y年n月j日', $unixDate);
+            //$unixDate = strtotime($date);
+            //$formattedDate = date('Y年n月j日', $unixDate);
+            //$estimateDate = $formattedDate;
+        }
+
+
+
+        //会社のIDを取得
+        $corp_id = $postData['corp_id'];
+
+        $corpData = $this->Corps->find();
+        $corp = $corpData->where(['id' => $corp_id])->first();
+
+        //自社情報の取得
         $myCorp = $this->MyCorps->find()->first();
 
         //郵便番号をハイフン有りで出力する
@@ -234,29 +291,39 @@ class EstimatesController extends AppController
         $conditions = $myCorp->conditions;
         $deadline = $myCorp->deadline;
 
+
+        //自作関数から見積データの取得
+        $result = $this->processEstimateData();
+
+        //postで飛んできた値を変数へ格納
+        $tekiyo = $result['tekiyo'];
+        $unitPrice = $result['unit_price'];
+        $quantity = $result['quantity'];
+        $amount = $result['amount'];
+        $note = $result['note'];
+        $totalAmount = $result['total_amount'];
+        $hosoku = $result['hosoku'];
+
+        //フォームの内容がOKであった場合のpostLinkボタンを押された時の処理
         if ($this->request->is('post')) {
-
-            $postData = $this->request->getData();
-            //post送信されたフォームの値をセッションへ格納
-            $this->request->getSession()->write('postData', $postData);
-
-            $corp = $corp->where(['id' => $this->request->getData('corp_id')])->first();
-
-            //postで飛んできた値を取得
-            $result = $this->processEstimateData();
-
-            //postで飛んできた値を変数へ格納
-            $tekiyo = $result['tekiyo'];
-            $unitPrice = $result['unit_price'];
-            $quantity = $result['quantity'];
-            $amount = $result['amount'];
-            $note = $result['note'];
-            $totalAmount = number_format($result['totalAmount']);
-            $hosoku = $result['hosoku'];
+            //sessionへ格納されたフォームの値を$postDataへ格納
+            $estimate = $this->Estimates->patchEntity($estimate, $postData);
+            $estimate['total_amount'] = $totalAmount;
+            $estimate['date'] = $estimateDate;
+            $estimate['create_user'] = $loginUser->user_name;
+            if ($this->Estimates->save($estimate)) {
+                $this->Flash->success(__('見積データを登録しました。'));
+                $this->request->getSession()->delete('postData');
+                return $this->redirect(['action' => 'view', $estimate->id]);
+            } else {
+                $this->Flash->error(__('見積データの登録に失敗しました。もう一度確認してやり直してください。'));
+            }
         }
 
         $data = [
-            'currentDate' => $currentDate,
+            'estimate' => $estimate,
+            'estimateDate' => $estimateDate,
+            'formattedDate' => $formattedDate,
             'corp' => $corp,
             'postCode' => $postCode,
             'tel' => $tel,
@@ -276,9 +343,9 @@ class EstimatesController extends AppController
         ];
 
         $this->set($data);
-    }*/
+    }
 
-    public function confirmEstimate()
+    /*public function confirmEstimate()
     {
 
         $loginUser = $this->Authentication->getResult()->getData();
@@ -367,7 +434,7 @@ class EstimatesController extends AppController
         ];
 
         $this->set($data);
-    }
+    }*/
 
     /**
      * Edit method
@@ -378,20 +445,28 @@ class EstimatesController extends AppController
      */
     public function edit($id = null)
     {
-        $estimate = $this->Estimates->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $estimate = $this->Estimates->patchEntity($estimate, $this->request->getData());
-            if ($this->Estimates->save($estimate)) {
-                $this->Flash->success(__('The estimate has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The estimate could not be saved. Please, try again.'));
+
+        $estimate = $this->Estimates->get($id, [
+            'contain' => ['Corps'],
+        ]);
+
+
+
+        //editアクションで登録はせずに見積確認フォームにリダイレクトする
+        if ($this->request->is('post', 'put', 'patch')) {
+            $estimateData = $this->request->getData();
+            $estimateData['corp_id'] = $estimate->corp->id;
+            $this->request->getSession()->write('postData', $estimateData);
+            $estimateData = $this->request->getSession()->read('postData');
+            return $this->redirect(['action' => 'ConfirmEstimate']);
         }
-        $corps = $this->Estimates->Corps->find('list', ['limit' => 200])->all();
-        $this->set(compact('estimate', 'corps'));
+
+        $data = [
+            'estimate' => $estimate,
+        ];
+
+        $this->set($data);
     }
 
     /**
@@ -409,14 +484,14 @@ class EstimatesController extends AppController
             $this->Flash->success(__('The estimate has been deleted.'));
         } else {
             $this->Flash->error(__('The estimate could not be deleted. Please, try again.'));
+            return $this->redirect(['action' => 'index']);
         }
 
         return $this->redirect(['action' => 'index']);
     }
 
-    /*private function processEstimateData()
+    private function processEstimateData($id = null)
     {
-        $postData = $this->request->getSession()->read('postData');
 
         $tekiyo = [];
         $unitPrice = [];
@@ -425,53 +500,6 @@ class EstimatesController extends AppController
         $note = [];
         $hosoku = [];
         $totalAmount = 0;
-
-        for ($i = 1; $i <= EstimateConst::FORM_NOT_HOSOKU; $i++) {
-            $tekiyo[$i] = $postData['tekiyo' . $i];
-            $unitPrice[$i] = $postData['unit_price' . $i];
-            $quantity[$i] = $postData['quantity' . $i];
-            $amount[$i] = $postData['amount' . $i];
-            $note[$i] = $postData['note' . $i];
-        }
-
-        for ($i = 1; $i <= EstimateConst::FORM_HOSOKU; $i++) {
-            $hosoku[$i] = $this->request->getData('hosoku' . $i);
-        }
-
-        for ($i = 1; $i <= EstimateConst::FORM_NOT_HOSOKU; $i++) {
-            $totalAmount += (int)$amount[$i];
-        }
-
-        $formattedUnitPrice = [];
-        $i = 1;
-
-        foreach ($unitPrice as $price) {
-            $formattedUnitPrice[$i] = number_format((int)$price);
-            $i++;
-        }
-
-
-        return [
-            'tekiyo' => $tekiyo,
-            'unit_price' => $formattedUnitPrice,
-            'quantity' => $quantity,
-            'amount' => $amount,
-            'note' => $note,
-            'hosoku' => $hosoku,
-            'totalAmount' => $totalAmount,
-        ];
-    }*/
-
-    private function processEstimateData($id = null)
-    {
-
-            $tekiyo = [];
-            $unitPrice = [];
-            $quantity = [];
-            $amount = [];
-            $note = [];
-            $hosoku = [];
-            $totalAmount = 0;
 
         //セッションから値を取得する時の処理
         if ($this->request->getSession()->read('postData')) {
