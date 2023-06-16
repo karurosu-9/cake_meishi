@@ -32,12 +32,13 @@ class DivisionsController extends AppController
 
         $divisions = $this->Divisions->find('all');
 
-        $keyword = $this->request->getData('keyword');
-
         $loginUser = $this->Authentication->getResult()->getData();
 
-        if (!empty($keyword)) {
-            $divisions= $this->Divisions->find()->where(['Divisions.division_name LIKE'=> '%' . $keyword . '%' ]);
+        $keyword = '';
+
+        if ($this->request->is('put')) {
+            $keyword = $this->request->getData('keyword');
+            $divisions->where(['Divisions.division_name LIKE'=> '%' . $keyword . '%' ]);
         }
 
         $divisionsCount = $divisions->count();
@@ -70,9 +71,6 @@ class DivisionsController extends AppController
         //ログインユーザーのデータを取得
         $loginUser = $this->Authentication->getResult()->getData();
 
-        $keyword = $this->request->getData('keyword');
-
-
         //userテーブルからdivisionsのidに紐づいたユーザーを取得
         $users = $this->Users->find('all')->where(['Users.division_id' => $id]);
 
@@ -84,7 +82,10 @@ class DivisionsController extends AppController
             ],
         ];
 
-        if (!empty($keyword)) {
+        $keyword = '';
+
+        if ($this->request->is('put')) {
+            $keyword = $this->request->getData('keyword');
             $users->where(['Users.user_name LIKE' => '%' . $keyword . '%']);
         }
 
