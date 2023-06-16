@@ -37,10 +37,11 @@ class CorpsController extends AppController
 
         $corps = $this->Corps->find('all');
 
-        $keyword = $this->request->getData();
+        $keyword = '';
 
-        if (!empty($keyword)) {
-            $corps->where(['Corps.corp_name' => '%' . $keyword .'%']);
+        if ($this->request->is('put')) {
+            $keyword = $this->request->getData('keyword');
+            $corps->where(['Corps.corp_name LIKE' => '%' . $keyword .'%']);
         }
 
         $corpsCount = $corps->count();
@@ -68,10 +69,11 @@ class CorpsController extends AppController
 
         $meishiData = $this->Meishi->find('all')->where(['Meishi.corp_id' => $id])->contain(['Corps']);
 
-        $keyword = $this->request->getData();
+        $keyword = '';
 
-        if (!empty($keyword)) {
-            $meishiData->where(['Meishi.employee_name' => '%' . $keyword . '%']);
+        if ($this->request->is('put')) {
+            $keyword = $this->request->getData('keyword');
+            $meishiData->where(['Meishi.employee_name LIKE' => '%' . $keyword . '%']);
         }
 
         $meishiDataCount = $meishiData->count();
