@@ -1,7 +1,7 @@
 <h1><?= __('Corp Register') ?></h1>
 <br>
 <br>
-<!-- 登録フォームの表示 -->
+<!-- 登録用のフォームをヘルパーメソッドで表示 -->
 <?= $this->Common->corpForm($corp, 'add') ?>
 <br>
 <br>
