@@ -94,6 +94,9 @@ class EstimatesController extends AppController
      */
     public function index()
     {
+
+        $loginUser = $this->Authentication->getResult()->getData();
+
         // アクセス時は見積データを表示しない状態にする
         $estimatesCount = 0;
         $estimates = [];
@@ -138,6 +141,7 @@ class EstimatesController extends AppController
         }
 
         $data = [
+            'loginUser' => $loginUser,
             'corps' => $corps,
             'estimates' => $estimates,
             'estimatesCount' => $estimatesCount,
@@ -239,7 +243,7 @@ class EstimatesController extends AppController
 
         $this->set($data);
     }
-    
+
 
     public function confirmEstimate()
     {
@@ -253,16 +257,14 @@ class EstimatesController extends AppController
         if (!empty($postData['date'])) {
             //データベースに登録する形式の日付
             $estimateDate = $postData['date'];
-            //ビューに表示する用の日付
+            //ビューに表示する形式に変換
             $unixDate = strtotime($estimateDate);
             $formattedDate = date('Y年n月j日', $unixDate);
         } else {
             $estimateDate = date('Y-m-d');
+            //ビューに表示する形式に変換
             $unixDate = strtotime($estimateDate);
             $formattedDate = date('Y年n月j日', $unixDate);
-            //$unixDate = strtotime($date);
-            //$formattedDate = date('Y年n月j日', $unixDate);
-            //$estimateDate = $formattedDate;
         }
 
 
