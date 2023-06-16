@@ -27,7 +27,8 @@ class CommonHelper extends Helper
         $form = '';
 
         $form .= $this->Form->create($data);
-        $form .= $this->Form->control('keyword');
+        //文字列のみ、もしくは文字列と数字は受け付けるが、数字のみは受け付けない仕様
+        $form .= $this->Form->control('keyword', ['pattern' => '^(?=.*[a-zA-Zぁ-んァ-ヶー一-龠])[0-9]+$']);
         $form .= $this->Form->button(__('Search'));
         $form .= $this->Form->end();
 
