@@ -7,18 +7,16 @@ use App\Consts\EstimateConst;
     <br>
     <br>
     <br>
-    <?php
-    echo $this->Form->create(null);
-    //見積を出す企業の選択リスト
-    echo $this->Form->control('corp_id', [
-        'options' => $corps,
-        'label' => '会社を選択してください。',
-        'style' => 'width:200px',
-    ]);
-    ?>
+    <h2><?= h($estimate->corp->corp_name) ?></h2>
     <br>
     <br>
-
+    <?= $this->Form->create(null) ?>
+    <?= $this->Form->control('date', [
+        'type' => 'date',
+        'label' => '※変更があれば日付を選択してください。',
+        'default' => date('Y-n-d'),
+        'style' => 'width: 200px;',
+    ]) ?>
     <table cellpadding="1">
         <tr>
             <th><?= __('Tekiyo') ?></th>
