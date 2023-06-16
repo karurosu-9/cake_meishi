@@ -20,7 +20,7 @@ echo $this->Html->css('estimate');
         <br>
         <br>
         <div class="date">
-            <?= $currentDate ?>
+            <?= h($formattedDate) ?>
         </div>
         <div class="corp">
             　<?= h($corp->corp_name) ?> 　　御中
