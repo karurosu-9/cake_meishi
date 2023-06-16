@@ -2,14 +2,13 @@
     <h1><?= __('Dvisions List') ?></h1>
     <br>
     <br>
-    <?php
-    echo $this->Form->create($divisions);
-    echo $this->Form->control('keyword');
-    echo $this->Form->button(__('Search'));
-    echo $this->Form->end();
-    ?>
+    <div style="font-weight: bold; color: red;">
+        ※部署名検索
+    </div>
+    <!-- 検索フォームをヘルパーメソッドから表示 -->
+    <?= $this->Common->searchForm($divisions) ?>
     <table>
-        <!-- 作成したヘルパーメソッド：　検索結果がなければ表示 -->
+        <!-- 検索結果件数が0なら表示 -->
         <?= $this->Common->displayNoDataMessage($divisionsCount) ?>
         <tr>
             <th><?= __('Division Name') ?></th>

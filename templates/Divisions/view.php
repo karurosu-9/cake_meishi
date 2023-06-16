@@ -2,13 +2,13 @@
     <h1><?= __(h($division->division_name)) ?></h1>
     <br>
     <br>
-    <?php
-    echo $this->Form->create($division);
-    echo $this->Form->control('keyword');
-    echo $this->Form->button(__('Search'));
-    echo $this->Form->end();
-    ?>
+    <div style="font-weight: bold; color: red;">
+        ※名前検索
+    </div>
+    <!-- 検索フォームをヘルパーメソッドから表示 -->
+    <?= $this->Common->searchForm($users) ?>
     <table>
+        <!-- 検索結果件数が0なら表示 -->
         <?php $this->Common->displayNoDataMessage($usersCount) ?>
         <tr>
             <th><?= __('User Id') ?></th>
