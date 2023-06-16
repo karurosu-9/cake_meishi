@@ -58,7 +58,7 @@
                         <br>
                         ・<?= $this->Html->link(__('Division Add'), ['controller' => 'Divisions', 'action' => 'add']) ?>
                         <br>
-                        ・<?= $this->Html->link(__('Corps Add'), ['controller' => 'Corps', 'action' => 'index']) ?>
+                        ・<?= $this->Html->link(__('Corps Add'), ['controller' => 'Corps', 'action' => 'add']) ?>
                         <br>
                     </div>
                     <div class="center-menu">
