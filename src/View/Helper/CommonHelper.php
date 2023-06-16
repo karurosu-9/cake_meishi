@@ -1,4 +1,5 @@
 <?php
+
 namespace App\View\Helper;
 
 use Cake\View\Helper;
@@ -6,7 +7,7 @@ use Cake\View\Helper;
 class CommonHelper extends Helper
 {
 
-    public function initialize(array $config) :void
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->Form = $this->_View->loadHelper('Form');
@@ -19,17 +20,35 @@ class CommonHelper extends Helper
         }
         return;
     }
+
     //検索フォーム用ヘルパーメソッド
-    public function SearchForm($data)
+    public function searchForm($data)
     {
-        $formContent = "";
+        $form = '';
 
-        $formContent .= $this->Form->create($data);
-        $formContent .= $this->Form->control('keyword');
-        $formContent .= $this->Form->button(__('Search'));
-        $formContent .= $this->Form->end();
+        $form .= $this->Form->create($data);
+        $form .= $this->Form->control('keyword');
+        $form .= $this->Form->button(__('Search'));
+        $form .= $this->Form->end();
 
-        return $formContent;
+        return $form;
+    }
+
+    public function corpForm($data, $action)
+    {
+        $form = '';
+
+        $form .= $this->Form->create($data);
+        $form .= $this->Form->control('corp_name');
+        $form .= $this->Form->control('address');
+        //アクションに応じてボタンの表示を変更
+        if ( $action === 'add') {
+            $form .= $this->Form->button(__('Register'));
+        } elseif ($action === 'edit') {
+            $form .= $this->Form->button(__('Edit'));
+        }
+        $form .= $this->Form->end();
+
+        return $form;
     }
 }
-?>
