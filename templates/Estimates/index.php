@@ -4,7 +4,7 @@
     <br>
     <br>
     <?php
-    echo $this->Form->create(null, ['type' => 'get', 'url' => ['action' => 'index']]);
+    echo $this->Form->create(null, ['url' => ['action' => 'index']]);
     echo $this->Form->control('corp_id', [
         'options' => $corps,
         'label' => '会社を選択してください。',
