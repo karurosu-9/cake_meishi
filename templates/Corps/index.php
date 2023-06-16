@@ -2,12 +2,11 @@
     <h1><?= __('Corp List') ?></h1>
     <br>
     <br>
-    <?php
-    echo $this->Form->create($corps);
-    echo $this->Form->control('keyword');
-    echo $this->Form->button(__('Search'));
-    echo $this->Form->end();
-    ?>
+    <!--  検索フォーム -->
+    <div class="searchConditions" style="font-weight: bold; color: red;">
+        ※会社名検索
+    </div>
+    <?= $this->Common->searchForm($corps) ?>
     <table>
         <!-- 該当する企業が無かった場合に表示する -->
         <?= $this->Common->displayNoDataMessage($corpsCount) ?>

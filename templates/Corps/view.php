@@ -2,12 +2,10 @@
     <h1><?= __(h($corp->corp_name)) ?></h1>
     <br>
     <br>
-    <?php
-    echo $this->Form->create($meishiData);
-    echo $this->Form->control('keyword');
-    echo $this->Form->button(__('Search'));
-    echo $this->Form->end();
-    ?>
+    <div style="font-weight: bold; color: red;">
+        ※名前検索
+    </div>
+    <?= $this->Common->searchForm($meishiData) ?>
     <table>
         <!-- 検索結果が該当無しの場合表示 -->
         <?= $this->Common->displayNoDataMessage($meishiDataCount) ?>
