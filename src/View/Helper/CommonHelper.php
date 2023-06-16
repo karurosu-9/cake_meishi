@@ -21,7 +21,7 @@ class CommonHelper extends Helper
         return;
     }
 
-    //検索フォーム用ヘルパーメソッド
+    //検索フォームのヘルパーメソッド
     public function searchForm($data)
     {
         $form = '';
@@ -34,6 +34,7 @@ class CommonHelper extends Helper
         return $form;
     }
 
+    //corp用の登録、編集フォームのヘルパーメソッド
     public function corpForm($data, $action)
     {
         $form = '';
@@ -43,6 +44,23 @@ class CommonHelper extends Helper
         $form .= $this->Form->control('address');
         //アクションに応じてボタンの表示を変更
         if ( $action === 'add') {
+            $form .= $this->Form->button(__('Register'));
+        } elseif ($action === 'edit') {
+            $form .= $this->Form->button(__('Edit'));
+        }
+        $form .= $this->Form->end();
+
+        return $form;
+    }
+
+    //divisionの登録、編集フォームのヘルパーメソッド
+    public function divisionForm($data, $action)
+    {
+        $form = '';
+
+        $form .= $this->Form->create($data);
+        $form .= $this->Form ->control('division_name');
+        if ($action === 'add') {
             $form .= $this->Form->button(__('Register'));
         } elseif ($action === 'edit') {
             $form .= $this->Form->button(__('Edit'));
