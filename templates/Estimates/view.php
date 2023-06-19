@@ -115,7 +115,7 @@ echo $this->Html->css('estimate');
             <br>
             <br>
             <br>
-            <?= $this->Html->link(__('<< BACK'), ['action' => 'index']) ?>
+            <?= $this->Form->button(__('<< BACK'), ['onclick' => 'javascript:history.back();']) ?>
             <div class="control-button" style="text-align: right;">
                 <div class="button">
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $estimate->id]) ?>
