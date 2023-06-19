@@ -2,6 +2,7 @@
 
 namespace App\View\Helper;
 
+use App\Consts\EstimateConst;
 use Cake\View\Helper;
 
 class CommonHelper extends Helper
@@ -54,12 +55,12 @@ class CommonHelper extends Helper
         return $form;
     }
 
-    //divisionの登録、編集フォームのヘルパーメソッド
+    //division用の登録、編集フォームのヘルパーメソッド
     public function divisionForm($data, $action)
     {
         $form = '';
 
-        $form .= $this->Form->create($data);
+        $form .= $this->Form->create($data, $action);
         $form .= $this->Form ->control('division_name');
         if ($action === 'add') {
             $form .= $this->Form->button(__('Register'));
@@ -70,4 +71,63 @@ class CommonHelper extends Helper
 
         return $form;
     }
+
+    public function estimateForm($options, $requestData, $action)
+{
+    $form = '';
+    $form .= $this->Form->create(null);
+
+    // 見積を出す企業の選択リスト
+    if ($action === 'add') {
+        $form .= $this->Form->control('corp_id', [
+            'options' => $options,
+            'label' => '会社を選択してください。',
+            'style' => 'width: 200px',
+            'required' => true,
+        ]);
+    }
+
+    $form .= '<br><br>';
+    $form .= '<table cellpadding="1">';
+    $form .= '<tr>';
+    $form .= '<th>' . __('Tekiyo') . '</th>';
+    $form .= '<th>' . __('Unit Price') . '</th>';
+    $form .= '<th>' . __('Quantity') . '</th>';
+    $form .= '<th>' . __('Amount') . '</th>';
+    $form .= '<th>' . __('Note') . '</th>';
+    $form .= '</tr>';
+    $form .= '<tr>';
+    $form .= '<td>' . $this->Form->text('tekiyo1', ['style' => 'width:200px', ]) . '</td>';
+    $form .= '<td>￥' . $this->Form->text('unit_price1', ['style' => 'width:85px', 'id' => 'unit_price1', 'onChange' => 'keisan()', 'value' => isset($requestData['unit_price1']) ? h($requestData['unit_price1']) : '', 'required' => true]) . '</td>';
+    $form .= '<td>' . $this->Form->text('quantity1', ['style' => 'width:50px', 'id' => 'quantity1', 'onChange' => 'keisan()', 'value' => isset($requestData['quantity1']) ? h($requestData['quantity1']) : '', 'required' => true]) . '</td>';
+    $form .= '<td>￥' . $this->Form->text('amount1', ['style' => 'width:100px', 'id' => 'amount1', 'readonly' => true, 'value' => isset($requestData['amount1']) ? h($requestData['amount1']) : '']) . '</td>';
+    $form .= '<td>' . $this->Form->text('note1', ['style' => 'width:400px', 'value' => isset($requestData['note1']) ? h($requestData['note1']) : '']) . '</td>';
+    $form .= '</tr>';
+
+    for ($i = 2; $i <= EstimateConst::FORM_NOT_HOSOKU; $i++) {
+        $form .= '<tr>';
+        $form .= '<td>' . $this->Form->text('tekiyo' . $i, ['style' => 'width:200px', 'value' => isset($requestData['tekiyo' . $i]) ? h($requestData['tekiyo' . $i]) : '']) . '</td>';
+        $form .= '<td>￥' . $this->Form->text('unit_price' . $i, ['style' => 'width:85px', 'id' => 'unit_price' . $i, 'onChange' => 'keisan()', 'value' => isset($requestData['unit_price' . $i]) ? h($requestData['unit_price' . $i]) : '']) . '</td>';
+        $form .= '<td>' . $this->Form->text('quantity' . $i, ['style' => 'width:50px', 'id' => 'quantity' . $i, 'onChange' => 'keisan()', 'value' => isset($requestData['quantity' . $i]) ? h($requestData['quantity' . $i]) : '']) . '</td>';
+        $form .= '<td>￥' . $this->Form->text('amount' . $i, ['style' => 'width:100px', 'id' => 'amount' . $i, 'readonly' => true, 'value' => isset($requestData['amount' . $i]) ? h($requestData['amount' . $i]) : '']) . '</td>';
+        $form .= '<td>' . $this->Form->text('note' . $i, ['style' => 'width:400px', 'value' => isset($requestData['note' . $i]) ? h($requestData['note' . $i]) : '']) . '</td>';
+        $form .= '</tr>';
+    }
+
+    $form .= '</table>';
+    $form .= '<h3>' . __('Insert Hosoku') . '</h3>';
+
+    for ($i = 1; $i <= EstimateConst::FORM_HOSOKU; $i++) {
+        $form .= $this->Form->text('hosoku' . $i, ['value' => isset($requestData['hosoku' . $i]) ? h($requestData['hosoku' . $i]) : '']);
+    }
+
+    $form .= '<br><br>';
+    $form .= '<div class="button">';
+    $form .= $this->Form->button(__('OK'));
+    $form .= '</div>';
+    $form .= $this->Form->end();
+
+    return $form;
+}
+
 }
