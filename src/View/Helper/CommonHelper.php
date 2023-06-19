@@ -156,6 +156,12 @@ class CommonHelper extends Helper
                 $form .= '</tr>';
             }
 
+            $form .= '</table>';
+            $form .= '<h3>' . __('Insert Hosoku') . '</h3>';
+
+            for ($i = 1; $i <= EstimateConst::FORM_HOSOKU; $i++) {
+                $form .= $this->Form->text('hosoku' . $i, ['value' => isset($requestData['hosoku' . $i]) ? h($requestData['hosoku' . $i]) : '']);
+            }
         }
 
         $form .= '<br><br>';
