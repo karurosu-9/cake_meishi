@@ -47,7 +47,7 @@ class EstimatesController extends AppController
     $estimates = [];
 
     //選択肢を会社名にして、デフォルト値を設定
-    $corps = $this->Corps->find('list', ['limit' =>200, 'valueField' => 'corp_name']);
+    $corps = $this->Corps->find('list', ['limit' =>200, 'valueField' => 'corp_name'])->all();
     $options = ['' => '---  選択リスト  ---'] + $corps->toArray();
 
     $corp = [];
@@ -149,7 +149,9 @@ class EstimatesController extends AppController
      */
     public function add()
     {
+        $postData = [];
         $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name'])->all();
+        $options = ['' => '---  会社を選択してください。 ---'] + $corps->toArray();
 
         //入力したフォームデータの内容をaddアクションで登録せずへ格納して見積確認フォームへリダイレクトする
         if ($this->request->is('post')) {
@@ -161,7 +163,8 @@ class EstimatesController extends AppController
         }
 
         $data = [
-            'corps' => $corps,
+            'postData' => $postData,
+            'options' => $options,
         ];
 
         $this->set($data);
