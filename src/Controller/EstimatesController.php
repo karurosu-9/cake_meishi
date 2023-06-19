@@ -33,246 +33,46 @@ class EstimatesController extends AppController
         ];
     }
 
-    /*public function index()
-   {
-    // アクセス時は見積データを表示しない状態にする
-    $estimatesCount = 0;
-    $estimates = [];
-
-    // 会社名で検索をかけた時に取得する値
-    $corpId = $this->request->getData('corp_id');
-
-
-    // 会社名の選択肢を取得
-    $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name']);
-    //セッション用のタイマーの初期値
-    $time = 0;
-
-    // 検索フォームが送信された場合
-    if ($this->request->is('post') && $corpId) {
-        $time = time() + (5 * 60);
-        // 検索条件と制限時間をセッションに保存
-        $searchId = $this->request->getData();
-        $this->request->getSession()->write('Estimates.search', [
-            'corp_id' => $searchId,
-            'time' => $time
-        ]);
-    }
-
-    // セッションから検索条件と制限時間をそれぞれ分けて取得
-    $searchData = $this->request->getSession()->read('Estimates.search');
-    $searchId = isset($searchData['corp_id']) ? $searchData['corp_id'] : [];
-    $searchTime = isset($searchData['time']) ? $searchData['time'] : null;
-
-    // 制限時間が設定されていて、現在の時刻が制限時間を超えている場合、セッションを削除して検索条件をクリア
-    if ($searchTime && $searchTime < time()) {
-        $this->request->getSession()->delete('Estimates.search');
-        $searchId = [];
-    }
-
-    // 検索条件がある場合
-    if ($searchId) {
-        $estimates = $this->Estimates->find('all')->contain(['Corps']);
-        $estimates = $estimates->where(['corp_id' => $searchId['corp_id']]);
-        $estimatesCount = $estimates->count();
-        $estimates = $this->paginate($estimates);
-    }
-
-    $data = [
-        'corps' => $corps,
-        'estimates' => $estimates,
-        'estimatesCount' => $estimatesCount,
-    ];
-
-    $this->set($data);
-   }*/
-
-   //getQueryのindex
-   /*public function index()
-   {
-
-    $loginUser = $this->Authentication->getResult()->getData();
-
-    // アクセス時は見積データを表示しない状態にする
-    $estimatesCount = 0;
-    $estimates = [];
-
-    // 会社名で検索をかけた時に取得する値
-    $corpId = $this->request->getQuery('corp_id');
-
-    // 会社名の選択肢を取得
-    $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name']);
-
-    $time = 0;
-
-    // 検索フォームが送信された場合
-    if ($this->request->is('get') && $corpId) {
-        $time = time() + (10 * 60);
-        // 検索条件と制限時間をセッションに保存
-        $searchParams = $this->request->getQueryParams();
-        $this->request->getSession()->write('Estimates.search', [
-            'params' => $searchParams,
-            'time' => $time
-        ]);
-    } elseif ($this->request->getQuery('clear')) {
-        // クエリパラメータ "clear" が指定された場合、セッションを削除して検索条件をクリア
-        $this->request->getSession()->delete('Estimates.search');
-    }
-
-    // セッションから検索条件と制限時間を取得
-    $searchData = $this->request->getSession()->read('Estimates.search');
-    $searchParams = isset($searchData['params']) ? $searchData['params'] : [];
-    $searchTime = isset($searchData['time']) ? $searchData['time'] : null;
-
-    // 制限時間が設定されていて、現在の時刻が制限時間を超えている場合、セッションを削除して検索条件をクリア
-    if ($searchTime && $searchTime < time()) {
-        $this->request->getSession()->delete('Estimates.search');
-        $searchParams = [];
-    }
-
-    // 検索条件がある場合
-    if ($searchParams) {
-        $estimates = $this->Estimates->find('all')->contain(['Corps']);
-        $estimates = $estimates->where(['corp_id' => $searchParams['corp_id']]);
-        $estimatesCount = $estimates->count();
-        $estimates = $this->paginate($estimates);
-    }
-
-    $data = [
-        'corps' => $corps,
-        'estimates' => $estimates,
-        'estimatesCount' => $estimatesCount,
-        'searchParams' => $searchParams,
-        'loginUser' => $loginUser,
-    ];
-
-    $this->set($data);
-   }*/
-
-
-   public function index()
-    {
-
-        $loginUser = $this->Authentication->getResult()->getData();
-
-        // アクセス時は見積データを表示しない状態にする
-        $estimatesCount = 0;
-        $estimates = [];
-
-
-        // 会社名の選択肢を取得
-        $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name']);
-        //セッション用のタイマーの初期値
-        $time = 0;
-
-        // 会社名で検索をかけた時に取得する値
-        $corpId = $this->request->getData('corp_id');
-
-        // 検索フォームが送信された場合
-        if ($this->request->is('post') && $corpId) {
-            $time = time() + (5 * 60);
-            // 検索条件と制限時間をセッションに保存
-            $searchId = $this->request->getData();
-            $this->request->getSession()->write('Estimates.search', [
-                'corp_id' => $searchId,
-                'time' => $time
-            ]);
-        }
-
-        // セッションから検索条件と制限時間をそれぞれ分けて取得
-        $searchData = $this->request->getSession()->read('Estimates.search');
-        $searchId = isset($searchData['corp_id']) ? $searchData['corp_id'] : [];
-        $searchTime = isset($searchData['time']) ? $searchData['time'] : null;
-
-        // 制限時間が設定されていて、現在の時刻が制限時間を超えている場合、セッションを削除して検索条件をクリア
-        if ($searchTime && $searchTime < time()) {
-            $this->request->getSession()->delete('Estimates.search');
-            $searchId = [];
-        }
-
-        // 検索条件がある場合
-        if ($searchId) {
-            $estimates = $this->Estimates->find('all')->contain(['Corps']);
-            $estimates = $estimates->where(['corp_id' => $searchId['corp_id']]);
-            $estimatesCount = $estimates->count();
-            $estimates = $this->paginate($estimates);
-        }
-
-        $data = [
-            'loginUser' => $loginUser,
-            'corps' => $corps,
-            'estimates' => $estimates,
-            'estimatesCount' => $estimatesCount,
-        ];
-
-        $this->set($data);
-    }
-
-
-
-//バックアップデータ
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    /*public function index()
+    public function index()
     {
-
         $loginUser = $this->Authentication->getResult()->getData();
 
-        // アクセス時は見積データを表示しない状態にする
-        $estimatesCount = 0;
-        $estimates = [];
+    //アクセス時は見積データを表示しない状態にする
+    $estimatesCount = 0;
+    $estimates = [];
+
+    //選択肢を会社名にして、デフォルト値を設定
+    $corps = $this->Corps->find('list', ['limit' =>200, 'valueField' => 'corp_name']);
+    $options = ['' => '---  選択リスト  ---'] + $corps->toArray();
+
+    $corp = [];
+
+    //検索をかけた時の処理
+    if ($this->request->getQuery('corp_id')) {
+        $searchId = $this->request->getQuery('corp_id');
+        $corp = $this->Corps->find()->select('corp_name')->where(['id' => $searchId])->first();
+        $estimates = $this->Estimates->find('all')->contain(['Corps']);
+        $estimates = $estimates->where(['corp_id' => $searchId]);
+        $estimatesCount = $estimates->count();
+        $estimates = $this->paginate($estimates);
+    }
 
 
-        // 会社名の選択肢を取得
-        $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name']);
-        //セッション用のタイマーの初期値
-        $time = 0;
+    $data = [
+        'loginUser' => $loginUser,
+        'options' => $options,
+        'corp' => $corp,
+        'estimates' => $estimates,
+        'estimatesCount' => $estimatesCount,
+    ];
 
-        // 会社名で検索をかけた時に取得する値
-        $corpId = $this->request->getData('corp_id');
-
-        // 検索フォームが送信された場合
-        if ($this->request->is('post') && $corpId) {
-            $time = time() + (5 * 60);
-            // 検索条件と制限時間をセッションに保存
-            $searchId = $this->request->getData();
-            $this->request->getSession()->write('Estimates.search', [
-                'corp_id' => $searchId,
-                'time' => $time
-            ]);
-        }
-
-        // セッションから検索条件と制限時間をそれぞれ分けて取得
-        $searchData = $this->request->getSession()->read('Estimates.search');
-        $searchId = isset($searchData['corp_id']) ? $searchData['corp_id'] : [];
-        $searchTime = isset($searchData['time']) ? $searchData['time'] : null;
-
-        // 制限時間が設定されていて、現在の時刻が制限時間を超えている場合、セッションを削除して検索条件をクリア
-        if ($searchTime && $searchTime < time()) {
-            $this->request->getSession()->delete('Estimates.search');
-            $searchId = [];
-        }
-
-        // 検索条件がある場合
-        if ($searchId) {
-            $estimates = $this->Estimates->find('all')->contain(['Corps']);
-            $estimates = $estimates->where(['corp_id' => $searchId['corp_id']]);
-            $estimatesCount = $estimates->count();
-            $estimates = $this->paginate($estimates);
-        }
-
-        $data = [
-            'loginUser' => $loginUser,
-            'corps' => $corps,
-            'estimates' => $estimates,
-            'estimatesCount' => $estimatesCount,
-        ];
-
-        $this->set($data);
-    }*/
+    $this->set($data);
+    }
 
     /**
      * View method
@@ -349,7 +149,6 @@ class EstimatesController extends AppController
      */
     public function add()
     {
-
         $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name'])->all();
 
         //入力したフォームデータの内容をaddアクションで登録せずへ格納して見積確認フォームへリダイレクトする
@@ -571,8 +370,6 @@ class EstimatesController extends AppController
      */
     public function edit($id = null)
     {
-
-
         $estimate = $this->Estimates->get($id, [
             'contain' => ['Corps'],
         ]);
@@ -618,7 +415,6 @@ class EstimatesController extends AppController
 
     private function processEstimateData($id = null)
     {
-
         $tekiyo = [];
         $unitPrice = [];
         $quantity = [];
@@ -657,7 +453,6 @@ class EstimatesController extends AppController
                 'total_amount' => $totalAmount,
             ];
         } else {
-
             $estimate = $this->Estimates->find()->where(['id' => $id])->first()->toArray();
 
             for ($i = 1; $i <= EstimateConst::FORM_NOT_HOSOKU; $i++) {
