@@ -10,15 +10,16 @@
     <br>
     <br>
     <?php
-    echo $this->Form->create(null, ['url' => ['action' => 'index']]);
+    echo $this->Form->create(null, ['type' => 'get', 'url' => ['action' => 'index']]);
     echo $this->Form->control('corp_id', [
-        'options' => $corps,
+        'options' => h($options),
         'label' => '会社を選択してください。',
         'style' => 'width: 200px;',
     ]);
     echo $this->Form->button(__('Search'));
     echo $this->Form->end();
     ?>
+    <br>
     <br>
     <br>
     <?php if ($estimatesCount === 0) : ?>
@@ -31,6 +32,9 @@
             </tr>
         </table>
     <?php else : ?>
+        <?php if (!empty($corp)) : ?>
+            <h3>〘<?= h($corp->corp_name) ?>の見積データ〙</h3>
+        <?php endif ; ?>
         <table>
             <tr>
                 <th><?= __('Id') ?></th>
