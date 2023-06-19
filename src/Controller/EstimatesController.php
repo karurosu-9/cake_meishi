@@ -377,7 +377,7 @@ class EstimatesController extends AppController
             'contain' => ['Corps'],
         ]);
 
-
+        $estimateDate = $estimate->date;
 
         //editアクションで登録はせずに見積確認フォームにリダイレクトする
         if ($this->request->is('post', 'put', 'patch')) {
@@ -390,6 +390,7 @@ class EstimatesController extends AppController
 
         $data = [
             'estimate' => $estimate,
+            'estimateDate' => $estimateDate,
         ];
 
         $this->set($data);
