@@ -27,8 +27,9 @@
             <!-- 該当する見積データが無かった場合に表示 -->
             <?= $this->Common->displayNoDataMessage($estimatesCount) ?>
             <tr>
-                <th><?= __('Id') ?></th>
+                <th><?= __('Estimate No.') ?></th>
                 <th><?= __('Created') ?></th>
+                <th><?= __('Create User') ?></th>
             </tr>
         </table>
     <?php else : ?>
@@ -37,14 +38,14 @@
         <?php endif ; ?>
         <table>
             <tr>
-                <th><?= __('Id') ?></th>
+                <th><?= __('Estimate No.') ?></th>
                 <th><?= __('Created') ?></th>
                 <th><?= __('Create User') ?></th>
             </tr>
-            <?php foreach ($estimates as $estimate) : ?>
+            <?php foreach ($estimates as $index => $estimate) : ?>
                 <tr>
                     <td><?= $this->Html->link($estimate->id, ['action' => 'view', $estimate->id]) ?></td>
-                    <td><?= h($estimate->date) ?></td>
+                    <td><?= h($formattedDates[$index]) ?></td>
                     <td><?= h($estimate->create_user) ?></td>
                 </tr>
             <?php endforeach; ?>
