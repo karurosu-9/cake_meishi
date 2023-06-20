@@ -98,8 +98,6 @@ class CorpsController extends AppController
         ];
 
         $this->set($data);
-
-        $this->set(compact('corp'));
     }
 
     /**
