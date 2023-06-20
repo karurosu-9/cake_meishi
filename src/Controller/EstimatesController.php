@@ -44,14 +44,14 @@ class EstimatesController extends AppController
 
         //アクセス時は見積データを表示しない状態にする
         $estimatesCount = 0;
-        $estimates = [];
-        $formattedDates = [];
 
         //選択肢を会社名にして、デフォルト値を設定
         $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name'])->all();
         $options = ['' => '---  選択リスト  ---'] + $corps->toArray();
 
         $corp = [];
+        $estimates = [];
+        $formattedDates = [];
 
         //検索をかけた時の処理
         if ($this->request->getQuery('corp_id')) {
@@ -61,8 +61,6 @@ class EstimatesController extends AppController
             $estimates = $estimates->where(['corp_id' => $searchId]);
             $estimatesCount = $estimates->count();
             $estimates = $this->paginate($estimates);
-
-            $date = [];
 
             foreach ($estimates as $estimate) {
                 $date = $estimate->date;

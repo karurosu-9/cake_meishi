@@ -8,25 +8,30 @@
     <!-- 検索フォームをヘルパーメソッドから表示 -->
     <?= $this->Common->searchForm($divisions) ?>
     <table>
-        <!-- 検索結果件数が0なら表示 -->
-        <?= $this->Common->displayNoDataMessage($divisionsCount) ?>
         <tr>
             <th><?= __('Division Name') ?></th>
             <?php if ($loginUser->admin === '管理者') : ?>
                 <th><?= __('Control Panel') ?></th>
             <?php endif; ?>
         </tr>
-        <?php foreach ($divisions as $division) : ?>
+        <!-- 検索結果が0なら表示 -->
+        <?php if ($divisionsCount === 0) : ?>
             <tr>
-                <td><?= $this->Html->link(h($division->division_name), ['action' => 'view', $division->id]) ?></td>
-                <?php if ($loginUser->admin === '管理者') : ?>
-                    <td>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $division->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $division->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', h($division->division_name))]) ?>
-                    </td>
-                <?php endif; ?>
+                <td><?= $this->Common->displayNoDataMessage($divisionsCount) ?></td>
             </tr>
-        <?php endforeach; ?>
+        <?php else : ?>
+            <?php foreach ($divisions as $division) : ?>
+                <tr>
+                    <td><?= $this->Html->link(h($division->division_name), ['action' => 'view', $division->id]) ?></td>
+                    <?php if ($loginUser->admin === '管理者') : ?>
+                        <td>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $division->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $division->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', h($division->division_name))]) ?>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </table>
     <div class="paginator">
         <ul class="pagination">

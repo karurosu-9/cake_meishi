@@ -8,8 +8,6 @@
     <!-- 検索フォームをヘルパーメソッドから表示 -->
     <?= $this->Common->searchForm($meishiData) ?>
     <table>
-        <!-- 検索結果件数が0なら表示 -->
-        <?= $this->Common->displayNoDataMessage($meishiDataCount) ?>
         <tr>
             <th><?= __('Division Name') ?></th>
             <th><?= __('title') ?></th>
@@ -18,19 +16,26 @@
             <th><?= __('address') ?></th>
             <th><?= __('Control') ?></th>
         </tr>
-        <?php foreach ($meishiData as $meishi) : ?>
+        <!-- 検索結果が0なら表示 -->
+        <?php if ($meishiDataCount === 0) : ?>
             <tr>
-                <td><?= h($meishi->division) ?></td>
-                <td><?= h($meishi->title) ?></td>
-                <td><?= h($meishi->employee_name) ?></td>
-                <td><?= h($meishi->tel) ?></td>
-                <td><?= h($meishi->corp->address) ?></td>
-                <td>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Meishi', 'action' => 'edit', $meishi->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Meishi', 'action' => 'delete', $meishi->id], ['confirm' => sprintf('『%s』の名刺データをを本当に削除してもよろしいですか？', h($meishi->employee_name))]) ?>
-                </td>
+                <td><?= $this->Common->displayNoDataMessage($meishiDataCount) ?></td>
             </tr>
-        <?php endforeach; ?>
+        <?php else : ?>
+            <?php foreach ($meishiData as $meishi) : ?>
+                <tr>
+                    <td><?= h($meishi->division) ?></td>
+                    <td><?= h($meishi->title) ?></td>
+                    <td><?= h($meishi->employee_name) ?></td>
+                    <td><?= h($meishi->tel) ?></td>
+                    <td><?= h($meishi->corp->address) ?></td>
+                    <td>
+                        <?= $this->Html->link(__('Edit'), ['controller' => 'Meishi', 'action' => 'edit', $meishi->id]) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Meishi', 'action' => 'delete', $meishi->id], ['confirm' => sprintf('『%s』の名刺データをを本当に削除してもよろしいですか？', h($meishi->employee_name))]) ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </table>
     <div class="paginator">
         <ul class="pagination">

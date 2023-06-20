@@ -8,8 +8,6 @@
     <!--  検索フォームをヘルパーメソッドから表示 -->
     <?= $this->Common->searchForm($corps) ?>
     <table>
-        <!-- 検索結果件数が0なら表示 -->
-        <?= $this->Common->displayNoDataMessage($corpsCount) ?>
         <tr>
             <th><?= __('Corp Name') ?></th>
             <th><?= __('Corp Adress') ?></th>
@@ -17,18 +15,25 @@
                 <th><?= __('Control Panel') ?></th>
             <?php endif; ?>
         </tr>
-        <?php foreach ($corps as $corp) : ?>
+        <!-- 検索結果が0なら表示 -->
+        <?php if ($corpsCount === 0) : ?>
             <tr>
-                <td><?= $this->Html->link(h($corp->corp_name), ['action' => 'view', $corp->id]) ?></td>
-                <td><?= h($corp->address) ?></td>
-                <?php if ($loginUser->admin === '管理者') : ?>
-                    <td>
-                        <?= $this->Html->link('Edit', ['action' => 'edit', $corp->id]) ?>
-                        <?= $this->Form->postLink('Delete', ['action' => 'delete', $corp->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', h($corp->corp_name))]) ?>
-                    </td>
-                <?php endif; ?>
+                <td><?= $this->Common->displayNoDataMessage($corpsCount) ?></td>
             </tr>
-        <?php endforeach; ?>
+        <?php else : ?>
+            <?php foreach ($corps as $corp) : ?>
+                <tr>
+                    <td><?= $this->Html->link(h($corp->corp_name), ['action' => 'view', $corp->id]) ?></td>
+                    <td><?= h($corp->address) ?></td>
+                    <?php if ($loginUser->admin === '管理者') : ?>
+                        <td>
+                            <?= $this->Html->link('Edit', ['action' => 'edit', $corp->id]) ?>
+                            <?= $this->Form->postLink('Delete', ['action' => 'delete', $corp->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', h($corp->corp_name))]) ?>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </table>
     <div class="paginator">
         <ul class="pagination">

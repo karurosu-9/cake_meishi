@@ -8,8 +8,6 @@
     <!-- 検索フォームをヘルパーメソッドから表示 -->
     <?= $this->Common->searchForm($users) ?>
     <table>
-        <!-- 検索結果件数が0なら表示 -->
-        <?php $this->Common->displayNoDataMessage($usersCount) ?>
         <tr>
             <th><?= __('User Id') ?></th>
             <th><?= __('User Name') ?></th>
@@ -18,16 +16,23 @@
             <?php endif; ?>
             <th><?= __('Register') ?></th>
         </tr>
-        <?php foreach ($users as $user) : ?>
+        <!-- 検索結果が0なら表示 -->
+        <?php if ($usersCount === 0) : ?>
             <tr>
-                <td><?= $user->id ?></td>
-                <td><?= $this->Html->link(h($user->user_name), ['controller' => 'Users', 'action' => 'view', $user->id]) ?></td>
-                <?php if ($loginUser->admin === '管理者') : ?>
-                    <td><?= h($user->admin) ?></td>
-                <?php endif; ?>
-                <td><?= h($user->created) ?></td>
+                <td><?= $this->Common->displayNoDataMessage($usersCount) ?></td>
             </tr>
-        <?php endforeach; ?>
+        <?php else : ?>
+            <?php foreach ($users as $user) : ?>
+                <tr>
+                    <td><?= $user->id ?></td>
+                    <td><?= $this->Html->link(h($user->user_name), ['controller' => 'Users', 'action' => 'view', $user->id]) ?></td>
+                    <?php if ($loginUser->admin === '管理者') : ?>
+                        <td><?= h($user->admin) ?></td>
+                    <?php endif; ?>
+                    <td><?= h($user->created) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </table>
     <div class="paginator">
         <ul class="pagination">
