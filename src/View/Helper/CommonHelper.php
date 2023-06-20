@@ -77,8 +77,8 @@ class CommonHelper extends Helper
         $form = '';
         $form .= $this->Form->create(null);
 
-        // 見積を出す企業の選択リスト
         if ($action === 'add') {
+            //見積を出す企業の選択フォーム
             $form .= $this->Form->control('corp_id', [
                 'options' => $options,
                 'label' => '会社を選択してください。',
@@ -121,6 +121,7 @@ class CommonHelper extends Helper
                 $form .= $this->Form->text('hosoku' . $i, ['value' => isset($requestData['hosoku' . $i]) ? h($requestData['hosoku' . $i]) : '']);
             }
         } elseif ($action === 'edit') {
+            //日付選択フォーム
             $form .= $this->Form->control('date', [
                 'type' => 'date',
                 'default' => $options,
