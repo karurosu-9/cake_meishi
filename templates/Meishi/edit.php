@@ -3,6 +3,7 @@
     <br>
     <br>
     <h3>〘 <?= h($meishi->corp->corp_name) ?> 〙</h3>
+    <!-- フォームの表示を自作ヘルパーから表示 -->
     <?= $this->Common->meishiForm($meishi, null, 'edit') ?>
     <br>
     <br>
