@@ -60,8 +60,9 @@ class CommonHelper extends Helper
     {
         $form = '';
 
-        $form .= $this->Form->create($data, $action);
+        $form .= $this->Form->create($data);
         $form .= $this->Form->control('division_name');
+        //アクションに応じてボタンの表示を変更
         if ($action === 'add') {
             $form .= $this->Form->button(__('Register'));
         } elseif ($action === 'edit') {
@@ -72,6 +73,48 @@ class CommonHelper extends Helper
         return $form;
     }
 
+    //meishi用の登録、編集フォームのへルーパーメソッド
+    public function meishiForm($data, $option=null, $action)
+    {
+        $form = '';
+
+        $form .= $this->Form->create($data);
+
+        if ($action === 'add' && $option !== null) {
+            $form .= $this->Form->control('corp_id', [
+                'options' => $option,
+                'label' => '会社を選択してください',
+                'style' => 'width:200px;',
+                'required' => true,
+            ]);
+        }
+
+        $form .= '<br><br>';
+        $form .= '<table>';
+        $form .= '<tr>';
+        $form .= '<th>' . __('division') . '</th>';
+        $form .= '<th>' . __('title') . '</th>';
+        $form .= '<th>' . __('employee_name') . '</th>';
+        $form .= '<th>' . __('tel') . '</th>';
+        $form .= '</tr>';
+        $form .= '<tr>';
+        $form .= '<td>' . $this->Form->text('division', ['required' => true]) . '</td>';
+        $form .= '<td>' . $this->Form->text('title') . '</td>';
+        $form .= '<td>' . $this->Form->text('employee_name', ['required' => true]) . '</td>';
+        $form .= '<td>' . $this->Form->text('tel', ['required' => true]) . '</td>';
+        $form .= '</tr>';
+        $form .= '</table>';
+        if ($action === 'add') {
+            $form .= $this->Form->button(__('Register'));
+        } elseif ($action === 'edit') {
+            $form .= $this->Form->button(__('Edit'));
+        }
+        $form .= $this->Form->end();
+
+        return $form;
+    }
+
+    //estimate用の登録、編集フォームのヘルパーメソッド
     public function estimateForm($options, $requestData, $action)
     {
         $form = '';
