@@ -48,7 +48,7 @@
     <br>
     <br>
     <div class="list">
-        <?php if ($loginUser->admin === '管理者' || $loginUser->admin === 'システム部') : ?>
+        <?php if ($loginUser->admin === '管理者' || $loginUser->division === 'システム部') : ?>
             <div class="box30">
                 <div class="box-title"><?= __('Admin Menu') ?></div>
                 <div class="menu-list">
