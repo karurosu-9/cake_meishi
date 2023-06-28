@@ -123,7 +123,7 @@ echo $this->Html->css('estimate');
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $estimate->id]) ?>
                 </div>
                 <div class="button">
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $estimate->id], ['confirm' => sprintf('『%s』の見積データを本当に削除してよろしいですか？', $estimate->id)]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $estimate->id], ['confirm' => h("『 {$estimate->id} 』の見積データを本当に削除してよろしいですか？")]) ?>
                 </div>
             </div>
         </div>

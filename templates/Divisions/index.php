@@ -26,7 +26,7 @@
                     <?php if ($loginUser->admin === '管理者') : ?>
                         <td>
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $division->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $division->id], ['confirm' => sprintf('『%s』を本当に削除してもよろしいですか？', h($division->division_name))]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $division->id], ['confirm' => h("『 {$division->division_name} 』を本当に削除してもよろしいですか？")]) ?>
                         </td>
                     <?php endif; ?>
                 </tr>
