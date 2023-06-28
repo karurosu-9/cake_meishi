@@ -14,6 +14,7 @@ class CommonHelper extends Helper
         $this->Form = $this->_View->loadHelper('Form');
     }
 
+    //検索結果が0の時の処理
     public function displayNoDataMessage($counter)
     {
         if ($counter === 0) {
