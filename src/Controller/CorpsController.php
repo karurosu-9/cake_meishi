@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Event\EventInterface;
+
 /**
  * Corps Controller
  *
@@ -11,6 +13,15 @@ namespace App\Controller;
  */
 class CorpsController extends AppController
 {
+
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        //権限が無くてもアクセスできるアクション
+        if (in_array($this->request->getParam('action'), ['index', 'view', 'add', 'edit', 'delete'])) {
+            $this->Authorization->skipAuthorization();
+          }
+    }
 
     public function initialize(): void
     {

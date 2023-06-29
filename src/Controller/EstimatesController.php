@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Consts\EstimateConst;
 use Cake\Routing\Route\RedirectRoute;
+use Cake\Event\EventInterface;
 
 /**
  * Estimates Controller
@@ -15,6 +16,15 @@ use Cake\Routing\Route\RedirectRoute;
  */
 class EstimatesController extends AppController
 {
+
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        //権限が無くてもアクセスできるアクション
+        if (in_array($this->request->getParam('action'), ['index', 'view', 'add', 'confirmEstimate', 'edit', 'delete'])) {
+            $this->Authorization->skipAuthorization();
+        }
+    }
 
     public function initialize(): void
     {
@@ -358,7 +368,7 @@ class EstimatesController extends AppController
         $hosoku = [];
         $totalAmount = 0;
 
-        //セッションから値を取得する時の処理
+        //confirmEstimateアクション時はセッションから値を取得する時の処理
         if ($this->request->getSession()->read('postData')) {
 
             $postData = $this->request->getSession()->read('postData');
@@ -387,7 +397,7 @@ class EstimatesController extends AppController
                 'hosoku' => $hosoku,
                 'total_amount' => $totalAmount,
             ];
-        //データベースから値を取得する
+        //view, editアクション時はデータベースから値を取得する
         } else {
             $estimate = $this->Estimates->find()->where(['id' => $id])->first()->toArray();
 

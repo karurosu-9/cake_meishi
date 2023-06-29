@@ -13,6 +13,18 @@ use Cake\Event\EventInterface;
  */
 class UsersController extends AppController
 {
+
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        //ログインしていなくてもアクセスできるアクション
+        $this->Authentication->addUnauthenticatedActions(['login']);
+        //権限が無くてもアクセスできるアクション
+        if (in_array($this->request->getParam('action'), ['login', 'logout', 'index'])) {
+            $this->Authorization->skipAuthorization();
+          }
+    }
+
     public function initialize(): void
     {
         parent::initialize();
@@ -27,13 +39,6 @@ class UsersController extends AppController
 
         $this->Divisions = $this->getTableLocator()->get('Divisions');
 
-    }
-
-    public function beforeFilter(EventInterface $event)
-    {
-        parent::beforeFilter($event);
-        //ログインしていなくてもアクセスできるアクション
-        $this->Authentication->addUnauthenticatedActions(['login']);
     }
 
     public function login()
@@ -58,6 +63,7 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
     }
+    
     /**
      * Index method
      *
