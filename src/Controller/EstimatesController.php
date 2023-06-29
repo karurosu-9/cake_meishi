@@ -34,6 +34,8 @@ class EstimatesController extends AppController
 
         //自社の情報を取得
         $this->MyCorps = $this->getTableLocator()->get('MyCorps');
+        
+        $this->loadComponent('LoginUser');
 
         $this->paginate = [
             'limit' => 20,
@@ -50,7 +52,7 @@ class EstimatesController extends AppController
      */
     public function index()
     {
-        $loginUser = $this->Authentication->getResult()->getData();
+        $loginUser = $this->LoginUser->getLoginUser();
 
         //アクセス時は見積データを表示しない状態にする
         $estimatesCount = 0;
@@ -197,7 +199,7 @@ class EstimatesController extends AppController
     {
         $postData = $this->request->getSession()->read('postData');
 
-        $loginUser = $this->Authentication->getResult()->getData();
+        $loginUser = $this->LoginUser->getLoginUser();
 
         $estimate = [];
 

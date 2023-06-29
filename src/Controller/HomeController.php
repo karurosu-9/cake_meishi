@@ -22,6 +22,14 @@ class HomeController extends AppController
             $this->Authorization->skipAuthorization();
         }
     }
+
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->loadComponent('LoginUser');
+    }
+
     /**
      * Index method
      *
@@ -29,7 +37,7 @@ class HomeController extends AppController
      */
     public function index()
     {
-        $loginUser = $this->Authentication->getResult()->getData();
+        $loginUser = $this->LoginUser->getLoginUser();
 
         $data = [
             'loginUser' => $loginUser,

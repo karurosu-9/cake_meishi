@@ -21,7 +21,7 @@ class UsersController extends AppController
         //ログインしていなくてもアクセスできるアクション
         $this->Authentication->addUnauthenticatedActions(['login']);
         //権限が無くてもアクセスできるアクション
-        if (in_array($this->request->getParam('action'), ['login', 'logout', 'index'])) {
+        if (in_array($this->request->getParam('action'), ['login', 'logout', 'index', 'add'])) {
             $this->Authorization->skipAuthorization();
         }
     }
@@ -74,7 +74,7 @@ class UsersController extends AppController
 
         $keyword = $this->request->getData('keyword');
         //ログインユーザーの情報を取得
-        $loginUser = $this->Authentication->getResult()->getData();
+        $loginUser = $this->LoginUser->getLoginUser();
 
         $users = $this->Users->find('all');
 
@@ -104,7 +104,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         //ログインユーザーのデータを取得
-        $loginUser = $this->Authentication->getResult()->getData();
+        $loginUser = $this->LoginUser->getLoginUser();
 
         $user = $this->Users->get($id, [
             'contain' => ['Divisions'],

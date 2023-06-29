@@ -36,6 +36,8 @@ class CorpsController extends AppController
         ];
 
         $this->Meishi = $this->getTableLocator()->get('Meishi');
+        $this->loadComponent('LoginUser');
+
     }
     /**
      * Index method
@@ -45,7 +47,7 @@ class CorpsController extends AppController
     public function index()
     {
 
-        $loginUser = $this->Authentication->getResult()->getData();
+        $loginUser = $this->LoginUser->getLoginUser();
 
         $corps = $this->Corps->find('all');
 
@@ -129,7 +131,11 @@ class CorpsController extends AppController
             }
             $this->Flash->error(__('The corp could not be saved. Please, try again.'));
         }
-        $this->set(compact('corp'));
+
+        $data = [
+            'corp' => $corp,
+        ];
+        $this->set($data);
     }
 
     /**
@@ -153,7 +159,12 @@ class CorpsController extends AppController
             }
             $this->Flash->error(__('The corp could not be saved. Please, try again.'));
         }
-        $this->set(compact('corp'));
+
+        $data = [
+            'corp' => $corp,
+        ];
+
+        $this->set($data);
     }
 
     /**

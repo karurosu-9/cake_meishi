@@ -28,10 +28,9 @@ class DivisionsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-
-
-
+        
         $this->Users = $this->getTableLocator()->get('Users');
+        $this->loadComponent('LoginUser');
     }
     /**
      * Index method
@@ -43,7 +42,7 @@ class DivisionsController extends AppController
 
         $divisions = $this->Divisions->find('all');
 
-        $loginUser = $this->Authentication->getResult()->getData();
+        $loginUser = $this->LoginUser->getLoginUser();
 
         $keyword = '';
 
@@ -80,7 +79,7 @@ class DivisionsController extends AppController
         ]);
 
         //ログインユーザーのデータを取得
-        $loginUser = $this->Authentication->getResult()->getData();
+        $loginUser = $this->LoginUser->getLoginUser();
 
         //userテーブルからdivisionsのidに紐づいたユーザーを取得
         $users = $this->Users->find('all')->where(['Users.division_id' => $id]);
@@ -161,7 +160,12 @@ class DivisionsController extends AppController
             }
             $this->Flash->error(__('The division could not be saved. Please, try again.'));
         }
-        $this->set(compact('division'));
+
+        $data = [
+            'division' => $division,
+        ];
+
+        $this->set($data);
     }
 
     /**
