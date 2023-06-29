@@ -48,7 +48,7 @@
     <br>
     <br>
     <div class="list">
-        <?php if ($loginUser->admin === '管理者' || $loginUser->division === 'システム部') : ?>
+        <?php if ($loginUser->admin === '管理者' || $loginUser->admin === 'システム') : ?>
             <div class="box30">
                 <div class="box-title"><?= __('Admin Menu') ?></div>
                 <div class="menu-list">
@@ -90,7 +90,7 @@
                         <br>
                     </div>
                     <div class="right-menu">
-                        <?php if ($this->loginUser->admin === '経理部') : ?>
+                        <?php if ($loginUser->admin === '経理') : ?>
                             ・<?= $this->Html->link(__('Estimates'), ['controller' => 'Estimates', 'action' => 'index']) ?>
                         <?php endif;  ?>
                         <br>
