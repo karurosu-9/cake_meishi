@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -17,11 +18,11 @@ class DivisionsController extends AppController
 
     public function beforeFilter(EventInterface $event)
     {
-        
+
         //権限が無くてもアクセスできるアクション
         if (in_array($this->request->getParam('action'), ['index', 'view', 'add', 'edit', 'delete'])) {
             $this->Authorization->skipAuthorization();
-          }
+        }
     }
 
     public function initialize(): void
@@ -48,7 +49,7 @@ class DivisionsController extends AppController
 
         if ($this->request->is('put')) {
             $keyword = $this->request->getData('keyword');
-            $divisions->where(['Divisions.division_name LIKE'=> '%' . $keyword . '%' ]);
+            $divisions->where(['Divisions.division_name LIKE' => '%' . $keyword . '%']);
         }
 
         $divisionsCount = $divisions->count();

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -19,7 +20,7 @@ class HomeController extends AppController
         //権限が無くてもアクセスできるアクション
         if (in_array($this->request->getParam('action'), ['index'])) {
             $this->Authorization->skipAuthorization();
-          }
+        }
     }
     /**
      * Index method
@@ -36,5 +37,4 @@ class HomeController extends AppController
 
         $this->set($data);
     }
-
 }

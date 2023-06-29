@@ -195,7 +195,7 @@ class EstimatesController extends AppController
 
     public function confirmEstimate()
     {
-       $postData = $this->request->getSession()->read('postData');
+        $postData = $this->request->getSession()->read('postData');
 
         $loginUser = $this->Authentication->getResult()->getData();
 
@@ -397,7 +397,7 @@ class EstimatesController extends AppController
                 'hosoku' => $hosoku,
                 'total_amount' => $totalAmount,
             ];
-        //view, editアクション時はデータベースから値を取得する
+            //view, editアクション時はデータベースから値を取得する
         } else {
             $estimate = $this->Estimates->find()->where(['id' => $id])->first()->toArray();
 

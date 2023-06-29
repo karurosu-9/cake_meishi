@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -22,7 +23,7 @@ class UsersController extends AppController
         //権限が無くてもアクセスできるアクション
         if (in_array($this->request->getParam('action'), ['login', 'logout', 'index'])) {
             $this->Authorization->skipAuthorization();
-          }
+        }
     }
 
     public function initialize(): void
@@ -38,21 +39,20 @@ class UsersController extends AppController
         ];
 
         $this->Divisions = $this->getTableLocator()->get('Divisions');
-
     }
 
     public function login()
     {
-            $this->request->allowMethod(['post', 'get']);
-            $result = $this->Authentication->getResult();
-            if ($result->isValid()) {
-                $this->Flash->success(__('ログインしました。'));
-                return $this->redirect(['controller' => 'Home', 'action' => 'index']);
-            }
+        $this->request->allowMethod(['post', 'get']);
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $this->Flash->success(__('ログインしました。'));
+            return $this->redirect(['controller' => 'Home', 'action' => 'index']);
+        }
 
-            if ($this->request->is('post') && !$result->isValid()) {
-                $this->Flash->error(__('名前かパスワードが間違っています。もう一度やり直してください。'));
-            }
+        if ($this->request->is('post') && !$result->isValid()) {
+            $this->Flash->error(__('名前かパスワードが間違っています。もう一度やり直してください。'));
+        }
     }
 
     public function logout()
@@ -63,7 +63,7 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
     }
-    
+
     /**
      * Index method
      *
@@ -138,7 +138,7 @@ class UsersController extends AppController
         }
         //$divisionsにdivisionNameカラムの値を格納している
         $divisions = $this->Divisions->find('list', ['valueField' => 'division_name', 'limit' => 200])->toArray();
-        $data =[
+        $data = [
             'user' => $user,
             'divisions' => $divisions,
         ];

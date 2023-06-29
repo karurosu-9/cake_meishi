@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -20,7 +21,7 @@ class CorpsController extends AppController
         //権限が無くてもアクセスできるアクション
         if (in_array($this->request->getParam('action'), ['index', 'view', 'add', 'edit', 'delete'])) {
             $this->Authorization->skipAuthorization();
-          }
+        }
     }
 
     public function initialize(): void
@@ -52,7 +53,7 @@ class CorpsController extends AppController
 
         if ($this->request->is('put')) {
             $keyword = $this->request->getData('keyword');
-            $corps->where(['Corps.corp_name LIKE' => '%' . $keyword .'%']);
+            $corps->where(['Corps.corp_name LIKE' => '%' . $keyword . '%']);
         }
 
         $corpsCount = $corps->count();

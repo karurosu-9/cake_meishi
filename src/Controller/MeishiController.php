@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -20,7 +21,7 @@ class MeishiController extends AppController
         //権限が無くてもアクセスできるアクション
         if (in_array($this->request->getParam('action'), ['add', 'edit', 'delete'])) {
             $this->Authorization->skipAuthorization();
-          }
+        }
     }
 
     public function initialize(): void
