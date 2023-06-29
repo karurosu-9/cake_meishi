@@ -21,7 +21,7 @@ class UsersController extends AppController
         //ログインしていなくてもアクセスできるアクション
         $this->Authentication->addUnauthenticatedActions(['login']);
         //権限が無くてもアクセスできるアクション
-        if (in_array($this->request->getParam('action'), ['login', 'logout', 'index', 'add'])) {
+        if (in_array($this->request->getParam('action'), ['login', 'logout', 'index', 'view', 'add', 'edit', 'delete'])) {
             $this->Authorization->skipAuthorization();
         }
     }
@@ -39,6 +39,7 @@ class UsersController extends AppController
         ];
 
         $this->Divisions = $this->getTableLocator()->get('Divisions');
+        $this->loadComponent('LoginUser');
     }
 
     public function login()
