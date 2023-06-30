@@ -6,6 +6,8 @@ namespace App\Controller;
 
 use Cake\Event\EventInterface;
 
+
+
 /**
  * Users Controller
  *
@@ -21,7 +23,7 @@ class UsersController extends AppController
         //ログインしていなくてもアクセスできるアクション
         $this->Authentication->addUnauthenticatedActions(['login']);
         //権限が無くてもアクセスできるアクション
-        if (in_array($this->request->getParam('action'), ['login', 'logout', 'index', 'view', 'add', 'edit', 'delete'])) {
+        if (in_array($this->request->getParam('action'), ['login', 'logout', 'index', 'view'])) {
             $this->Authorization->skipAuthorization();
         }
     }
@@ -102,7 +104,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id)
     {
         //ログインユーザーのデータを取得
         $loginUser = $this->LoginUser->getLoginUser();
@@ -126,6 +128,13 @@ class UsersController extends AppController
      */
     public function add()
     {
+
+        $user = $this->Users->newEmptyEntity();
+
+        //ログインユーザーのadminがシステムまたは管理者でなければアクセス拒否
+        if (!$this->Authorization->can($user, 'add')) {
+            return $this->redirect(['action' => 'index']);
+        }
 
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -156,6 +165,12 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
+        $user = $this->Users->get($id);
+
+        //ログインユーザーのadminが`システム`または管理者か、Entityの対象が自分自身でないとアクセス拒否
+        if (!$this->Authorization->can($user, 'edit')) {
+            return $this->redirect(['action' => 'index']);
+        }
         $user = $this->Users->get($id, [
             'contain' => ['Divisions'],
         ]);
@@ -187,8 +202,14 @@ class UsersController extends AppController
      */
     public function delete($id = null)
     {
+
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
+
+        //ログインユーザーのadminが`システム`または管理者じゃないとアクセス拒否
+        if (!$this->Authorization->can($user, 'delete')) {
+            return $this->redirect(['action' => 'index']);
+        }
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {
