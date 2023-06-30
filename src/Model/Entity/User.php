@@ -6,7 +6,7 @@ namespace App\Model\Entity;
 use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
-use function PHPUnit\Framework\stringContains;
+use PHPUnit\Framework\stringContains;
 
 /**
  * User Entity
@@ -51,6 +51,19 @@ class User extends Entity
         'password',
     ];
 
+    //UserPolicy用のアクセス許可するユーザー
+    protected function _getAuthorizedUser()
+    {
+        return $this->admin === 'システム';
+    }
+
+    //UserPolicy用のアクセス許可するユーザー
+    protected function _getIsAdmin()
+    {
+        return $this->admin === '管理者';
+    }
+
+    //パスワードのハッシュ化
     protected function _setPassword(string $password) : ?string
     {
         if(strlen($password) > 0) {
