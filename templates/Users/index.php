@@ -2,6 +2,13 @@
     <h1><?= __('User List') ?></h1>
     <br>
     <br>
+    <?php if ($loginUser->admin === '管理者' || $loginUser->admin === 'システム' ) : ?>
+        <div class="button" id="add-button">
+            <?= $this->Html->link(__('Users Add'), ['action' => 'add']) ?>
+        </div>
+    <?php endif; ?>
+    <br>
+    <br>
     <?php
     echo $this->Form->create($users);
     echo $this->Form->control('keyword');

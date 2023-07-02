@@ -2,6 +2,11 @@
     <h1><?= __('Corp List') ?></h1>
     <br>
     <br>
+    <?php if ($loginUser->admin === '管理者' || $loginUser->admin === 'システム' ): ?>
+        <div class="button" id="add-button">
+            <?= $this->Html->link(__('Corps Add'), ['action' => 'add']) ?>
+        </div>
+    <?php endif; ?>
     <div class="searchConditions" style="font-weight: bold; color: red;">
         ※会社名検索
     </div>
