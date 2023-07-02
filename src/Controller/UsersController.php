@@ -131,8 +131,8 @@ class UsersController extends AppController
 
         $user = $this->Users->newEmptyEntity();
 
-        //ログインユーザーのadminがシステムまたは管理者でなければアクセス拒否
         if (!$this->Authorization->can($user, 'add')) {
+            $this->Flash->error(__('権限がないのでアクセスできません。'));
             return $this->redirect(['action' => 'index']);
         }
 
