@@ -148,9 +148,11 @@ class UsersController extends AppController
         }
         //$divisionsにdivisionNameカラムの値を格納している
         $divisions = $this->Divisions->find('list', ['valueField' => 'division_name', 'limit' => 200])->toArray();
+        $usersAdminList = $this->Users->find('list', ['valueField' => 'admin', 'limit' => 100])->toArray();
         $data = [
             'user' => $user,
             'divisions' => $divisions,
+            'usersAdminList' => $usersAdminList,
         ];
 
         $this->set($data);
@@ -184,11 +186,12 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $divisions = $this->Divisions->find('list', ['limit' => 200, 'valueField' => 'division_name'])->toArray();
-
+        $usersAdminList = $this->Users->find('list', ['limit' => 200, 'valueField' => 'admin'])->toArray();
         $data = [
             'user' => $user,
             'divisions' => $divisions,
-        ];
+            'usersAdminList' => $usersAdminList,
+        ]; 
 
         $this->set($data);
     }
