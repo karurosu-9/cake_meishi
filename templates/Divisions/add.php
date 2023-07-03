@@ -3,7 +3,7 @@
     <br>
     <br>
     <!-- 登録フォームのヘルパーメソッド -->
-    <?= $this->ViewForm->divisionForm($division, 'add') ?>
+    <?= $this->ViewForm->generateDivisionForm($division, 'add') ?>
     <br>
     <br>
     <div style="font-size: 20px">

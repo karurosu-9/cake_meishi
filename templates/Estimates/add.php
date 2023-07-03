@@ -4,6 +4,6 @@
     <br>
     <br>
     <br>
-    <?= $this->ViewForm->estimateForm($options, $postData, 'add') ?>
+    <?= $this->ViewForm->generateEstimateForm($options, $postData, 'add') ?>
 </div>
 

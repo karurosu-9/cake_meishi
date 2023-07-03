@@ -2,7 +2,7 @@
 <br>
 <br>
 <!-- 登録用のフォームをヘルパーメソッドで表示 -->
-<?= $this->ViewForm->corpForm($corp, 'add') ?>
+<?= $this->ViewForm->generateCorpForm($corp, 'add') ?>
 <br>
 <br>
 <div style="font-size: 20px">

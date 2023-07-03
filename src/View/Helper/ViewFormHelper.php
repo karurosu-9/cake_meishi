@@ -27,7 +27,7 @@ class ViewFormHelper extends Helper
     }
 
     //検索フォームのヘルパーメソッド
-    public function searchForm($data)
+    public function generateSearchForm($data)
     {
         $form = '';
 
@@ -41,7 +41,7 @@ class ViewFormHelper extends Helper
     }
 
     //corp用の登録、編集フォームのヘルパーメソッド
-    public function corpForm($data, $action)
+    public function generateCorpForm($data, $action)
     {
         $form = '';
 
@@ -60,7 +60,7 @@ class ViewFormHelper extends Helper
     }
 
     //division用の登録、編集フォームのヘルパーメソッド
-    public function divisionForm($data, $action)
+    public function generateDivisionForm($data, $action)
     {
         $form = '';
 
@@ -78,7 +78,7 @@ class ViewFormHelper extends Helper
     }
 
     //meishi用の登録、編集フォームのへルーパーメソッド
-    public function meishiForm($data, $option = null, $action)
+    public function generateMeishiForm($data, $option = null, $action)
     {
         $form = '';
 
@@ -119,7 +119,7 @@ class ViewFormHelper extends Helper
     }
 
     //estimate用の登録、編集フォームのヘルパーメソッド
-    public function estimateForm($options, $requestData, $action)
+    public function generateEstimateForm($options, $requestData, $action)
     {
         $form = '';
         $form .= $this->Form->create(null);
