@@ -20,7 +20,7 @@ class DivisionsController extends AppController
     {
 
         //権限が無くてもアクセスできるアクション
-        if (in_array($this->request->getParam('action'), ['index', 'view', 'add', 'edit', 'delete'])) {
+        if (in_array($this->request->getParam('action'), ['index', 'view'])) {
             $this->Authorization->skipAuthorization();
         }
     }
@@ -122,6 +122,10 @@ class DivisionsController extends AppController
     public function add()
     {
         $division = $this->Divisions->newEmptyEntity();
+
+        //アクセスの権限がなかった場合の処理
+        $this->checkPermission($division, 'add');
+
         if ($this->request->is('post')) {
             $division = $this->Divisions->patchEntity($division, $this->request->getData());
             if ($this->Divisions->save($division)) {
@@ -151,6 +155,10 @@ class DivisionsController extends AppController
         $division = $this->Divisions->get($id, [
             'contain' => [],
         ]);
+
+        //アクセス権限の確認
+        $this->checkPermission($division, 'edit');
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $division = $this->Divisions->patchEntity($division, $this->request->getData());
             if ($this->Divisions->save($division)) {
@@ -179,6 +187,10 @@ class DivisionsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $division = $this->Divisions->get($id);
+
+        //アクセス権限の確認
+        $this->checkPermission($division, 'delete');
+
         if ($this->Divisions->delete($division)) {
             $this->Flash->success(__('The division has been deleted.'));
         } else {

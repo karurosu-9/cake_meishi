@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Event\EventInterface;
+use App\Controller\AppController;
 
 
 
@@ -41,6 +42,7 @@ class UsersController extends AppController
         ];
 
         $this->Divisions = $this->getTableLocator()->get('Divisions');
+        //ログインユーザーの値を取得するコンポーネント
         $this->loadComponent('LoginUser');
     }
 
@@ -131,10 +133,8 @@ class UsersController extends AppController
 
         $user = $this->Users->newEmptyEntity();
 
-        if (!$this->Authorization->can($user, 'add')) {
-            $this->Flash->error(__('権限がないのでアクセスできません。'));
-            return $this->redirect(['action' => 'index']);
-        }
+        //アクセス権限の確認)(AppControllerからの関数)
+        $this->checkPermission($user, 'add');
 
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -169,10 +169,9 @@ class UsersController extends AppController
     {
         $user = $this->Users->get($id);
 
-        //ログインユーザーのadminが`システム`または管理者か、Entityの対象が自分自身でないとアクセス拒否
-        if (!$this->Authorization->can($user, 'edit')) {
-            return $this->redirect(['action' => 'index']);
-        }
+        //アクセス権限の確認
+        $this->checkPermission($user, 'edit');
+
         $user = $this->Users->get($id, [
             'contain' => ['Divisions'],
         ]);
@@ -209,10 +208,9 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
 
-        //ログインユーザーのadminが`システム`または管理者じゃないとアクセス拒否
-        if (!$this->Authorization->can($user, 'delete')) {
-            return $this->redirect(['action' => 'index']);
-        }
+        //アクセス権限の確認
+        $this->checkPermission($user, 'delete');
+
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {

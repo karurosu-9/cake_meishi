@@ -123,10 +123,8 @@ class CorpsController extends AppController
     {
         $corp = $this->Corps->newEmptyEntity();
 
-        if (!$this->Authorization->can($corp, 'add')) {
-            $this->Flash->error(__('権限がないのでアクセスできません。'));
-            return $this->redirect(['action' => 'index']);
-        }
+        //
+        $this->checkPermission($corp, 'add');
 
         if ($this->request->is('post')) {
             $corp = $this->Corps->patchEntity($corp, $this->request->getData());
