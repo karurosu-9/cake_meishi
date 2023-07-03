@@ -44,25 +44,24 @@ class ViewFormHelper extends Helper
     public function generateUserForm($data, $option, $option2, $action) {
         $form = '';
 
-        $option = [
-            '' => '-- 所属部署を選択してください。--'
-        ] + $option;
-
-        $option2 = [
-            '' => '-- 権限を選択してください。--',
-        ] + $option2;
+        
 
         $form .= $this->Form->create($data);
         $form .= $this->Form->control('division_id', [
-            'options' => $option,
+            'options' => [
+                '' => '-- 所属部署を選択してください。--',
+            ] + $option,
             'value' => '',
         ]);
         $form .= $this->Form->control('user_name');
         $form .= $this->Form->control('password');
         $form .= $this->Form->control('admin', [
-            'options' => $option2,
+            'options' => [
+                '' => '-- 権限を選択してください。--',
+            ] + $option2,
             'value' => '',
         ]);
+        
         if ($action === 'add') {
             $form .= $this->Form->button(__('Register'));
         } elseif ($action === 'edit') {
