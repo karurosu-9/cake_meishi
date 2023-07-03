@@ -10,5 +10,5 @@ echo $this->Html->script('estimate.js');
     <h2><?= h($estimate->corp->corp_name) ?>への見積作成</h2>
     <br>
     <br>
-    <?= $this->Common->estimateForm($estimateDate, $estimate, 'edit') ?>
+    <?= $this->ViewForm->estimateForm($estimateDate, $estimate, 'edit') ?>
 </div>

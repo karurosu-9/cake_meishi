@@ -3,7 +3,7 @@
     <br>
     <br>
     <!-- フォームの表示を自作ヘルパーから表示 -->
-    <?= $this->Common->meishiForm($meishi, $corps, 'add') ?>
+    <?= $this->ViewForm->meishiForm($meishi, $corps, 'add') ?>
     <br>
     <br>
     <div style="font-size: 20px">

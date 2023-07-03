@@ -6,7 +6,7 @@
         ※部署名検索
     </div>
     <!-- 検索フォームをヘルパーメソッドから表示 -->
-    <?= $this->Common->searchForm($divisions) ?>
+    <?= $this->ViewForm->searchForm($divisions) ?>
     <table>
         <tr>
             <th><?= __('Division Name') ?></th>

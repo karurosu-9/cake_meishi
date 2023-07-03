@@ -2,7 +2,7 @@
     <h1><?= __('Division Edit') ?></h1>
     <br>
     <br>
-    <?= $this->Common->divisionForm($division, 'edit') ?>
+    <?= $this->ViewForm->divisionForm($division, 'edit') ?>
     <br>
     <br>
     <div style="font-size: 20px">

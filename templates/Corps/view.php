@@ -6,7 +6,7 @@
         ※名前検索
     </div>
     <!-- 検索フォームをヘルパーメソッドから表示 -->
-    <?= $this->Common->searchForm($meishiData) ?>
+    <?= $this->ViewForm->searchForm($meishiData) ?>
     <table>
         <tr>
             <th><?= __('Division Name') ?></th>

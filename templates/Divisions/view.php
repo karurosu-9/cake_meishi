@@ -6,7 +6,7 @@
         ※名前検索
     </div>
     <!-- 検索フォームをヘルパーメソッドから表示 -->
-    <?= $this->Common->searchForm($users) ?>
+    <?= $this->ViewForm->searchForm($users) ?>
     <table>
         <tr>
             <th><?= __('User Id') ?></th>

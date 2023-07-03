@@ -11,7 +11,7 @@
         ※会社名検索
     </div>
     <!--  検索フォームをヘルパーメソッドから表示 -->
-    <?= $this->Common->searchForm($corps) ?>
+    <?= $this->ViewForm->searchForm($corps) ?>
     <table>
         <tr>
             <th><?= __('Corp Name') ?></th>

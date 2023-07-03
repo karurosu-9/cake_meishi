@@ -3,7 +3,7 @@
     <br>
     <br>
     <!-- 編集用のフォームをヘルパーメソッドで表示 -->
-    <?= $this->Common->corpForm($corp, 'edit') ?>
+    <?= $this->ViewForm->corpForm($corp, 'edit') ?>
     <br>
     <br>
     <div style="font-size: 20px">
