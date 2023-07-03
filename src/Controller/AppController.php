@@ -52,4 +52,12 @@ class AppController extends Controller
          */
         //$this->loadComponent('FormProtection');
     }
+
+    //ログインユーザーのadminが`システム`または管理者か、Entityの対象が自分自身でないとアクセス拒否
+    protected function checkPermission($resource, $action) {
+        if (!$this->Authorization->can($resource, $action)) {
+            $this->Flash->error('no');
+            return $this->redirect(['action' => 'index']);
+        }
+    }
 }
