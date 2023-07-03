@@ -40,6 +40,39 @@ class ViewFormHelper extends Helper
         return $form;
     }
 
+    //user用の登録、編集フォームのヘルパーメソッド
+    public function generateUserForm($data, $option, $option2, $action) {
+        $form = '';
+
+        $option = [
+            '' => '-- 所属部署を選択してください。--'
+        ] + $option;
+
+        $option2 = [
+            '' => '-- 権限を選択してください。--',
+        ] + $option2;
+
+        $form .= $this->Form->create($data);
+        $form .= $this->Form->control('division_id', [
+            'options' => $option,
+            'value' => '',
+        ]);
+        $form .= $this->Form->control('user_name');
+        $form .= $this->Form->control('password');
+        $form .= $this->Form->control('admin', [
+            'options' => $option2,
+            'value' => '',
+        ]);
+        if ($action === 'add') {
+            $form .= $this->Form->button(__('Register'));
+        } elseif ($action === 'edit') {
+            $form .= $this->Form->button(__('Edit'));
+        }
+        $form .= $this->Form->end();
+
+        return $form;
+    }
+
     //corp用の登録、編集フォームのヘルパーメソッド
     public function generateCorpForm($data, $action)
     {
