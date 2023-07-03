@@ -19,7 +19,7 @@ class CorpsController extends AppController
     {
         parent::beforeFilter($event);
         //権限が無くてもアクセスできるアクション
-        if (in_array($this->request->getParam('action'), ['index', 'view', 'edit', 'delete'])) {
+        if (in_array($this->request->getParam('action'), ['index', 'view'])) {
             $this->Authorization->skipAuthorization();
         }
     }
@@ -156,8 +156,15 @@ class CorpsController extends AppController
         $corp = $this->Corps->get($id, [
             'contain' => [],
         ]);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $corp = $this->Corps->patchEntity($corp, $this->request->getData());
+            //アクセス権限がない場合の処理
+            if (!$this->Authorization->can($corp, 'add')) {
+                $this->Flash->error(__('権限がないのでアクセスできません。'));
+                return $this->redirect(['action' => 'index']);
+            }
+            
             if ($this->Corps->save($corp)) {
                 $this->Flash->success(__('The corp has been saved.'));
 
@@ -184,6 +191,13 @@ class CorpsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $corp = $this->Corps->get($id);
+
+        //アクセスの権限がない場合の処理
+        if (!$this->Authorization->can($corp, 'add')) {
+            $this->Flash->error(__('権限がないのでアクセスできません。'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         if ($this->Corps->delete($corp)) {
             $this->Flash->success(__('The corp has been deleted.'));
         } else {
