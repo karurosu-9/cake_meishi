@@ -23,6 +23,10 @@ class EstimatePolicy
         return $user->authorized_user || $user->admin === '経理';
     }
 
+    public function canConfirmEstimate(IdentityInterface $user) {
+        return $user->authorized_user || $user->admin === '経理';
+    }
+
     /**
      * Check if $user can edit Estimate
      *

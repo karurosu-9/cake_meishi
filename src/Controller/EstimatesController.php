@@ -21,7 +21,7 @@ class EstimatesController extends AppController
     {
         parent::beforeFilter($event);
         //権限が無くてもアクセスできるアクション
-        if (in_array($this->request->getParam('action'), ['index', 'view', 'add', 'confirmEstimate', 'edit', 'delete'])) {
+        if (in_array($this->request->getParam('action'), ['index', 'view', 'delete'])) {
             $this->Authorization->skipAuthorization();
         }
     }
@@ -173,6 +173,9 @@ class EstimatesController extends AppController
      */
     public function add()
     {
+        //アクセス制限の確認
+        $estimate = $this->Estimates->newEmptyEntity();
+        $this->checkPermission($estimate, 'add');
         $postData = [];
         $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name'])->all();
         $options = ['' => '---  会社を選択してください。 ---'] + $corps->toArray();
@@ -197,11 +200,13 @@ class EstimatesController extends AppController
 
     public function confirmEstimate()
     {
+        //アクセス制限の確認
+        $estimate = $this->Estimates->newEmptyEntity();
+        $this->checkPermission($estimate, 'confirmEstimate');
+
         $postData = $this->request->getSession()->read('postData');
 
         $loginUser = $this->LoginUser->getLoginUser();
-
-        $estimate = [];
 
         //新規作成用のデータを入れるのか編集用のデータなのかを区別
         if (!empty($postData['id'])) {
@@ -315,6 +320,10 @@ class EstimatesController extends AppController
      */
     public function edit($id = null)
     {
+        //アクセス制限の確認
+        $estimateEntity = $this->Estimates->newEmptyEntity();
+        $this->checkPermission($estimateEntity, 'edit');
+         
         $estimate = $this->Estimates->get($id, [
             'contain' => ['Corps'],
         ]);
