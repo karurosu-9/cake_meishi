@@ -130,7 +130,7 @@ class UsersController extends AppController
      */
     public function add()
     {
-
+        $userFormData = [];
         $user = $this->Users->newEmptyEntity();
 
         //アクセス権限の確認)(AppControllerからの関数)
@@ -138,7 +138,12 @@ class UsersController extends AppController
 
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $userFormData = $this->request->getData();
+            
+            //自作関数からadminの値を取得
+            $user->admin = $this->selectAdmin($userFormData);
+            
+            $user = $this->Users->patchEntity($user, $userFormData);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -148,7 +153,15 @@ class UsersController extends AppController
         }
         //$divisionsにdivisionNameカラムの値を格納している
         $divisions = $this->Divisions->find('list', ['valueField' => 'division_name', 'limit' => 200])->toArray();
-        $usersAdminList = $this->Users->find('list', ['valueField' => 'admin', 'limit' => 100])->toArray();
+
+        //division_nameをadminの登録用の名前に変換
+        $usersAdminList = [];
+        $excludeDivisions = ['管理者'];
+        $divisions = array_diff($divisions, $excludeDivisions);
+        foreach ($divisions as $name) {
+           $usersAdminList[] = $name;
+        }
+
         $data = [
             'user' => $user,
             'divisions' => $divisions,
@@ -176,7 +189,13 @@ class UsersController extends AppController
             'contain' => ['Divisions'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+
+            $userFormData = $this->request->getData();
+
+            //自作関数からadminの値を取得
+            $user->admin = $this->selectAdmin($userFormData);
+
+            $user = $this->Users->patchEntity($user, $userFormData);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -185,7 +204,13 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $divisions = $this->Divisions->find('list', ['limit' => 200, 'valueField' => 'division_name'])->toArray();
-        $usersAdminList = $this->Users->find('list', ['limit' => 200, 'valueField' => 'admin'])->toArray();
+        
+        //division_nameをadminの登録用の名前に変換
+        $usersAdminList = [];
+        foreach($divisions as $name) {
+            
+        }
+
         $data = [
             'user' => $user,
             'divisions' => $divisions,
@@ -218,5 +243,21 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    private function selectAdmin($formData) {
+
+        $user = $this->Users->newEmptyEntity();
+
+        //所属部署によって、adminを自動設定---division_idの1は管理者に設定
+        if ($formData['division_id'] === '2') {  //division_idの2は経理に設定
+            $user->admin = '経理';
+        } elseif ($formData['division_id'] === '3') {  //division_idの3はシステムに設定
+            $user->admin = 'システム';
+        } else {
+            $user->admin = '一般';
+        }
+
+        return $user->admin;
     }
 }
