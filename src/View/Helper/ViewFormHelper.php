@@ -41,27 +41,28 @@ class ViewFormHelper extends Helper
     }
 
     //user用の登録、編集フォームのヘルパーメソッド
-    public function generateUserForm($data, $option, $option2, $action) {
+    public function generateUserForm($data, $option, $option2, $action, $user = null)
+    {
         $form = '';
 
-        
+
 
         $form .= $this->Form->create($data);
-        $form .= $this->Form->control('division_id', [
-            'options' => [
-                '' => '-- 所属部署を選択してください。--',
-            ] + $option,
-            'value' => '',
-        ]);
+        if ($action === 'add') {
+            $form .= $this->Form->control('division_id', [
+                'options' => [
+                    '' => '-- 所属部署を選択してください。--',
+                ] + $option,
+                'value' => '',
+            ]);
+        } elseif ($action === 'edit') {
+            $form .= $this->Form->control('division_id', [
+                'options' => $option,
+            ]);
+        }
         $form .= $this->Form->control('user_name');
         $form .= $this->Form->control('password');
-        $form .= $this->Form->control('admin', [
-            'options' => [
-                '' => '-- 権限を選択してください。--',
-            ] + $option2,
-            'value' => '',
-        ]);
-        
+        //アクションボタンの変更
         if ($action === 'add') {
             $form .= $this->Form->button(__('Register'));
         } elseif ($action === 'edit') {
