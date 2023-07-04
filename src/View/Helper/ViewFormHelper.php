@@ -162,7 +162,7 @@ class ViewFormHelper extends Helper
             $form .= $this->Form->control('corp_id', [
                 'options' => $options,
                 'label' => '会社を選択してください。',
-                'style' => 'width: 200px',
+                'style' => 'width: 300px',
                 'required' => true,
             ]);
 
