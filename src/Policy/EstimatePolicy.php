@@ -32,6 +32,7 @@ class EstimatePolicy
      */
     public function canEdit(IdentityInterface $user, Estimate $estimate)
     {
+        return $user->authorized_user || $user->admin === '経理';
     }
 
     /**
@@ -43,6 +44,7 @@ class EstimatePolicy
      */
     public function canDelete(IdentityInterface $user, Estimate $estimate)
     {
+        return $user->authorized_user || $user->admin === '経理';
     }
 
     /**
