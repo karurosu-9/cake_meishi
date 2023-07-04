@@ -5,6 +5,10 @@
     <hr>
     <p>所属部署：　<?= h($user->division->division_name) ?></p>
     <hr>
+    <?php if ($loginUser->admin === '管理者' || $loginUser->admin === 'システム'): ?>
+        <p>管理区分：　<?= h($user->admin) ?></p>
+        <hr>
+    <?php endif; ?>
     <?php if ($loginUser->admin === '管理者' || $loginUser->admin === 'システム' || $loginUser->id === $user->id) : ?>
         <div class="button">
             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
