@@ -54,8 +54,8 @@ class AppController extends Controller
     }
 
     //ログインユーザーのadminが`システム`または管理者か、Entityの対象が自分自身でないとアクセス拒否
-    protected function checkPermission($resource, $action) {
-        if (!$this->Authorization->can($resource, $action)) {
+    protected function checkPermission($entity, $action) {
+        if (!$this->Authorization->can($entity, $action)) {
             $this->Flash->error('権限がないため、アクセスできません。');
             return $this->redirect(['action' => 'index']);
         }
