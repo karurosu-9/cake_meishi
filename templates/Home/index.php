@@ -60,6 +60,7 @@
                         <br>
                         ・<?= $this->Html->link(__('Corps Add'), ['controller' => 'Corps', 'action' => 'add']) ?>
                         <br>
+                        ・<?= $this->Html->link(__('Meishi Add'), ['controller' => 'Meishi', 'action' => 'add']) ?>
                     </div>
                     <div class="center-menu">
                         <p><?= __('List') ?></p>
