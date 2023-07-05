@@ -29,8 +29,9 @@ class MeishiPolicy
      * @param \App\Model\Entity\Meishi $meishi
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Meishi $meishi)
+    public function canEdit(IdentityInterface $user)
     {
+        $user->authorized_user; 
     }
 
     /**
@@ -42,6 +43,7 @@ class MeishiPolicy
      */
     public function canDelete(IdentityInterface $user, Meishi $meishi)
     {
+        $user->authorized_user;
     }
 
     /**
