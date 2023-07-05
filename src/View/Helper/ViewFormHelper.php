@@ -41,27 +41,29 @@ class ViewFormHelper extends Helper
     }
 
     //user用の登録、編集フォームのヘルパーメソッド
-    public function generateUserForm($data, $option, $option2, $action, $user = null)
+    public function generateUserForm($data, $option = null, $action)
     {
         $form = '';
 
-
-
         $form .= $this->Form->create($data);
-        if ($action === 'add') {
+        if ($action === 'add' && $option !== null) {
             $form .= $this->Form->control('division_id', [
                 'options' => [
                     '' => '-- 所属部署を選択してください。--',
                 ] + $option,
                 'value' => '',
+                'required' => true,
             ]);
-        } elseif ($action === 'edit') {
+        } elseif ($action === 'edit' && $option !== null) {
             $form .= $this->Form->control('division_id', [
                 'options' => $option,
+                'required' => true,
             ]);
         }
         $form .= $this->Form->control('user_name');
         $form .= $this->Form->control('password');
+        $form .= '<br><br>';
+
         //アクションボタンの変更
         if ($action === 'add') {
             $form .= $this->Form->button(__('Register'));
@@ -81,6 +83,8 @@ class ViewFormHelper extends Helper
         $form .= $this->Form->create($data);
         $form .= $this->Form->control('corp_name');
         $form .= $this->Form->control('address');
+        $form .= '<br><br>';
+
         //アクションに応じてボタンの表示を変更
         if ($action === 'add') {
             $form .= $this->Form->button(__('Register'));
@@ -99,6 +103,8 @@ class ViewFormHelper extends Helper
 
         $form .= $this->Form->create($data);
         $form .= $this->Form->control('division_name');
+        $form .= '<br><br>';
+
         //アクションに応じてボタンの表示を変更
         if ($action === 'add') {
             $form .= $this->Form->button(__('Register'));
@@ -119,9 +125,19 @@ class ViewFormHelper extends Helper
 
         if ($action === 'add' && $option !== null) {
             $form .= $this->Form->control('corp_id', [
-                'options' => $option,
+                'options' => [
+                    '' => '-- 会社を選択してください。--',
+                ] + $option,
+                'value' => '',
                 'label' => '会社を選択してください',
-                'style' => 'width:200px;',
+                'style' => 'width:300px;',
+                'required' => true,
+            ]);
+        } elseif ($action === 'edit' && $option !== null) {
+            $form .= $this->control('corp_id', [
+                'options' => $option,
+                'label' => '会社を選択してください。',
+                'style' => 'width:300px',
                 'required' => true,
             ]);
         }
@@ -141,6 +157,9 @@ class ViewFormHelper extends Helper
         $form .= '<td>' . $this->Form->text('tel', ['required' => true]) . '</td>';
         $form .= '</tr>';
         $form .= '</table>';
+        $form .= '<br><br>';
+
+        //アクションに応じてボタンの表示の変更
         if ($action === 'add') {
             $form .= $this->Form->button(__('Register'));
         } elseif ($action === 'edit') {
@@ -152,15 +171,18 @@ class ViewFormHelper extends Helper
     }
 
     //estimate用の登録、編集フォームのヘルパーメソッド
-    public function generateEstimateForm($options, $requestData, $action)
+    public function generateEstimateForm($option = null, $requestData, $action)
     {
         $form = '';
         $form .= $this->Form->create(null);
 
-        if ($action === 'add') {
+        if ($action === 'add' && $option !== null) {
             //見積を出す企業の選択フォーム
             $form .= $this->Form->control('corp_id', [
-                'options' => $options,
+                'options' => [
+                    'value' => '-- 会社を選択してください。--',
+                ] + $option,
+                 'value' => '',
                 'label' => '会社を選択してください。',
                 'style' => 'width: 300px',
                 'required' => true,
@@ -200,11 +222,11 @@ class ViewFormHelper extends Helper
             for ($i = 1; $i <= EstimateConst::FORM_HOSOKU; $i++) {
                 $form .= $this->Form->text('hosoku' . $i, ['value' => isset($requestData['hosoku' . $i]) ? h($requestData['hosoku' . $i]) : '']);
             }
-        } elseif ($action === 'edit') {
+        } elseif ($action === 'edit' && $option !== null) {
             //日付選択フォーム
             $form .= $this->Form->control('date', [
                 'type' => 'date',
-                'default' => $options,
+                'default' => $option,
                 'label' => '※変更があれば日付を選択してください。',
                 'style' => 'width:150px',
                 'required' => true,
@@ -244,11 +266,18 @@ class ViewFormHelper extends Helper
                 $form .= $this->Form->text('hosoku' . $i, ['value' => isset($requestData['hosoku' . $i]) ? h($requestData['hosoku' . $i]) : '']);
             }
         }
-
         $form .= '<br><br>';
-        $form .= '<div class="button">';
-        $form .= $this->Form->button(__('OK'));
-        $form .= '</div>';
+
+        //アクションに応じてボタンの表示の変更
+        if ($action === 'add') {
+            $form .= '<div class="button">';
+            $form .= $this->Form->button(__('Register'));
+            $form .= '</div>';
+        } elseif ($action === 'edit') {
+            $form .= '<div class="button">';
+            $form .= $this->Form->button(__('Edit'));
+            $form .= '</div>';
+        }
         $form .= $this->Form->end();
 
         return $form;
