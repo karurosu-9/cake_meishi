@@ -2,7 +2,7 @@
     <h1><?= __('User Edit') ?></h1>
     <br>
     <br>
-    <?= $this->ViewForm->generateUserForm($user, $divisions, $usersAdminList, 'edit') ?>
+    <?= $this->ViewForm->generateUserForm($user, $divisionsList, 'edit') ?>
     <br>
     <br>
     <div style="font-size: 20px">

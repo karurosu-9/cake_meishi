@@ -2,7 +2,7 @@
     <h1><?= __('User Register') ?></h1>
     <br>
     <br>
-    <?= $this->ViewForm->generateUserForm($user, $divisions, $usersAdminList, 'add') ?>
+    <?= $this->ViewForm->generateUserForm($user, $divisionsList, 'add') ?>
     <br>
     <br>
     <div style="font-size: 20px">
