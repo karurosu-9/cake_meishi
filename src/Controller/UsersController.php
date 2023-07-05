@@ -152,20 +152,19 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         //$divisionsにdivisionNameカラムの値を格納している
-        $divisions = $this->Divisions->find('list', ['valueField' => 'division_name', 'limit' => 200])->toArray();
+        $divisions = $this->Divisions->find('list', ['valueField' => 'division_name', 'limit' => 200])->order(['id' => 'ASC'])->toArray();
 
-        //division_nameをadminの登録用の名前に変換
-        $usersAdminList = [];
-        $excludeDivisions = ['管理者'];
+        //フォームの選択リストに表示しないものを設定
+        $divisionsList = [];
+        $excludeDivisions = ['管理課'];
         $divisions = array_diff($divisions, $excludeDivisions);
-        foreach ($divisions as $name) {
-           $usersAdminList[] = $name;
+        foreach ($divisions as $id => $name) {
+           $divisionsList[$id] = $name;
         }
 
         $data = [
             'user' => $user,
-            'divisions' => $divisions,
-            'usersAdminList' => $usersAdminList,
+            'divisionsList' => $divisionsList,
         ];
 
         $this->set($data);
@@ -185,7 +184,7 @@ class UsersController extends AppController
             'contain' => ['Divisions'],
         ]);
         $this->checkPermission($user, 'edit');
-        
+
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $userFormData = $this->request->getData();
@@ -201,18 +200,20 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $divisions = $this->Divisions->find('list', ['limit' => 200, 'valueField' => 'division_name'])->toArray();
+        $divisions = $this->Divisions->find('list', ['limit' => 200, 'valueField' => 'division_name'])->order(['id' => 'ASC'])->toArray();
         
-        //division_nameをadminの登録用の名前に変換
-        $usersAdminList = [];
-        foreach($divisions as $name) {
-            
+        //フォームの選択リストに表示しないものを設定
+        $divisionsList = [];
+        $excludeDivisions = ['管理課'];
+        $divisions = array_diff($divisions, $excludeDivisions);
+        foreach($divisions as $id => $name) {
+            $divisionsList[$id] = $name;
         }
+        var_dump($divisionsList);
 
         $data = [
             'user' => $user,
-            'divisions' => $divisions,
-            'usersAdminList' => $usersAdminList,
+            'divisionsList' => $divisionsList,
         ]; 
 
         $this->set($data);
