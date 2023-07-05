@@ -131,9 +131,9 @@ class UsersController extends AppController
     public function add()
     {
         $userFormData = [];
-        $user = $this->Users->newEmptyEntity();
 
         //アクセス権限の確認)(AppControllerからの関数)
+        $user = $this->Users->newEmptyEntity();
         $this->checkPermission($user, 'add');
 
         $user = $this->Users->newEmptyEntity();
@@ -180,14 +180,12 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Users->get($id);
-
         //アクセス権限の確認
-        $this->checkPermission($user, 'edit');
-
         $user = $this->Users->get($id, [
             'contain' => ['Divisions'],
         ]);
+        $this->checkPermission($user, 'edit');
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $userFormData = $this->request->getData();
@@ -231,9 +229,9 @@ class UsersController extends AppController
     {
 
         $this->request->allowMethod(['post', 'delete']);
-        $user = $this->Users->get($id);
 
         //アクセス権限の確認
+        $user = $this->Users->get($id);
         $this->checkPermission($user, 'delete');
 
         if ($this->Users->delete($user)) {

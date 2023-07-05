@@ -38,7 +38,10 @@ class MeishiController extends AppController
      */
     public function add()
     {
+        //自作関数でのアクセス権限の確認
         $meishi = $this->Meishi->newEmptyEntity();
+        $this->checkPermission($meishi, 'add');
+
         if ($this->request->is('post')) {
 
             $meishi = $this->Meishi->patchEntity($meishi, $this->request->getData());
@@ -71,6 +74,10 @@ class MeishiController extends AppController
         $meishi = $this->Meishi->get($id, [
             'contain' => ['Corps'],
         ]);
+
+        //アクセス権限の確認
+        $this->checkPermission($meishi, 'edit');
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $meishi = $this->Meishi->patchEntity($meishi, $this->request->getData());
             if ($this->Meishi->save($meishi)) {
@@ -84,6 +91,7 @@ class MeishiController extends AppController
         $data = [
             'meishi' => $meishi,
         ];
+        
         $this->set($data);
     }
 
@@ -97,7 +105,11 @@ class MeishiController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+
+        //アクセス権限の確認
         $meishi = $this->Meishi->get($id);
+        $this->checkPermission($meishi, 'delete');
+        
         if ($this->Meishi->delete($meishi)) {
             $this->Flash->success(__('The meishi has been deleted.'));
         } else {

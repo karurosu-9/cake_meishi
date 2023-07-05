@@ -123,7 +123,7 @@ class DivisionsController extends AppController
     {
         $division = $this->Divisions->newEmptyEntity();
 
-        //アクセスの権限がなかった場合の処理
+        //自作関数でのアクセスの権限の確認
         $this->checkPermission($division, 'add');
 
         if ($this->request->is('post')) {

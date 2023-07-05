@@ -173,9 +173,10 @@ class EstimatesController extends AppController
      */
     public function add()
     {
-        //アクセス制限の確認
+        //自作関数でのアクセス制限の確認
         $estimate = $this->Estimates->newEmptyEntity();
         $this->checkPermission($estimate, 'add');
+
         $postData = [];
         $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name'])->all();
         $options = ['' => '---  会社を選択してください。 ---'] + $corps->toArray();
@@ -319,14 +320,13 @@ class EstimatesController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
-    {
-        //アクセス制限の確認
-        $estimateEntity = $this->Estimates->newEmptyEntity();
-        $this->checkPermission($estimateEntity, 'edit');
-         
+    {    
         $estimate = $this->Estimates->get($id, [
             'contain' => ['Corps'],
         ]);
+
+        //アクセス権限の確認
+        $this->checkPermission($estimate, 'edit');
 
         $estimateDate = $estimate->date;
 
@@ -359,6 +359,10 @@ class EstimatesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $estimate = $this->Estimates->get($id);
+
+        //アクセス権限の確認
+        $this->checkPermission($estimate, 'delete');
+
         if ($this->Estimates->delete($estimate)) {
             $this->Flash->success(__('The estimate has been deleted.'));
         } else {
