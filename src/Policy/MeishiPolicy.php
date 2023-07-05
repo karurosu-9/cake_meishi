@@ -5,12 +5,21 @@ namespace App\Policy;
 
 use App\Model\Entity\Meishi;
 use Authorization\IdentityInterface;
+use Authorization\Policy\BeforePolicyInterface;
 
 /**
  * Meishi policy
  */
-class MeishiPolicy
+class MeishiPolicy implements BeforePolicyInterface
 {
+    //管理者は全てのアクションにアクセスできる
+    public function before($user, $resource, $action)
+    {
+        if ($user->is_admin) {
+            return true;
+        }
+    }
+
     /**
      * Check if $user can add Meishi
      *

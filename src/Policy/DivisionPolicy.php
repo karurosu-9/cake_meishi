@@ -5,12 +5,20 @@ namespace App\Policy;
 
 use App\Model\Entity\Division;
 use Authorization\IdentityInterface;
+use Authorization\Policy\BeforePolicyInterface;
 
 /**
  * Division policy
  */
-class DivisionPolicy
+class DivisionPolicy implements BeforePolicyInterface
 {
+    //管理者は全てのアクションにアクセスできる
+    public function before($user, $resource, $action)
+    {
+        if ($user->is_admin) {
+            return true;
+        }
+    }
     /**
      * Check if $user can add Division
      *

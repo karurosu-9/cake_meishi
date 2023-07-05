@@ -5,12 +5,20 @@ namespace App\Policy;
 
 use App\Model\Entity\Estimate;
 use Authorization\IdentityInterface;
+use Authorization\Policy\BeforePolicyInterface;
 
 /**
  * Estimate policy
  */
-class EstimatePolicy
+class EstimatePolicy implements BeforePolicyInterface
 {
+    //管理者は全てのアクションにアクセスできる
+    public function before($user, $resource, $action)
+    {
+        if ($user->is_admin) {
+            return true;
+        }
+    }
     /**
      * Check if $user can add Estimate
      *

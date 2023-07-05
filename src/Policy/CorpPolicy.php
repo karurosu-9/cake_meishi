@@ -5,12 +5,20 @@ namespace App\Policy;
 
 use App\Model\Entity\Corp;
 use Authorization\IdentityInterface;
+use Authorization\Policy\BeforePolicyInterface;
 
 /**
  * Corp policy
  */
-class CorpPolicy
+class CorpPolicy implements BeforePolicyInterface
 {
+    //管理者は全てのアクションにアクセスできる
+    public function before($user, $resource, $action)
+    {
+        if ($user->is_admin) {
+            return true;
+        }
+    }
     /**
      * Check if $user can add Corp
      *

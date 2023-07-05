@@ -5,12 +5,21 @@ namespace App\Policy;
 
 use App\Model\Entity\User;
 use Authorization\IdentityInterface;
+use Authorization\Policy\BeforePolicyInterface;
 
 /**
  * User policy
  */
-class UserPolicy
+class UserPolicy implements BeforePolicyInterface
 {
+    //管理者は全てのアクションにアクセスできる
+    public function before($user, $resource, $action)
+    {
+        if ($user->is_admin) {
+            return true;
+        }
+    }
+
     /**
      * Check if $user can add User
      *
