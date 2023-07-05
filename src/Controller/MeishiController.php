@@ -52,7 +52,7 @@ class MeishiController extends AppController
             }
             $this->Flash->error(__('The meishi could not be saved. Please, try again.'));
         }
-        $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name'])->all();
+        $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name'])->toArray();
 
         $data = [
             'meishi' => $meishi,
@@ -109,7 +109,7 @@ class MeishiController extends AppController
         //アクセス権限の確認
         $meishi = $this->Meishi->get($id);
         $this->checkPermission($meishi, 'delete');
-        
+
         if ($this->Meishi->delete($meishi)) {
             $this->Flash->success(__('The meishi has been deleted.'));
         } else {
