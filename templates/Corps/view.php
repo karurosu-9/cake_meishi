@@ -44,6 +44,8 @@
             <?php endforeach; ?>
         <?php endif; ?>
     </table>
+    <!-- controllerのpaginateに指定した数以上でページネーションの表示  -->
+    <?php if ($meishiDataCount >= 31) : ?>
     <div class="paginator">
         <ul class="pagination">
             <?php
@@ -55,6 +57,7 @@
             ?>
         </ul>
     </div>
+    <?php endif; ?>
     <br>
     <br>
     <div style="font-size: 20px">
