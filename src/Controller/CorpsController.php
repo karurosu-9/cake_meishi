@@ -39,6 +39,7 @@ class CorpsController extends AppController
         $this->loadComponent('LoginUser');
 
     }
+
     /**
      * Index method
      *
@@ -47,15 +48,19 @@ class CorpsController extends AppController
     public function index()
     {
 
+        $searchCorp = [];
+        $corpsCount = 0;
+        //ヘルパーからログインユーザーの値を取得
         $loginUser = $this->LoginUser->getLoginUser();
 
+        //全リストを表示させるときの処理
         $corps = $this->Corps->find('all');
 
-        $keyword = '';
+        $corpsList = $this->Corps->find('list', ['valueField' => 'corp_name', 'limit' => 200])->order(['corp_name' => 'ASC'])->toArray();
 
-        if ($this->request->is('put')) {
-            $keyword = $this->request->getData('keyword');
-            $corps->where(['Corps.corp_name LIKE' => '%' . $keyword . '%']);
+        if ($this->request->getQuery('corp_id')) {
+            $searchId = $this->request->getQuery('corp_id');
+            $corps = $corps->find('all')->where(['id' => $searchId]);
         }
 
         $corpsCount = $corps->count();
@@ -64,8 +69,10 @@ class CorpsController extends AppController
 
         $data = [
             'corps' => $corps,
-            'corpsCount' => $corpsCount,
             'loginUser' => $loginUser,
+            'corpsList' => $corpsList,
+            'searchCorp' => $searchCorp,
+            'corpsCount' => $corpsCount,
         ];
 
         $this->set($data);
