@@ -202,19 +202,58 @@ class UsersController extends AppController
         }
         $divisions = $this->Divisions->find('list', ['limit' => 200, 'valueField' => 'division_name'])->order(['id' => 'ASC'])->toArray();
         
-        //フォームの選択リストに表示しないものを設定
+
         $divisionsList = [];
+        //フォームの選択リストに表示しないものを設定
         $excludeDivisions = ['管理課'];
         $divisions = array_diff($divisions, $excludeDivisions);
         foreach($divisions as $id => $name) {
             $divisionsList[$id] = $name;
         }
-        var_dump($divisionsList);
 
         $data = [
             'user' => $user,
             'divisionsList' => $divisionsList,
         ]; 
+
+        $this->set($data);
+    }
+
+    //パスワード変更用のアクション
+    public function changePassword($id)
+    {
+        $userData = [];
+
+        $user = $this->Users->get($id, [
+            'contain' => ['Divisions'],
+        ]);
+
+        //アクセス権限の確認
+        $this->checkPermission($user, 'changePassword');
+
+        $userData = $user->toArray();
+        
+        if ($this->request->is(['post', 'patch', 'put'])) {
+            $password = $this->request->getData('newPassword');
+            $confirmPassword = $this->request->getData('confirmPassword');
+            //パスワードが一致していた場合の処理
+            if ($password === $confirmPassword) {
+                $userData['password'] = $password;
+                $this->Users->patchEntity($user, $userData);
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('パスワードを変更致しました。'));
+                    return $this->redirect(['action' => 'view', $user->id]);
+                } else {
+                    $this->Flash->error(__('パスワードを変更できませんでした。もう一度やり直してください。'));
+                }
+            } else {
+                $this->Flash->error(__('パスワードが一致しませんでした。もう一度やり直してください。'));
+            }
+        }
+
+        $data = [
+            'user' => $user,
+        ];
 
         $this->set($data);
     }

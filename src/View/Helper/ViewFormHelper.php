@@ -61,7 +61,6 @@ class ViewFormHelper extends Helper
             ]);
         }
         $form .= $this->Form->control('user_name');
-        $form .= $this->Form->control('password');
         $form .= '<br><br>';
 
         //アクションボタンの変更
