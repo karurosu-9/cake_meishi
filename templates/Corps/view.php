@@ -9,11 +9,6 @@
     <?= $this->ViewForm->generateSearchForm($meishiData) ?>
     <br>
     <br>
-    <div id="add-button" class="button">
-        <?= $this->Html->link(__('Meishi Add'), ['controller' => 'Meishi', 'action' => 'add']) ?>
-    </div> 
-    <br>
-    <br>
     <table>
         <tr>
             <th><?= __('Division Name') ?></th>
