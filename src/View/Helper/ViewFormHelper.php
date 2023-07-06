@@ -26,6 +26,25 @@ class ViewFormHelper extends Helper
         $this->Form = $this->_View->loadHelper('Form');
     }
 
+    //リストから選択する用のフォーム
+    public function generateListSearchForm($option)
+    {
+        $form = '';
+
+        $form .= $this->Form->create(null, ['type' => 'get', 'url' => ['action' => 'index']]);
+        $form .= $this->Form->control('corp_id', [
+            'options' => [
+                '' => '-- 会社を選択してください。--',
+            ] + h($option),
+            'value' => '',
+            'style' => 'width: 350px',
+        ]);
+        $form .= $this->Form->button(__('Search'));
+        $form .= $this->Form->end();
+        return $form;
+
+    }
+
     //検索フォームのヘルパーメソッド
     public function generateSearchForm($data)
     {
@@ -50,13 +69,13 @@ class ViewFormHelper extends Helper
             $form .= $this->Form->control('division_id', [
                 'options' => [
                     '' => '-- 所属部署を選択してください。--',
-                ] + $option,
+                ] + h($option),
                 'value' => '',
                 'required' => true,
             ]);
         } elseif ($action === 'edit' && $option !== null) {
             $form .= $this->Form->control('division_id', [
-                'options' => $option,
+                'options' => h($option),
                 'required' => true,
             ]);
         }
