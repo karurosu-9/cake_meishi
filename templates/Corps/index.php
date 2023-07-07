@@ -18,7 +18,7 @@
         ※会社名検索
     </div>
     <!--  検索フォームをヘルパーメソッドから表示 -->
-    <?= $this->ViewForm->generateListSearchForm($corpsList) ?> <!-- <//?= $this->ViewForm->generateSearchForm($corps) ?> -->
+    <?= $this->ViewForm->generateSearchListForm($formCorpsList, 'corp_id', 'index') ?>
     <br>
     <br>
     <table>
