@@ -27,15 +27,13 @@ class ViewFormHelper extends Helper
     }
 
     //リストから選択する用のフォーム
-    public function generateListSearchForm($option)
+    public function generateSearchListForm($option, $columnName, $action)
     {
         $form = '';
 
-        $form .= $this->Form->create(null, ['type' => 'get', 'url' => ['action' => 'index']]);
-        $form .= $this->Form->control('corp_id', [
-            'options' => [
-                '' => '-- 会社を選択してください。--',
-            ] + h($option),
+        $form .= $this->Form->create(null, ['type' => 'get', 'url' => ['action' => $action]]);
+        $form .= $this->Form->control($columnName, [
+            'options' => h($option),
             'value' => '',
             'style' => 'width: 350px',
         ]);

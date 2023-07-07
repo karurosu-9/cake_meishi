@@ -1,15 +1,16 @@
+<?= $this->Html->script('corp.js') ?>
 <div class="corps content">
     <h1><?= __(h($corp->corp_name)) ?></h1>
     <br>
     <br>
-    <div style="font-weight: bold; color: red;">
-        ※名前検索
-    </div>
-    <!-- 検索フォームをヘルパーメソッドから表示 -->
-    <?= $this->ViewForm->generateSearchForm($meishiData) ?>
+    <select id="select-division">
+        <?php foreach ($formDivisionsList as $division) : ?>
+            <option value="<?= $division ?>"><?= h($division) ?></option>
+        <?php endforeach; ?>
+    </select>
     <br>
     <br>
-    <table>
+    <table id="business-cards-table">
         <tr>
             <th><?= __('Division Name') ?></th>
             <th><?= __('title') ?></th>
@@ -19,11 +20,6 @@
             <th><?= __('Control') ?></th>
         </tr>
         <!-- 検索結果が0なら表示 -->
-        <?php if ($meishiDataCount === 0) : ?>
-            <tr>
-                <td><?= $this->Common->displayNoDataMessage($meishiDataCount) ?></td>
-            </tr>
-        <?php else : ?>
             <?php foreach ($meishiData as $meishi) : ?>
                 <tr>
                     <td><?= h($meishi->division) ?></td>
@@ -37,8 +33,8 @@
                     </td>
                 </tr>
             <?php endforeach; ?>
-        <?php endif; ?>
     </table>
+    <p class="no-data-message" style="display: none">※名刺データはありません。</p>
     <!-- controllerのpaginateに指定した数以上でページネーションの表示  -->
     <?php if ($meishiDataCount >= 31) : ?>
     <div class="paginator">

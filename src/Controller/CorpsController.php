@@ -56,7 +56,9 @@ class CorpsController extends AppController
         //全リストを表示させるときの処理
         $corps = $this->Corps->find('all');
 
+        //検索フォームに表示する用のリスト
         $corpsList = $this->Corps->find('list', ['valueField' => 'corp_name', 'limit' => 200])->order(['corp_name' => 'ASC'])->toArray();
+        $formCorpsList = ['' => '-- 会社を選択してください。--'] + $corpsList;
 
         if ($this->request->getQuery('corp_id')) {
             $searchId = $this->request->getQuery('corp_id');
@@ -70,9 +72,41 @@ class CorpsController extends AppController
         $data = [
             'corps' => $corps,
             'loginUser' => $loginUser,
-            'corpsList' => $corpsList,
+            'formCorpsList' => $formCorpsList,
             'searchCorp' => $searchCorp,
             'corpsCount' => $corpsCount,
+        ];
+
+        $this->set($data);
+    }
+
+    public function view($id = null)
+    {
+        $meishiDataCount = 0;
+
+        $corp = $this->Corps->get($id);
+
+        $meishiData = $this->Meishi->find('all')->where(['Meishi.corp_id' => $id])->contain(['Corps']);
+        
+        //検索フォームに表示する用のリスト
+        $divisionsList = $this->Meishi->find('list', ['valueField' => 'division', 'limit' => '200'])->group('division')->toArray();
+        $formDivisionsList = ['' => '-- 部署を選択してください。--'] + $divisionsList;
+
+
+        $this->paginate = [
+            'limit' => 30,
+            'order' => [
+                'Meishi.id' => 'DESC',
+            ],
+        ];
+
+        $meishiData = $this->paginate($meishiData);
+
+        $data = [
+            'meishiData' => $meishiData,
+            'formDivisionsList' => $formDivisionsList,
+            'corp' => $corp,
+            'meishiDataCount' => $meishiDataCount,
         ];
 
         $this->set($data);
@@ -85,10 +119,15 @@ class CorpsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    /*public function view($id = null)
     {
 
         $meishiData = $this->Meishi->find('all')->where(['Meishi.corp_id' => $id])->contain(['Corps']);
+
+        //検索フォームに表示する用のリスト
+        $meishiList = $meishiData->find('list', ['valueField' => 'division', 'limit' => '200', 'distinct' => 'division'])->toArray();
+        $formMeishiList = ['' => '-- 部署を選択してください。--'] + $meishiList;
+
 
         $keyword = '';
 
@@ -114,12 +153,13 @@ class CorpsController extends AppController
 
         $data = [
             'meishiData' => $meishiData,
+            'formMeishiList' => $formMeishiList,
             'meishiDataCount' => $meishiDataCount,
             'corp' => $corp,
         ];
 
         $this->set($data);
-    }
+    }*/
 
     /**
      * Add method
