@@ -3,10 +3,10 @@
     <h1><?= __(h($corp->corp_name)) ?></h1>
     <br>
     <br>
-    <div style="font-weight: bold;" >
+    <label style="font-weight: bold;" for="select-division" >
         リストから部署を選択して絞り込む
-    </div>
-    <select id="select-division">
+    </label>
+    <select id="select-division" style="width: 250px">
         <?php foreach ($formDivisionsList as $division) : ?>
             <option value="<?= $division ?>"><?= h($division) ?></option>
         <?php endforeach; ?>
