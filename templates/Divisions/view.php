@@ -1,13 +1,14 @@
+<?= $this->Html->script('division.js') ?>
 <div class="divisions content">
     <h1><?= __(h($division->division_name)) ?></h1>
     <br>
     <br>
-    <div style="font-weight: bold; color: red;">
-        ※名前検索
-    </div>
+    <label style="font-weight: bold;">
+        名前を入力して絞り込む
+    </label>
     <!-- 検索フォームをヘルパーメソッドから表示 -->
-    <?= $this->ViewForm->generateSearchForm($users) ?>
-    <table>
+    <input type="text" label="名前を入力して絞り込む" id="input-name">
+    <table id="input-user-table">
         <tr>
             <th><?= __('User Id') ?></th>
             <th><?= __('User Name') ?></th>
@@ -16,24 +17,18 @@
             <?php endif; ?>
             <th><?= __('Register') ?></th>
         </tr>
-        <!-- 検索結果が0なら表示 -->
-        <?php if ($usersCount === 0) : ?>
+        <?php foreach ($users as $user) : ?>
             <tr>
-                <td><?= $this->Common->displayNoDataMessage($usersCount) ?></td>
+                <td><?= $user->id ?></td>
+                <td><?= $this->Html->link(h($user->user_name), ['controller' => 'Users', 'action' => 'view', $user->id]) ?></td>
+                <?php if ($loginUser->admin === '管理者') : ?>
+                    <td><?= h($user->admin) ?></td>
+                <?php endif; ?>
+                <td><?= h($user->created) ?></td>
             </tr>
-        <?php else : ?>
-            <?php foreach ($users as $user) : ?>
-                <tr>
-                    <td><?= $user->id ?></td>
-                    <td><?= $this->Html->link(h($user->user_name), ['controller' => 'Users', 'action' => 'view', $user->id]) ?></td>
-                    <?php if ($loginUser->admin === '管理者') : ?>
-                        <td><?= h($user->admin) ?></td>
-                    <?php endif; ?>
-                    <td><?= h($user->created) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        <?php endif; ?>
+        <?php endforeach; ?>
     </table>
+    <p class="no-data-message" style="display: none;">※入力したユーザーは存在しません。</p>
     <div class="paginator">
         <ul class="pagination">
             <?php
