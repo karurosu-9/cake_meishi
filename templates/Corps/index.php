@@ -9,7 +9,7 @@
         <br>
         <br>
     <?php endif; ?>
-    <div class="button">
+    <div class="button" id="add-button">
         <?= $this->Html->link(__('Meishi Add'), ['controller' => 'Meishi', 'action' => 'add']) ?>
     </div>
     <br>
