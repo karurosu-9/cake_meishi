@@ -73,7 +73,6 @@ class DivisionsController extends AppController
      */
     public function view($id = null)
     {
-
         $division = $this->Divisions->get($id, [
             'contain' => ['Users'],
         ]);
@@ -86,28 +85,17 @@ class DivisionsController extends AppController
 
         $this->paginate = [
             'limit' => 10,
-            'contatin' => ['Divisions'],
+            'contain' => ['Divisions'],
             'order' => [
                 'Users.id' => 'ASC',
             ],
         ];
-
-        $keyword = '';
-
-        if ($this->request->is('put')) {
-            $keyword = $this->request->getData('keyword');
-            $users->where(['Users.user_name LIKE' => '%' . $keyword . '%']);
-        }
-
-        //検索結果のユーザーの該当数を取得
-        $usersCount = $users->count();
 
         $users = $this->paginate($users);
 
         $data = [
             'division' => $division,
             'users' => $users,
-            'usersCount' => $usersCount,
             'loginUser' => $loginUser,
         ];
 

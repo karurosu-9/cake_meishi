@@ -4,7 +4,7 @@
     <br>
     <br>
     <div style="font-weight: bold;" >
-        部署リストから絞り込む条件の指定
+        リストから部署を選択して絞り込む
     </div>
     <select id="select-division">
         <?php foreach ($formDivisionsList as $division) : ?>
