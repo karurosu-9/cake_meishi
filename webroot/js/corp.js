@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-//リストで選択された値と一致するデータを表示させる処理
+//リストで選択された値と一致するデータを表示する処理
 function displayBusinessCards(selectDivision) {
-    let tableRows = document.querySelectorAll('#business-cards-table tr');
+    let tableRows = document.querySelectorAll('#change-table tr');
     let noDataMessage = document.querySelector('.no-data-message');
 
     //データの行数をカウントする変数

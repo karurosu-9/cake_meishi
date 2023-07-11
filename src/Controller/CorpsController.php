@@ -47,9 +47,6 @@ class CorpsController extends AppController
      */
     public function index()
     {
-
-        $searchCorp = [];
-        $corpsCount = 0;
         //ヘルパーからログインユーザーの値を取得
         $loginUser = $this->LoginUser->getLoginUser();
 
@@ -58,14 +55,7 @@ class CorpsController extends AppController
 
         //検索フォームに表示する用のリスト
         $corpsList = $this->Corps->find('list', ['valueField' => 'corp_name', 'limit' => 200])->order(['corp_name' => 'ASC'])->toArray();
-        $formCorpsList = ['' => '-- 会社を選択してください。--'] + $corpsList;
-
-        if ($this->request->getQuery('corp_id')) {
-            $searchId = $this->request->getQuery('corp_id');
-            $corps = $corps->find('all')->where(['id' => $searchId]);
-        }
-
-        $corpsCount = $corps->count();
+        $formCorpsList = ['' => '-- 全てのデータを表示する --'] + $corpsList;
 
         $corps = $this->paginate($corps);
 
@@ -73,8 +63,6 @@ class CorpsController extends AppController
             'corps' => $corps,
             'loginUser' => $loginUser,
             'formCorpsList' => $formCorpsList,
-            'searchCorp' => $searchCorp,
-            'corpsCount' => $corpsCount,
         ];
 
         $this->set($data);
@@ -82,8 +70,6 @@ class CorpsController extends AppController
 
     public function view($id = null)
     {
-        $meishiDataCount = 0;
-
         $corp = $this->Corps->get($id);
 
         $meishiData = $this->Meishi->find('all')->where(['Meishi.corp_id' => $id])->contain(['Corps']);
@@ -106,7 +92,6 @@ class CorpsController extends AppController
             'meishiData' => $meishiData,
             'formDivisionsList' => $formDivisionsList,
             'corp' => $corp,
-            'meishiDataCount' => $meishiDataCount,
         ];
 
         $this->set($data);

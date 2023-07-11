@@ -1,18 +1,18 @@
 //フォームに入力した値を取得する処理
 document.addEventListener('DOMContentLoaded', function () {
-    let inputElement = document.getElementById('input-name');
+    let inputElement = document.getElementById('input-string');
 
     inputElement.addEventListener('input', function () {
         //trim()で入力値の余分な空白を取り除く
-        let inputName = inputElement.value.trim();
+        let inputString = inputElement.value.trim();
 
-        displayInputUser(inputName);
+        displayInputString(inputString);
     })
 })
 
 //入力した値と一致する名前を表示させる処理
-function displayInputUser(inputName) {
-    let tableRows = document.querySelectorAll('#input-user-table tr');
+function displayInputString(inputString) {
+    let tableRows = document.querySelectorAll('#change-table tr');
     let noDataMessage = document.querySelector('.no-data-message');
 
     //データの数をカウント 初期値は0
@@ -21,12 +21,12 @@ function displayInputUser(inputName) {
     for (let i = 1; i < tableRows.length; i++) {
         row = tableRows[i];
         //trim()で表示されている値の余分な空白を取り除く
-        userName = row.cells[1].textContent.trim();
+        tableString = row.cells[1].textContent.trim();
 
-        if (inputName === '') {
+        if (inputString === '') {
             row.style.display = 'table-row';
             tableRowsCount++;
-        } else if (userName.includes(inputName)) {
+        } else if (tableString.includes(inputString)) {
             row.style.display = 'table-row';
             tableRowsCount++;
         } else {

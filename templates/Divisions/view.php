@@ -6,8 +6,8 @@
     <label style="font-weight: bold;" for="input-name">
         名前を入力して絞り込む
     </label>
-    <input type="text" id="input-name" style="width: 250px" oninput="displayInputUser(this.value)">
-    <table id="input-user-table">
+    <input type="text" id="input-string" style="width: 250px" oninput="displayInputString(this.value)">
+    <table id="change-table">
         <tr>
             <th><?= __('User Id') ?></th>
             <th><?= __('User Name') ?></th>
