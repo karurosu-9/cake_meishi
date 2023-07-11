@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 })
 
+//入力した値と一致する名前を表示させる処理
 function displayInputUser(inputName) {
     let tableRows = document.querySelectorAll('#input-user-table tr');
     let noDataMessage = document.querySelector('.no-data-message');
@@ -28,7 +29,7 @@ function displayInputUser(inputName) {
         } else if (userName.includes(inputName)) {
             row.style.display = 'table-row';
             tableRowsCount++;
-        } else  {
+        } else {
             row.style.display = 'none';
         }
 

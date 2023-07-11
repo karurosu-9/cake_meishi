@@ -1,15 +1,15 @@
 //リストで選択された値を取得する処理
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     let selectElement = document.getElementById('select-division');
-    
+
     selectElement.addEventListener("change", function () {
         let selectDivision = selectElement.value;
-    
+
         displayBusinessCards(selectDivision);
     });
-  });
-  
-//リストで選択された値と一致するデータだけtableに表示される処理
+});
+
+//リストで選択された値と一致するデータを表示させる処理
 function displayBusinessCards(selectDivision) {
     let tableRows = document.querySelectorAll('#business-cards-table tr');
     let noDataMessage = document.querySelector('.no-data-message');
@@ -37,7 +37,7 @@ function displayBusinessCards(selectDivision) {
 
     //絞り込み結果が0だった時のメッセージの表示
     if (noDataMessage) {
-        if (dataRowCount === 0) { 
+        if (dataRowCount === 0) {
             noDataMessage.style.display = 'block';
         } else {
             noDataMessage.style.display = 'none';

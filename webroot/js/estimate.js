@@ -1,4 +1,4 @@
-//addアクションのjsコード
+//addアクションの自動計算をする処理
 function keisan() {
     for (let i = 1; i <= 5; i++) {
         //単価の値を取得
