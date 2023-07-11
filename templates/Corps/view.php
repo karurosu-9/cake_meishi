@@ -3,6 +3,9 @@
     <h1><?= __(h($corp->corp_name)) ?></h1>
     <br>
     <br>
+    <div style="font-weight: bold;" >
+        部署リストから絞り込む条件の指定
+    </div>
     <select id="select-division">
         <?php foreach ($formDivisionsList as $division) : ?>
             <option value="<?= $division ?>"><?= h($division) ?></option>
