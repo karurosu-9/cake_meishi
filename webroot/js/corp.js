@@ -1,3 +1,4 @@
+//リストで選択された値を取得する処理
 document.addEventListener("DOMContentLoaded", function() {
     let selectElement = document.getElementById('select-division');
     
@@ -8,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
   
-
+//リストで選択された値と一致するデータだけtableに表示される処理
 function displayBusinessCards(selectDivision) {
     let tableRows = document.querySelectorAll('#business-cards-table tr');
     let noDataMessage = document.querySelector('.no-data-message');
@@ -43,6 +44,3 @@ function displayBusinessCards(selectDivision) {
         }
     }
 }
-
-//初期表示は全ての名刺を表示する
-displayBusinessCards('');
