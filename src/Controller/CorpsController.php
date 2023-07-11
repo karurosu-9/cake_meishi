@@ -90,7 +90,7 @@ class CorpsController extends AppController
         
         //検索フォームに表示する用のリスト
         $divisionsList = $this->Meishi->find('list', ['valueField' => 'division', 'limit' => '200'])->group('division')->toArray();
-        $formDivisionsList = ['' => '-- 全て表示する --'] + $divisionsList;
+        $formDivisionsList = ['' => '-- 部署を選択してください。--'] + $divisionsList;
 
 
         $this->paginate = [
