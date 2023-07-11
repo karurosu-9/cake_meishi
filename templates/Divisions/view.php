@@ -3,11 +3,10 @@
     <h1><?= __(h($division->division_name)) ?></h1>
     <br>
     <br>
-    <label style="font-weight: bold;">
+    <label style="font-weight: bold;" for="input-name">
         名前を入力して絞り込む
     </label>
-    <!-- 検索フォームをヘルパーメソッドから表示 -->
-    <input type="text" label="名前を入力して絞り込む" id="input-name">
+    <input type="text" id="input-name" style="width: 250px" oninput="displayInputUser(this.value)">
     <table id="input-user-table">
         <tr>
             <th><?= __('User Id') ?></th>

@@ -19,3 +19,8 @@
 #add-button {
     margin-left: 900px;
 }
+
+.no-data-message {
+    font-weight: bold;
+    color: red;
+}
