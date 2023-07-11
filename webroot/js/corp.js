@@ -20,10 +20,10 @@ function displayBusinessCards(selectDivision) {
     for (let i = 1; i < tableRows.length; i++) {
         //行ごとの取得
         let row = tableRows[i];
-        //行の2列目の値を取得 ※1列目は<tr>のため
-        let division = row.cells[1].textContent;
+        //行の1列目の値を取得 ※row.cells[0]が1列目の値になる
+        let division = row.cells[0].textContent;
 
-        if (selectDivision === '') {
+        if (selectDivision === '-- 全て表示する --') {
             row.style.display = 'table-row';
             dataRowCount++;
         } else if (division === selectDivision) {
