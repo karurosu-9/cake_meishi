@@ -29,6 +29,7 @@ class MeishiPolicy implements BeforePolicyInterface
      */
     public function canAdd(IdentityInterface $user, Meishi $meishi)
     {
+        return true;
     }
 
     /**
