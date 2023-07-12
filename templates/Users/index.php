@@ -9,12 +9,7 @@
     <?php endif; ?>
     <br>
     <br>
-    <?php
-    echo $this->Form->create($users);
-    echo $this->Form->control('keyword');
-    echo $this->Form->button(__('Search'));
-    echo $this->Form->end();
-    ?>
+    <?= $this->ViewForm->generateSearchForm($users) ?>
     <table>
         <!-- 該当するユーザーがいなかった場合表示 -->
         <?= $this->Common->displayNoDataMessage($usersCount) ?>
