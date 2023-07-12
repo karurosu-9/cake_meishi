@@ -35,7 +35,7 @@ class UsersController extends AppController
 
         $this->paginate = [
             'contain' => ['Divisions'],
-            'limit' => 6,
+            'limit' => 30,
             'order' => [
                 'Users.id' => 'ASC',
             ],
