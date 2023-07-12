@@ -51,18 +51,27 @@ class CorpsController extends AppController
         $loginUser = $this->LoginUser->getLoginUser();
 
         //全リストを表示させるときの処理
-        $corps = $this->Corps->find('all');
+        $corpsList = $this->Corps->find('all');
 
-        //検索フォームに表示する用のリスト
-        $corpsList = $this->Corps->find('list', ['valueField' => 'corp_name', 'limit' => 200])->order(['corp_name' => 'ASC'])->toArray();
-        $formCorpsList = ['' => '-- 全てのデータを表示する --'] + $corpsList;
+        $searchCorpName = '';
 
-        $corps = $this->paginate($corps);
+        $keyword = '';
+
+        //検索フォームに入力のあった時の処理
+        if ($this->request->getQuery('keyword')) {
+            $searchCorpName = $this->request->getQuery('keyword');
+            $corpsList = $this->Corps->find()->where(['corp_name LIKE' => '%' . $searchCorpName . '%']);
+        }
+
+        $corpsCount = $corpsList->count();
+
+        $corpsList = $this->paginate($corpsList);
 
         $data = [
-            'corps' => $corps,
+            'corpsList' => $corpsList,
             'loginUser' => $loginUser,
-            'formCorpsList' => $formCorpsList,
+            'corpsCount' => $corpsCount,
+            'keyword' => $keyword,
         ];
 
         $this->set($data);

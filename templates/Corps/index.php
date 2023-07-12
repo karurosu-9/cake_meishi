@@ -16,13 +16,9 @@
     <br>
     <br>
     <label style="font-weight: bold;">
-        リストから会社名を選択して絞り込む
+        会社名を入力して絞り込む
     </label>
-    <select id="select-division" style="width: 300px">
-        <?php foreach ($formCorpsList as $corp) : ?>
-            <option value="<?= $corp ?>"><?= $corp ?></option>
-        <?php endforeach; ?>
-    </select>
+    <?= $this->ViewForm->generateSearchQuery($corpsList, 'index', $keyword) ?>
     <br>
     <br>
     <table id="change-table">
@@ -33,7 +29,7 @@
                 <th><?= __('Control Panel') ?></th>
             <?php endif; ?>
         </tr>
-        <?php foreach ($corps as $corp) : ?>
+        <?php foreach ($corpsList as $corp) : ?>
             <tr>
                 <td><?= $this->Html->link(h($corp->corp_name), ['action' => 'view', $corp->id]) ?></td>
                 <td><?= h($corp->address) ?></td>
@@ -46,6 +42,7 @@
             </tr>
         <?php endforeach; ?>
     </table>
+    <p><?= $this->Common->displayNoDataMessage($corpsCount) ?></p>
     <div class="paginator">
         <ul class="pagination">
             <?php
