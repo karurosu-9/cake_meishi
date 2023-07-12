@@ -1,5 +1,8 @@
 <div class="user content">
-    <p></p><small>社員番号：　<?= h($user->id) ?></small></p>
+    <?php if ($loginUser->id === $user->id) : ?>
+        <div><h2>【 マイページ 】</h2></div>
+    <?php endif; ?>
+    <p><small>社員番号：　<?= h($user->id) ?></small></p>
     <hr>
     <h3>名前：　<?= h($user->user_name) ?></h3>
     <hr>
