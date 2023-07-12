@@ -46,8 +46,8 @@ class DivisionsController extends AppController
 
         $keyword = '';
 
-        if ($this->request->is('put')) {
-            $keyword = $this->request->getData('keyword');
+        if ($this->request->getQuery('keyword')) {
+            $keyword = $this->request->getQuery('keyword');
             $divisions->where(['Divisions.division_name LIKE' => '%' . $keyword . '%']);
         }
 

@@ -2,11 +2,11 @@
     <h1><?= __('Dvisions List') ?></h1>
     <br>
     <br>
-    <div style="font-weight: bold; color: red;">
-        ※部署名検索
-    </div>
+    <label style="font-weight: bold;">
+        部署名を入力して絞り込み検索
+    </label>
     <!-- 検索フォームをヘルパーメソッドから表示 -->
-    <?= $this->ViewForm->generateSearchForm($divisions) ?>
+    <?= $this->ViewForm->generateSearchQueryForm($divisions, 'index') ?>
     <table>
         <tr>
             <th><?= __('Division Name') ?></th>
@@ -14,12 +14,6 @@
                 <th><?= __('Control Panel') ?></th>
             <?php endif; ?>
         </tr>
-        <!-- 検索結果が0なら表示 -->
-        <?php if ($divisionsCount === 0) : ?>
-            <tr>
-                <td><?= $this->Common->displayNoDataMessage($divisionsCount) ?></td>
-            </tr>
-        <?php else : ?>
             <?php foreach ($divisions as $division) : ?>
                 <tr>
                     <td><?= $this->Html->link(h($division->division_name), ['action' => 'view', $division->id]) ?></td>
@@ -31,8 +25,8 @@
                     <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
-        <?php endif; ?>
     </table>
+    <p><?= $this->Common->displayNoDataMessage($divisionsCount) ?></p>
     <div class="paginator">
         <ul class="pagination">
             <?php
