@@ -18,6 +18,7 @@
     <label style="font-weight: bold;">
         会社名を入力して絞り込む
     </label>
+    <!-- ヘルパーメソッドからの検索フォーム -->
     <?= $this->ViewForm->generateSearchQuery($corpsList, 'index', $keyword) ?>
     <br>
     <br>
@@ -42,6 +43,7 @@
             </tr>
         <?php endforeach; ?>
     </table>
+    <!-- 検索結果が0だった時に表示する処理 -->
     <p><?= $this->Common->displayNoDataMessage($corpsCount) ?></p>
     <div class="paginator">
         <ul class="pagination">

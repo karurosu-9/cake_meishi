@@ -22,7 +22,6 @@
             <th><?= __('address') ?></th>
             <th><?= __('Control') ?></th>
         </tr>
-        <!-- 検索結果が0なら表示 -->
         <?php foreach ($meishiData as $meishi) : ?>
             <tr>
                 <td><?= h($meishi->division) ?></td>
@@ -37,6 +36,7 @@
             </tr>
         <?php endforeach; ?>
     </table>
+    <!-- 検索結果が0だった時の表示する処理 -->
     <p class="no-data-message" style="display: none">※名刺データはありません。</p>
     <div class="paginator">
         <ul class="pagination">
