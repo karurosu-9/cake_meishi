@@ -18,8 +18,8 @@
     <label style="font-weight: bold;">
         会社名を入力して絞り込む
     </label>
-    <!-- ヘルパーメソッドからの検索フォーム -->
-    <?= $this->ViewForm->generateSearchQuery($corpsList, 'index', $keyword) ?>
+    <!-- 検索フォームをヘルパーメソッドから表示-->
+    <?= $this->ViewForm->generateSearchQueryForm($corpsList, 'index', $keyword) ?>
     <br>
     <br>
     <table id="change-table">
