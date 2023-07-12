@@ -43,7 +43,21 @@ class ViewFormHelper extends Helper
 
     }
 
-    //検索フォームのヘルパーメソッド
+    //検索フォームのヘルパーメソッド ※getQuery()
+    public function generateSearchQuery($data, $action)
+    {
+        $form = '';
+
+        $form .= $this->Form->create($data, ['type' => 'get', 'url' => ['action' => $action]]);
+        //文字列のみ、もしくは文字列と数字は受け付けるが、数字のみは受け付けない
+        $form .= $this->Form->control('keyword', ['label' => false, 'pattern' => '^(?=.*[a-zA-Zぁ-んァ-ヶー一-龠])[a-zA-Zぁ-んァ-ヶー一-龠0-9]+$', 'style' => 'width: 350px']);
+        $form .= $this->Form->button('search');
+        $form .= $this->Form->end();
+
+        return $form;
+    }
+
+    //検索フォームのヘルパーメソッド ※getData()
     public function generateSearchForm($data)
     {
         $form = '';
