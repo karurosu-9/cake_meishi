@@ -3,6 +3,7 @@
     <h1><?= __(h($division->division_name)) ?></h1>
     <br>
     <br>
+    <!-- フォームの入力値をjavascriptで表示する処理 -->
     <label style="font-weight: bold;" for="input-name">
         名前を入力して絞り込む
     </label>
@@ -27,6 +28,7 @@
             </tr>
         <?php endforeach; ?>
     </table>
+    <!-- 検索結果が0だった時に表示する処理 -->
     <p class="no-data-message" style="display: none;">※入力したユーザーは存在しません。</p>
     <div class="paginator">
         <ul class="pagination">

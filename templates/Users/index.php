@@ -33,6 +33,7 @@
             </tr>
         <?php endforeach; ?>
     </table>
+    <!-- 検索結果が0だった時の処理 -->
     <p><?= $this->Common->displayNoDataMessage($usersCount) ?></p>
     <div class="paginator">
         <ul class="pagination">

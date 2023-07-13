@@ -26,6 +26,7 @@
                 </tr>
             <?php endforeach; ?>
     </table>
+    <!-- 検索結果が0だった時の表示する処理 -->
     <p><?= $this->Common->displayNoDataMessage($divisionsCount) ?></p>
     <div class="paginator">
         <ul class="pagination">

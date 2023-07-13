@@ -3,6 +3,7 @@
     <h1><?= __(h($corp->corp_name)) ?></h1>
     <br>
     <br>
+    <!-- リストから絞り込み検索をしてjavascriptで表示する処理 -->
     <label style="font-weight: bold;" for="select-division">
         リストから部署を選択して絞り込む
     </label>
