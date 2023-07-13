@@ -111,8 +111,14 @@ class ViewFormHelper extends Helper
         $form = '';
 
         $form .= $this->Form->create($data);
-        $form .= $this->Form->control('corp_name');
-        $form .= $this->Form->control('address');
+        $form .= $this->Form->control('corp_name', [
+            'style' => 'width: 300px',
+            'required' => true,
+        ]);
+        $form .= $this->Form->control('address', [
+            'style' => 'width: 300px',
+            'required' => true,
+        ]);
         $form .= '<br><br>';
 
         //アクションに応じてボタンの表示を変更
@@ -132,7 +138,10 @@ class ViewFormHelper extends Helper
         $form = '';
 
         $form .= $this->Form->create($data);
-        $form .= $this->Form->control('division_name');
+        $form .= $this->Form->control('division_name', [
+            'style' => 'width: 300px',
+            'required' => true,
+        ]);
         $form .= '<br><br>';
 
         //アクションに応じてボタンの表示を変更
@@ -160,7 +169,7 @@ class ViewFormHelper extends Helper
                 ] + $option,
                 'value' => '',
                 'label' => '会社を選択してください',
-                'style' => 'width:300px;',
+                'style' => 'width: 300px;',
                 'required' => true,
             ]);
         } elseif ($action === 'edit' && $option !== null) {
