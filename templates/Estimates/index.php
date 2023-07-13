@@ -9,16 +9,8 @@
     <?php endif; ?>
     <br>
     <br>
-    <?php
-    echo $this->Form->create(null, ['type' => 'get', 'url' => ['action' => 'index']]);
-    echo $this->Form->control('corp_id', [
-        'options' => h($options),
-        'label' => '会社を選択してください。',
-        'style' => 'width: 200px;',
-    ]);
-    echo $this->Form->button(__('Search'));
-    echo $this->Form->end();
-    ?>
+    <!-- フォームをヘルパーメソッドから表示 -->
+    <?= $this->ViewForm->generateSearchListForm($corpsList, 'corp_id', 'index') ?>
     <br>
     <br>
     <br>
@@ -31,20 +23,16 @@
             <th><?= __('Created') ?></th>
             <th><?= __('Create User') ?></th>
         </tr>
-        <?php if ($estimatesCount === 0) : ?>
+        <?php foreach ($estimates as $index => $estimate) : ?>
             <tr>
-                <td><?= $this->Common->displayNoDataMessage($estimatesCount) ?></td>
+                <td><?= $this->Html->link($estimate->id, ['action' => 'view', $estimate->id]) ?></td>
+                <td><?= h($formattedDates[$index]) ?></td>
+                <td><?= h($estimate->create_user) ?></td>
             </tr>
-        <?php else : ?>
-            <?php foreach ($estimates as $index => $estimate) : ?>
-                <tr>
-                    <td><?= $this->Html->link($estimate->id, ['action' => 'view', $estimate->id]) ?></td>
-                    <td><?= h($formattedDates[$index]) ?></td>
-                    <td><?= h($estimate->create_user) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        <?php endif; ?>
+        <?php endforeach; ?>
     </table>
+    <!-- 検索結果が0だった時に表示する処理 -->
+    <td><?= $this->Common->displayNoDataMessage($estimatesCount) ?></td>
     <?php if (!empty($estimates)) : ?>
         <div class="paginator">
             <ul class="pagination">
