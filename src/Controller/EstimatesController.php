@@ -59,7 +59,7 @@ class EstimatesController extends AppController
 
         //選択肢を会社名にして、デフォルト値を設定
         $corps = $this->Corps->find('list', ['limit' => 200, 'valueField' => 'corp_name'])->all();
-        $options = ['' => '---  選択リスト  ---'] + $corps->toArray();
+        $corpsList = ['' => '---  選択リスト  ---'] + $corps->toArray();
 
         $corp = [];
         $estimates = [];
@@ -86,7 +86,7 @@ class EstimatesController extends AppController
 
         $data = [
             'loginUser' => $loginUser,
-            'options' => $options,
+            'corpsList' => $corpsList,
             'corp' => $corp,
             'estimates' => $estimates,
             'estimatesCount' => $estimatesCount,
