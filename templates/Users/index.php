@@ -9,10 +9,9 @@
     <?php endif; ?>
     <br>
     <br>
-    <?= $this->ViewForm->generateSearchForm($users) ?>
+    <label>名前を入力して絞り込み検索</label>
+    <?= $this->ViewForm->generateSearchQueryForm($users, 'index') ?>
     <table>
-        <!-- 該当するユーザーがいなかった場合表示 -->
-        <?= $this->Common->displayNoDataMessage($usersCount) ?>
         <tr>
             <th><?= __('User Id') ?></th>
             <th><?= __('User Name') ?></th>
@@ -34,6 +33,7 @@
             </tr>
         <?php endforeach; ?>
     </table>
+    <p><?= $this->Common->displayNoDataMessage($usersCount) ?></p>
     <div class="paginator">
         <ul class="pagination">
             <?php

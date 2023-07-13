@@ -76,14 +76,15 @@ class UsersController extends AppController
      */
     public function index()
     {
-
-        $keyword = $this->request->getData('keyword');
         //ログインユーザーの情報を取得
         $loginUser = $this->LoginUser->getLoginUser();
 
         $users = $this->Users->find('all');
 
-        if (!empty($keyword)) {
+        $keyword = '';
+
+        if ($this->request->getQuery('keyword')) {
+            $keyword = $this->request->getQuery('keyword');
             $users = $users->where(['Users.user_name LIKE' => '%' . $keyword . '%']);
         }
 
