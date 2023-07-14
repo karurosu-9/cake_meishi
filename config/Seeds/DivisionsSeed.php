@@ -25,7 +25,7 @@ class DivisionsSeed extends AbstractSeed
     {
         $data = [
             [
-                'division_name' => '管理者',
+                'division_name' => '管理部',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],

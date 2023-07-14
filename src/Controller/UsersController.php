@@ -157,7 +157,7 @@ class UsersController extends AppController
 
         //フォームの選択リストに表示しないものを設定
         $divisionsList = [];
-        $excludeDivisions = ['管理課'];
+        $excludeDivisions = ['管理部'];
         $divisions = array_diff($divisions, $excludeDivisions);
         foreach ($divisions as $id => $name) {
             $divisionsList[$id] = $name;
