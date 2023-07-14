@@ -40,7 +40,6 @@ class ViewFormHelper extends Helper
         $form .= $this->Form->button(__('Search'));
         $form .= $this->Form->end();
         return $form;
-
     }
 
     //検索フォームのヘルパーメソッド ※getQuery()
@@ -85,6 +84,7 @@ class ViewFormHelper extends Helper
                 'value' => '',
                 'required' => true,
             ]);
+            $form .= $this->Form->control('password');
         } elseif ($action === 'edit' && $option !== null) {
             $form .= $this->Form->control('division_id', [
                 'options' => h($option),
@@ -221,7 +221,7 @@ class ViewFormHelper extends Helper
                 'options' => [
                     'value' => '-- 会社を選択してください。--',
                 ] + $option,
-                 'value' => '',
+                'value' => '',
                 'label' => '会社を選択してください。',
                 'style' => 'width: 300px',
                 'required' => true,
