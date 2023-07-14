@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Cake\I18n\FrozenDate;
@@ -24,7 +25,7 @@ class DivisionsSeed extends AbstractSeed
     {
         $data = [
             [
-                'division_name' => '一般',
+                'division_name' => '管理者',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],
@@ -33,7 +34,11 @@ class DivisionsSeed extends AbstractSeed
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],
-
+            [
+                'division_name' => 'システム部',
+                'created' => FrozenTime::now(),
+                'modified' => FrozenTime::now(),
+            ],
         ];
 
         $table = $this->table('divisions');
