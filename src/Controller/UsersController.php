@@ -140,10 +140,10 @@ class UsersController extends AppController
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
             $userFormData = $this->request->getData();
-            
+
             //自作関数からadminの値を取得
             $user->admin = $this->selectAdmin($userFormData);
-            
+
             $user = $this->Users->patchEntity($user, $userFormData);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
@@ -160,7 +160,7 @@ class UsersController extends AppController
         $excludeDivisions = ['管理課'];
         $divisions = array_diff($divisions, $excludeDivisions);
         foreach ($divisions as $id => $name) {
-           $divisionsList[$id] = $name;
+            $divisionsList[$id] = $name;
         }
 
         $data = [
@@ -180,6 +180,9 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
+        //ログインユーザーのデータを取得
+        $loginUser = $this->LoginUser->getLoginUser();
+
         //アクセス権限の確認
         $user = $this->Users->get($id, [
             'contain' => ['Divisions'],
@@ -202,20 +205,21 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $divisions = $this->Divisions->find('list', ['limit' => 200, 'valueField' => 'division_name'])->order(['id' => 'ASC'])->toArray();
-        
+
 
         $divisionsList = [];
         //フォームの選択リストに表示しないものを設定
         $excludeDivisions = ['管理課'];
         $divisions = array_diff($divisions, $excludeDivisions);
-        foreach($divisions as $id => $name) {
+        foreach ($divisions as $id => $name) {
             $divisionsList[$id] = $name;
         }
 
         $data = [
             'user' => $user,
+            'loginUser' => $loginUser,
             'divisionsList' => $divisionsList,
-        ]; 
+        ];
 
         $this->set($data);
     }
@@ -233,7 +237,7 @@ class UsersController extends AppController
         $this->checkPermission($user, 'changePassword');
 
         $userData = $user->toArray();
-        
+
         if ($this->request->is(['post', 'patch', 'put'])) {
             $password = $this->request->getData('newPassword');
             $confirmPassword = $this->request->getData('confirmPassword');
@@ -284,7 +288,8 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    private function selectAdmin($formData) {
+    private function selectAdmin($formData)
+    {
 
         $user = $this->Users->newEmptyEntity();
 
