@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Policy;
@@ -66,5 +67,10 @@ class UserPolicy implements BeforePolicyInterface
     public function canView(IdentityInterface $user, User $resource)
     {
         return true;
+    }
+
+    public function canChangePassword(IdentityInterface $user, User $modelUser)
+    {
+        return $user->authorized_user || $user->id === $modelUser->id;
     }
 }
