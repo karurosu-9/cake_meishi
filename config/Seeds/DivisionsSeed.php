@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Cake\I18n\FrozenDate;
@@ -24,8 +25,17 @@ class DivisionsSeed extends AbstractSeed
     {
         $data = [
             [
-                'divisionName' => '経理部',
-                'user_id' => 1,
+                'division_name' => '管理部',
+                'created' => FrozenTime::now(),
+                'modified' => FrozenTime::now(),
+            ],
+            [
+                'division_name' => '経理部',
+                'created' => FrozenTime::now(),
+                'modified' => FrozenTime::now(),
+            ],
+            [
+                'division_name' => 'システム部',
                 'created' => FrozenTime::now(),
                 'modified' => FrozenTime::now(),
             ],

@@ -21,9 +21,8 @@ class DivisionsFixture extends TestFixture
             [
                 'id' => 1,
                 'divisionName' => 'Lorem ipsum dolor sit amet',
-                'user_id' => 1,
-                'created' => '2023-05-30 18:02:13',
-                'modified' => '2023-05-30 18:02:13',
+                'created' => '2023-05-31 14:27:38',
+                'modified' => '2023-05-31 14:27:38',
             ],
         ];
         parent::init();

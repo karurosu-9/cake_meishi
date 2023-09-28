@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class CreateUsers extends AbstractMigration
+class CreateDivisions extends AbstractMigration
 {
     /**
      * Change Method.
@@ -14,24 +14,14 @@ class CreateUsers extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('users');
-        $table->addColumn('division', 'string', [
-            'limit' => 50,
+        $table = $this->table('divisions');
+        $table->addColumn('division_name', 'string', [
+            'limit' => 100,
             'null' => false,
-        ])
-        ->addColumn('userName', 'string', [
-            'limit' => 50,
-            'null' => false,
-        ])
-        ->addColumn('password', 'string', [
-            'limit' => 255,
-            'null' => false,
-        ])
-        ->addColumn('admin', 'string', [
-            'default' => '一般',
         ])
         ->addColumn('created', 'datetime')
         ->addColumn('modified', 'datetime');
+        $table->addIndex('division_name', ['unique' => 'true']);
         $table->create();
     }
 }

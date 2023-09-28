@@ -11,6 +11,8 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property \App\Model\Table\DivisionsTable&\Cake\ORM\Association\BelongsTo $Divisions
+ *
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -45,8 +47,8 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('divisions', [
-            'foreignKey' => 'id',
+        $this->belongsTo('Divisions', [
+            'foreignKey' => 'division_id',
             'joinType' => 'INNER',
         ]);
     }
@@ -60,28 +62,49 @@ class UsersTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->scalar('division')
-            ->maxLength('division', 50)
-            ->requirePresence('division', 'create')
-            ->notEmptyString('division');
-
-        $validator
-            ->scalar('userName')
-            ->maxLength('userName', 50)
-            ->requirePresence('userName', 'create')
-            ->notEmptyString('userName');
+            ->scalar('user_name')
+            ->maxLength('user_name', 50)
+            ->requirePresence('user_name', 'create')
+            ->notEmptyString('user_name', '名前を入力してください。');
 
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
             ->requirePresence('password', 'create')
-            ->notEmptyString('password');
+            ->notEmptyString('password', 'パスワードを入力してください。')
+            ->add('password', 'validFormat', [
+                'rule' => [
+                    'custom',
+                    '/^(?![0-9]+$)(?![a-zA-Z]+$)[a-zA-Z0-9ぁ-んァ-ヶー一-龠]{5,}/u'
+                ],
+                'message' => 'パスワードは5文字以上で数字と文字を絡めて入力してください。'
+            ])
+            ->add('password', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'], '同じパスワードを使用してる人がいます。変更してください。');
 
         $validator
             ->scalar('admin')
             ->maxLength('admin', 255)
-            ->notEmptyString('admin');
+            ->notEmptyString('admin', '管理区分を選択してください。');
+
+        $validator
+            ->integer('division_id')
+            ->notEmptyString('division_id', '部署を選択してください。');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->isUnique(['password']), ['errorField' => 'password']);
+        $rules->add($rules->existsIn('division_id', 'Divisions'), ['errorField' => 'division_id']);
+
+        return $rules;
     }
 }

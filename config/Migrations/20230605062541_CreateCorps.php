@@ -15,24 +15,17 @@ class CreateCorps extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('corps');
-        $table->addColumn('corpName', 'string', [
+        $table->addColumn('corp_name', 'string', [
             'limit' => 255,
-            'null' => false,
-        ])
-        ->addColumn('personName', 'string', [
-            'limit' => 50,
             'null' => false,
         ])
         ->addColumn('address', 'string', [
             'limit' => 255,
             'null' => false,
         ])
-        ->addColumn('tel', 'string', [
-            'limit' => 13,
-            'null' => false,
-        ])
         ->addColumn('created', 'datetime')
         ->addColumn('modified', 'datetime');
+        $table->addIndex('corp_name', ['unique' => 'true']);
         $table->create();
     }
 }

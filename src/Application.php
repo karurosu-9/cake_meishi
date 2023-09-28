@@ -35,6 +35,14 @@ use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
 
+//認可関係
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Policy\OrmResolver;
+use Psr\Http\Message\ResponseInterface;
+
 
 
 
@@ -44,7 +52,8 @@ use Psr\Http\Message\ServerRequestInterface;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication implements AuthenticationServiceProviderInterface
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface,
+    AuthorizationServiceProviderInterface //認可関係のコード
 {
     /**
      * Load all the application configuration and bootstrap logic.
@@ -74,6 +83,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         }
 
         // Load more plugins here
+        //認可関係のコード
+        $this->addPlugin('Authorization');
     }
 
     /**
@@ -101,18 +112,19 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // using it's second constructor argument:
             // `new RoutingMiddleware($this, '_cake_routes_')`
             ->add(new RoutingMiddleware($this))
-
+            ->add(new AuthenticationMiddleware($this))
             // Parse various types of encoded request bodies so that they are
             // available as array through $request->getData()
             // https://book.cakephp.org/4/en/controllers/middleware.html#body-parser-middleware
             ->add(new BodyParserMiddleware())
-            ->add(new AuthenticationMiddleware($this))
 
             // Cross Site Request Forgery (CSRF) Protection Middleware
             // https://book.cakephp.org/4/en/security/csrf.html#cross-site-request-forgery-csrf-middleware
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
-            ]));
+            ]))
+            //認可関係のコード
+            ->add(new AuthorizationMiddleware($this));
 
         return $middlewareQueue;
     }
@@ -121,14 +133,14 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     {
         // ログイン必須ページにアクセスしたときのリダイレクト先
         $authenticationService = new AuthenticationService([
-            'unauthenticatedRedirect' => '/cake_meishi/users/login',
+            'unauthenticatedRedirect' => '/GitHub/cake_meishi/users/login',
             'queryParam' => 'redirect',
         ]);
 
         // identifiers を読み込み、username と password のフィールドを確認します
         $authenticationService->loadIdentifier('Authentication.Password', [
             'fields' => [
-                'username' => 'username',
+                'username' => 'user_name',
                 'password' => 'password',
             ]
         ]);
@@ -138,13 +150,21 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // 入力した username と password をチェックする為のフォームデータを設定します
         $authenticationService->loadAuthenticator('Authentication.Form', [
             'fields' => [
-                'username' => 'username',
+                'username' => 'user_name',
                 'password' => 'password',
             ],
-            'loginUrl' => '/cake_meishi/users/login',
+            'loginUrl' => '/GitHub/cake_meishi/users/login',
         ]);
 
         return $authenticationService;
+    }
+
+    //認可関係のコード
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
+        $resolver = new OrmResolver();
+
+        return new AuthorizationService($resolver);
     }
 
     /**

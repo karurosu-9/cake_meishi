@@ -1,0 +1,26 @@
+@media print {
+    .page {
+        width: 172mm;
+        height: 251mm;
+        margin-top: 190px;
+        margin-left: 35px;
+        page-break-after: always;
+    }
+
+    .page:last-child {
+        page-break-after: auto;
+    }
+
+    .no_print {
+        display: none;
+    }
+}
+
+#add-button {
+    margin-left: 900px;
+}
+
+.no-data-message {
+    font-weight: bold;
+    color: red;
+}
